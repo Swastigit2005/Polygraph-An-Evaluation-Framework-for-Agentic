@@ -54,6 +54,7 @@ class Settings:
     # Forwarded as `reasoning_effort` to reasoning models; empty = provider default.
     gen_reasoning_effort: str = "low"
     fast_reasoning_effort: str = "low"
+    judge_reasoning_effort: str = ""
     max_output_tokens: int = 1024
     # Client-side rate limits, applied per model (Groq limits are per model).
     rpm_limit: int = 30
@@ -61,6 +62,10 @@ class Settings:
     max_retries: int = 6
     # USD per 1M tokens as "model=in/out,model=in/out"; unknown models report cost=None.
     model_prices: str = ""
+    # Comma-separated models whose json_schema structured output is unreliable; they use JSON mode.
+    json_mode_models: str = ""
+    # Per-model cap on max_completion_tokens, "model=N,model=N" (Groq rejects some models' large requests).
+    model_max_output: str = ""
 
     # --- Embeddings / reranker (local) ---
     embed_model: str = "BAAI/bge-small-en-v1.5"
@@ -100,11 +105,14 @@ class Settings:
             temperature=_float("LLM_TEMPERATURE", 0.0),
             gen_reasoning_effort=_str("GEN_REASONING_EFFORT", "low"),
             fast_reasoning_effort=_str("FAST_REASONING_EFFORT", "low"),
+            judge_reasoning_effort=_str("JUDGE_REASONING_EFFORT"),
             max_output_tokens=_int("LLM_MAX_OUTPUT_TOKENS", 1024),
             rpm_limit=_int("GROQ_RPM_LIMIT", 30),
             tpm_limit=_int("GROQ_TPM_LIMIT", 6000),
             max_retries=_int("LLM_MAX_RETRIES", 6),
             model_prices=_str("MODEL_PRICES"),
+            json_mode_models=_str("JSON_MODE_MODELS"),
+            model_max_output=_str("MODEL_MAX_OUTPUT"),
             embed_model=_str("EMBED_MODEL", cls.embed_model),
             embed_query_prompt=os.getenv("EMBED_QUERY_PROMPT", cls.embed_query_prompt),
             rerank_model=_str("RERANK_MODEL", cls.rerank_model),

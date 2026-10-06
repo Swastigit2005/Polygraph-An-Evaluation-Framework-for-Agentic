@@ -126,6 +126,8 @@ class DiskCache:
         path.parent.mkdir(parents=True, exist_ok=True)
         self._conn = sqlite3.connect(path, check_same_thread=False)
         self._conn.execute("CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
+        self._conn.execute("CREATE TABLE IF NOT EXISTS usage (day TEXT, model TEXT, requests INTEGER, tokens INTEGER, "
+                           "PRIMARY KEY (day, model))")
         self._lock = threading.Lock()
 
     def get(self, key: str) -> dict[str, Any] | None:
@@ -133,6 +135,20 @@ class DiskCache:
         with self._lock:
             row = self._conn.execute("SELECT value FROM cache WHERE key = ?", (key,)).fetchone()
         return json.loads(row[0]) if row else None
+
+    def add_usage(self, model: str, tokens: int) -> None:
+        """Add one uncached API call to today's (UTC) per-model ledger."""
+        day = time.strftime("%Y-%m-%d", time.gmtime())
+        with self._lock:
+            self._conn.execute(
+                "INSERT INTO usage VALUES (?, ?, 1, ?) ON CONFLICT(day, model) DO UPDATE SET "
+                "requests = requests + 1, tokens = tokens + excluded.tokens", (day, model, tokens))
+            self._conn.commit()
+
+    def usage_by_day(self) -> list[tuple[str, str, int, int]]:
+        """(day, model, requests, tokens) rows, newest first."""
+        with self._lock:
+            return self._conn.execute("SELECT * FROM usage ORDER BY day DESC, model").fetchall()
 
     def set(self, key: str, value: dict[str, Any]) -> None:
         """Store a JSON-serialisable value."""
@@ -174,7 +190,10 @@ class LLM:
         self._limiters: dict[str, RateLimiter] = {}  # Groq limits apply per model
         self._cache = DiskCache(self.s.cache_dir / "llm_cache.sqlite") if self.s.use_llm_cache else None
         self._prices = parse_prices(self.s.model_prices)
-        self._no_json_schema: set[str] = set()  # models that rejected json_schema
+        self._max_out = {m.strip(): int(n) for m, _, n in
+                         (part.rpartition("=") for part in self.s.model_max_output.split(",") if "=" in part)}
+        # Models that rejected (or are configured to skip) json_schema and use JSON mode instead.
+        self._no_json_schema: set[str] = {m.strip() for m in self.s.json_mode_models.split(",") if m.strip()}
         self.last_rate_headers: dict[str, str] = {}
 
     def _limiter(self, model: str) -> RateLimiter:
@@ -201,7 +220,8 @@ class LLM:
             "model": model,
             "messages": messages,
             "temperature": self.s.temperature if temperature is None else temperature,
-            "max_completion_tokens": max_tokens or self.s.max_output_tokens,
+            "max_completion_tokens": min(max_tokens or self.s.max_output_tokens,
+                                         self._max_out.get(model, 10**9)),
         }
         if response_format:
             params["response_format"] = response_format
@@ -216,6 +236,7 @@ class LLM:
         result = self._call_with_retries(params)
         if self._cache:
             self._cache.set(key, {"text": result.text, "usage": asdict(result.usage)})
+            self._cache.add_usage(model, result.usage.total_tokens)
         return result
 
     def complete_structured(
@@ -280,6 +301,9 @@ class LLM:
                     type(exc).__name__ in {"APIConnectionError", "APITimeoutError"}
                 if not retryable:
                     raise
+                if status == 429 and "Request too large" in str(exc):
+                    # Exceeds a per-request ceiling (e.g. OTPM); retrying cannot succeed.
+                    raise LLMError(f"Request too large for {params['model']}: {exc}") from exc
                 wait = _retry_after_seconds(exc) if status == 429 else None
                 if wait is not None and wait > _QUOTA_RETRY_AFTER_S:
                     raise QuotaExhausted(f"Groq daily quota exhausted for {params['model']}; "
