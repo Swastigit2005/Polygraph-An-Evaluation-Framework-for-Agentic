@@ -1,32 +1,18 @@
----
-title: Agentic RAG with Evals
-emoji: 🔄
-colorFrom: blue
-colorTo: indigo
-sdk: gradio
-sdk_version: 6.29.1
-python_version: "3.11"
-app_file: app.py
-pinned: false
-license: mit
-short_description: Self-reflective RAG agent over Docker docs, with agent evals
----
-
-# Self-Reflective Agentic RAG with an Agent Evaluation Harness
+# Polygraph: Self-Reflective Agentic RAG with an Agent Evaluation Harness
 
 **A LangGraph RAG agent that grades its own retrieval, rewrites failed queries and refuses rather than guessing, plus an evaluation harness that measures each of those decisions, not just the final answer.**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Hugging%20Face%20Spaces-yellow)](HF_SPACE_URL)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B)](LIVE_DEMO_URL)
 [![Code](https://img.shields.io/badge/Code-GitHub-black)](https://github.com/Swastigit2005/Polygraph-An-Evaluation-Framework-for-Agentic)
 ![CI](https://github.com/Swastigit2005/Polygraph-An-Evaluation-Framework-for-Agentic/actions/workflows/ci.yml/badge.svg)
 
-> Demo GIF: _placeholder._ To record one, open the Space, ask an answerable question and one of the "not in the
+> Demo GIF: _placeholder._ To record one, open the live demo, ask an answerable question and one of the "not in the
 > knowledge base" examples, expand **Agent trace**, then record with Kap (macOS, free) or ScreenToGif (Windows)
 > and save it as `assets/demo.gif`.
 
 The knowledge base is 242 pages of the Docker documentation (Engine, Compose, Build, Desktop), giving an
 IT-support / DevOps assistant. Everything runs on free tiers: Groq for LLMs, local sentence-transformers for
-embeddings and reranking, and Hugging Face Spaces for hosting.
+embeddings and reranking, and Streamlit Community Cloud for hosting.
 
 ## Architecture
 
@@ -176,7 +162,7 @@ git clone https://github.com/Swastigit2005/Polygraph-An-Evaluation-Framework-for
 uv venv -p 3.11 .venv && uv pip install -p .venv -r requirements.txt -r requirements-dev.txt -e .
 cp .env.example .env                       # add GROQ_API_KEY (free at console.groq.com)
 .venv/bin/python scripts/list_groq_models.py   # see which models your key can use; set them in .env
-.venv/bin/python app.py                    # http://127.0.0.1:7860
+.venv/bin/streamlit run streamlit_app.py   # http://localhost:8501  (Gradio version: .venv/bin/python app.py)
 .venv/bin/pytest -q                        # offline unit tests (no network)
 ```
 
@@ -199,14 +185,20 @@ dispatch, or on PRs labelled `run-evals`: it evaluates the `full` config on a fi
 (`eval/ci_subset.json`) and fails if any metric falls below `eval/thresholds.json`. The thresholds come from the
 first full run, minus 0.10. The gate needs a `GROQ_API_KEY` repository secret.
 
-## Deploy (Hugging Face Spaces, free CPU)
+## Deploy (Streamlit Community Cloud, free)
 
-```bash
-hf auth login                                   # token with "write" access from huggingface.co/settings/tokens
-.venv/bin/python scripts/deploy_space.py        # creates the Space, sets secrets, uploads, verifies a live answer
-```
+1. Push this repo to a public GitHub repository.
+2. Run `.venv/bin/python scripts/make_streamlit_secrets.py`. It writes `.streamlit/secrets.toml` from your `.env`;
+   the file is git-ignored.
+3. On [share.streamlit.io](https://share.streamlit.io), sign in with GitHub and click **Create app → Deploy a
+   public app from GitHub**:
+   - repository: this repo, branch `main`, main file `streamlit_app.py`;
+   - **Advanced settings → Python 3.11**, and paste the contents of `.streamlit/secrets.toml` into **Secrets**.
+4. Deploy. The first build installs CPU-only PyTorch and downloads the two local models, taking a few minutes.
 
-Docker alternative: `docker build -t agentic-rag-evals . && docker run -p 7860:7860 --env-file .env agentic-rag-evals`.
+Alternatives: the Gradio app (`app.py`) runs on Hugging Face Spaces, which now requires a PRO plan for Gradio
+Spaces, or anywhere Docker runs:
+`docker build -t polygraph . && docker run -p 7860:7860 --env-file .env polygraph`.
 
 ## Limitations
 

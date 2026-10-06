@@ -1,8 +1,9 @@
-# Pinned runtime dependencies (also installed by Hugging Face Spaces).
-# Linux gets the CPU-only torch wheel (no CUDA libraries); macOS/Windows use PyPI.
---extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.14.1+cpu ; sys_platform == "linux"
-torch==2.14.1 ; sys_platform != "linux"
+# Pinned runtime dependencies (Streamlit Community Cloud / HF Spaces / Docker install this file).
+# Linux x86_64 gets the CPU-only torch wheel (no CUDA libraries); other platforms use PyPI.
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and platform_machine == "x86_64" and python_version == "3.11"
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and platform_machine == "x86_64" and python_version == "3.12"
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and platform_machine == "x86_64" and python_version == "3.13"
+torch==2.14.1 ; sys_platform != "linux" or platform_machine != "x86_64"
 chromadb==1.5.9
 deepeval==2.9.3
 gradio==6.29.1
@@ -20,4 +21,5 @@ pyyaml==6.0.3
 ragas==0.4.3
 rank-bm25==0.2.2
 sentence-transformers==6.1.0
+streamlit==1.65.0
 transformers==5.18.0

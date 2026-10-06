@@ -30,3 +30,6 @@ Thumbs.db
 eval/results/progress/
 eval/results/*__dryrun*
 eval/results/run_all.log
+
+# Streamlit secrets (contains your API key)
+.streamlit/secrets.toml
