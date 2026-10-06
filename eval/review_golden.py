@@ -4,6 +4,8 @@ Usage:
     python eval/review_golden.py            # review unreviewed items
     python eval/review_golden.py --all      # revisit every item (including accepted/rejected)
     python eval/review_golden.py --stats    # print counts and exit
+    python eval/review_golden.py --proposals eval/ai_review_proposals.json
+                                            # show an AI pre-review per item; Enter = take it
 
 Keys (per item):
     a  accept (verified=true)         x  reject (excluded from metrics)
@@ -12,6 +14,7 @@ Keys (per item):
     v  view a candidate chunk in full (by number)
     n  add/replace a note             s  skip for now
     Q  save and quit
+    Enter  (with --proposals) apply the shown proposal: accept / accept with edit / reject
 Changes are saved to eval/golden_set.jsonl after every action.
 """
 
@@ -103,8 +106,8 @@ def show(item: dict, idx: int, total: int, chunks: dict) -> list[str]:
     return cands
 
 
-def review(items: list[dict], revisit_all: bool) -> None:
-    """Main interactive loop."""
+def review(items: list[dict], revisit_all: bool, proposals: dict[str, dict] | None = None) -> None:
+    """Main interactive loop. Proposals are only suggestions; nothing is applied without a key press."""
     chunks = {c.id: c for c in read_chunks(get_settings().index_dir / "chunks.jsonl")}
     queue = [i for i, it in enumerate(items) if revisit_all or not (it.get("verified") or it.get("rejected"))]
     print(stats(items))
@@ -116,16 +119,30 @@ def review(items: list[dict], revisit_all: bool) -> None:
         item = items[i]
         while True:
             cands = show(item, qpos, len(queue), chunks)
-            cmd = input(f"{BOLD}[a]ccept [x]reject [q]uestion [r]ef [t]oggle [v]iew [n]ote [s]kip [Q]uit > {RESET}")
+            prop = (proposals or {}).get(item["id"])
+            if prop:
+                print(f"{BOLD}Proposal:{RESET} {prop['decision']} — {prop['reason']}")
+                for field, value in prop.get("edit", {}).items():
+                    print(f"  {field} → {value}")
+            hint = "[Enter]=proposal " if prop else ""
+            keys = "[a]ccept [x]reject [q]uestion [r]ef [t]oggle [v]iew [n]ote [s]kip [Q]uit"
+            cmd = input(f"{BOLD}{hint}{keys} > {RESET}")
             cmd = cmd.strip()
+            if cmd == "" and prop:
+                item.update(prop.get("edit", {}))
+                cmd = "x" if prop["decision"] == "reject" else "a"
+                if cmd == "x":
+                    item["notes"] = f"rejected: {prop['reason']}"
+            elif cmd == "":
+                continue
             if cmd == "a":
                 if not item["should_refuse"] and not item["relevant_chunk_ids"]:
                     print(f"{RED}An answerable item needs at least one relevant chunk.{RESET}")
                     continue
-                item.update(verified=True, rejected=False,
+                item.update(verified=True, rejected=False, reviewer="human",
                             reviewed_at=datetime.now(UTC).isoformat(timespec="seconds"))
             elif cmd == "x":
-                item.update(verified=False, rejected=True,
+                item.update(verified=False, rejected=True, reviewer="human",
                             reviewed_at=datetime.now(UTC).isoformat(timespec="seconds"))
             elif cmd == "q":
                 item["question"] = _edit("Question: ", item["question"])
@@ -175,13 +192,15 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--all", action="store_true", help="revisit accepted/rejected items too")
     ap.add_argument("--stats", action="store_true", help="print review progress and exit")
+    ap.add_argument("--proposals", type=Path, default=None, help="JSON of AI pre-review proposals to display")
     args = ap.parse_args()
     items = load()
     if args.stats:
         print(stats(items))
         return
     try:
-        review(items, args.all)
+        proposals = json.loads(args.proposals.read_text())["proposals"] if args.proposals else None
+        review(items, args.all, proposals)
     except (KeyboardInterrupt, EOFError):
         save(items)
         print("\nSaved.\n" + stats(items))

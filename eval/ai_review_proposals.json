@@ -1,0 +1,359 @@
+{
+ "reviewer": "claude-opus-5.5 (AI pre-review; proposals only, not verification)",
+ "proposals": {
+  "a-build/builders/drivers/docker#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-compose/intro/compose-application-model#005": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/use-desktop#000": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/install/centos#010": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-build/builders/drivers/kubernetes#006": {
+   "decision": "accept_with_edit",
+   "reason": "draft copied a typo from the docs example (requests.* instead of limits.*)",
+   "edit": {
+    "reference_answer": "Set the `limits.ephemeral-storage` driver option for the Kubernetes driver, specifying the size in bytes or with a valid suffix (for example 100M)."
+   }
+  },
+  "a-compose/how-tos/environment-variables/set-environment-variables#002": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/setup/install/mac-install#007": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/daemon/troubleshoot#022": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-build/checks#010": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-compose/how-tos/multiple-compose-files#000": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/setup/install/linux/fedora#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/storage/drivers/device-mapper-driver#027": {
+   "decision": "reject",
+   "reason": "trivia about a value in sample output, not a support question"
+  },
+  "a-build/metadata/attestations#010": {
+   "decision": "reject",
+   "reason": "trivia about an example manifest"
+  },
+  "a-compose/how-tos/environment-variables/variable-interpolation#004": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/use-desktop/images#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/security/rootless/troubleshoot#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-build/exporters/oci-docker#003": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-compose/support-and-feedback/faq#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/troubleshoot-and-support/faqs/general#007": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/daemon/ipv6#006": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-build/bake/targets#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-compose/install/uninstall#004": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/use-desktop/resource-saver#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/install/raspberry-pi-os#005": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-build/cache/invalidation#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-compose/how-tos/networking#011": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/setup/install/windows-permission-requirements#007": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/storage/tmpfs#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-build/builders/drivers#002": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-compose/how-tos/lifecycle#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/setup/install/linux/rhel#003": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/containers/resource_constraints#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-build/cache/optimize#009": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-compose/trust-model#007": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/use-desktop/builds#004": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/network/drivers/macvlan#012": {
+   "decision": "reject",
+   "reason": "trivia about sample output values"
+  },
+  "a-build/bake/overrides#009": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-compose/how-tos/gpu-support#004": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-desktop/troubleshoot-and-support/faqs/releases#000": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/storage/bind-mounts#002": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-build/exporters#011": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-compose/how-tos/environment-variables#000": {
+   "decision": "reject",
+   "reason": "meta question about doc structure; noisy gold list"
+  },
+  "a-desktop/setup/install/linux/debian#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-engine/security/trust/trust_automation#004": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "a-build/exporters/image-registry#004": {
+   "decision": "reject",
+   "reason": "duplicate of oci-docker#003; gold includes a chunk about a different exporter"
+  },
+  "v-engine/cli/otel#000": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "v-build/bake/expressions#001": {
+   "decision": "reject",
+   "reason": "contrived phrasing"
+  },
+  "v-compose/bridge/use-model-runner#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "v-desktop/use-desktop/kubernetes#000": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "v-engine/network/drivers/overlay#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "v-build/cache/backends/azblob#001": {
+   "decision": "reject",
+   "reason": "underspecified: many cache backends answer it, gold is Azure-only"
+  },
+  "v-compose/intro/history#001": {
+   "decision": "accept_with_edit",
+   "reason": "original question did not mention Compose at all",
+   "edit": {
+    "question": "The old Compose tool I used to run seems to be unsupported now — which versions are actually supported?"
+   }
+  },
+  "v-desktop/setup/install/mac-permission-requirements#008": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "v-engine/logging/dual-logging#008": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "v-build/builders#005": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "v-compose/how-tos/init-containers#006": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "v-desktop/settings-and-maintenance/backup-and-restore#001": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-000": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-002": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-003": {
+   "decision": "reject",
+   "reason": "partially answerable: Desktop 'Start analysis' / 'View packages and CVEs'"
+  },
+  "u-004": {
+   "decision": "reject",
+   "reason": "partially answerable: generic volume backup/restore/migrate pages"
+  },
+  "u-005": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-006": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-007": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-008": {
+   "decision": "reject",
+   "reason": "partially answerable: gha cache backend + GitHub Actions workflow example"
+  },
+  "u-010": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-011": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-012": {
+   "decision": "reject",
+   "reason": "answerable: windows-install 'Which backend should I use?' tip"
+  },
+  "u-013": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-014": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-015": {
+   "decision": "reject",
+   "reason": "partially answerable: remote host via DOCKER_HOST + Swarm overlay networking"
+  },
+  "u-016": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-017": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-018": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-019": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-020": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-021": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-022": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-023": {
+   "decision": "reject",
+   "reason": "partially answerable: multi-platform build docs apply to any CI"
+  },
+  "u-024": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-025": {
+   "decision": "reject",
+   "reason": "partially answerable: generic daemon DNS troubleshooting"
+  },
+  "u-026": {
+   "decision": "reject",
+   "reason": "partially answerable: Beta features settings"
+  },
+  "u-027": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-028": {
+   "decision": "reject",
+   "reason": "partially answerable: Apple silicon system requirements"
+  },
+  "u-029": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-030": {
+   "decision": "accept",
+   "reason": "question realistic, reference grounded in gold chunk(s), gold list complete"
+  },
+  "u-031": {
+   "decision": "reject",
+   "reason": "answerable: Kubernetes driver docs cover BuildKit on any cluster"
+  }
+ }
+}
