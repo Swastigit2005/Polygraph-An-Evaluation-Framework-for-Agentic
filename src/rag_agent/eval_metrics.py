@@ -15,8 +15,9 @@ Definitions (also documented in the README):
   after the rewrite contained a gold chunk.
 * Steps — number of node executions per query (mean, p95). Loop rate — share of queries whose
   rewrite count reached MAX_REWRITES.
-* Latency — wall time, except that LLM calls served from the disk cache are charged their
-  originally measured API latency, so cached re-runs report realistic latency.
+* Latency — wall time minus client-side rate-limit queueing/backoff (an artefact of running the
+  eval faster than the free tier allows), with LLM calls served from the disk cache charged their
+  originally measured API latency, so cached replays report realistic latency.
 """
 
 from __future__ import annotations
@@ -128,8 +129,11 @@ def rewrite_outcomes(trace: Trace, item: Item) -> list[bool]:
 
 
 def effective_latency(step_or_trace_latency: float, usages: Iterable[dict[str, Any]]) -> float:
-    """Wall latency plus the original API latency of calls that were served from cache."""
-    return step_or_trace_latency + sum(u["latency_s"] for u in usages if u.get("cached"))
+    """Wall latency minus rate-limit waits, plus the original API latency of cache-served calls."""
+    usages = list(usages)
+    waits = sum(u.get("wait_s", 0.0) for u in usages if not u.get("cached"))
+    cached = sum(u["latency_s"] for u in usages if u.get("cached"))
+    return max(0.0, step_or_trace_latency - waits) + cached
 
 
 # --------------------------------------------------------------------------- aggregate

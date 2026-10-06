@@ -90,9 +90,9 @@ def test_rewrite_outcomes() -> None:
     assert rewrite_outcomes(t, item) == [False, True]
 
 
-def test_effective_latency_adds_original_latency_of_cached_calls() -> None:
-    usage = [{"latency_s": 2.0, "cached": True}, {"latency_s": 1.0, "cached": False}]
-    assert effective_latency(1.5, usage) == 3.5
+def test_effective_latency_adds_cached_latency_and_removes_rate_limit_waits() -> None:
+    usage = [{"latency_s": 2.0, "cached": True}, {"latency_s": 1.0, "cached": False, "wait_s": 0.5}]
+    assert effective_latency(1.5, usage) == 3.0  # 1.5 wall - 0.5 queueing + 2.0 original cached latency
 
 
 def test_aggregate_refusal_rates_steps_and_loops() -> None:

@@ -54,6 +54,7 @@ class Usage:
     cost_usd: float | None = None
     latency_s: float = 0.0  # wall time of the original (uncached) API call
     cached: bool = False
+    wait_s: float = 0.0  # client-side rate-limit queueing + 429 backoff before the call succeeded
 
     @property
     def total_tokens(self) -> int:
@@ -231,7 +232,7 @@ class LLM:
 
         key = hashlib.sha256(json.dumps(params, sort_keys=True).encode()).hexdigest()
         if self._cache and (hit := self._cache.get(key)):
-            usage = Usage(**{**hit["usage"], "cached": True})
+            usage = Usage(**{**hit["usage"], "cached": True, "wait_s": 0.0})
             return LLMResult(text=hit["text"], usage=usage)
 
         with tracing.observation(f"llm:{model}", as_type="generation", model=model, input=messages,
@@ -295,6 +296,7 @@ class LLM:
     def _call_with_retries(self, params: dict[str, Any]) -> LLMResult:
         est = estimate_tokens(json.dumps(params["messages"])) + min(params["max_completion_tokens"], 512)
         delay = 2.0
+        started = time.perf_counter()
         for attempt in range(self.s.max_retries + 1):
             handle = self._limiter(params["model"]).acquire(est)
             t0 = time.perf_counter()
@@ -331,7 +333,8 @@ class LLM:
             self._limiter(params["model"]).record_actual(handle, prompt_t + completion_t)
             text = (resp.choices[0].message.content or "").strip()
             usage = Usage(model=params["model"], prompt_tokens=prompt_t, completion_tokens=completion_t,
-                          cost_usd=self._cost(params["model"], prompt_t, completion_t), latency_s=latency)
+                          cost_usd=self._cost(params["model"], prompt_t, completion_t), latency_s=latency,
+                          wait_s=round(max(0.0, t0 - started), 4))
             return LLMResult(text=text, usage=usage)
         raise RateLimited("unreachable")  # pragma: no cover
 
