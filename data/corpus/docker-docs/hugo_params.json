@@ -1,0 +1,22 @@
+{
+  "bake_action_version": "v7",
+  "build_push_action_version": "v7",
+  "buildkit_version": "0.32.0",
+  "cache_action_version": "v5",
+  "checkout_action_version": "v6",
+  "compose_version": "v5.6.0",
+  "docker_ce_version": "29.8.2",
+  "docker_ce_version_prev": "29.8.1",
+  "example_alpine_version": "3.23",
+  "example_go_version": "1.26",
+  "example_node_version": "24",
+  "github_builder_version": "v1",
+  "latest_engine_api_version": "1.56",
+  "login_action_version": "v4",
+  "metadata_action_version": "v6",
+  "repo": "https://github.com/docker/docs",
+  "setup_buildx_action_version": "v4",
+  "setup_compose_action_version": "v2",
+  "setup_docker_action_version": "v5",
+  "setup_qemu_action_version": "v4"
+}

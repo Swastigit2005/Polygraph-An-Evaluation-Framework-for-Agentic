@@ -1,26 +1,27 @@
-# Environment
+# Secrets
 .env
 .env.local
 
-# Virtual environment
+# Python
 .venv/
 venv/
 __pycache__/
 *.pyc
-*.pyo
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
 
-# Vector store (auto-generated at runtime)
+# Local caches (LLM responses, model downloads)
+.cache/
+
+# Runtime artefacts
 chroma_db/
+.gradio/
+flagged/
 
-# uv
-.python-version
-
-# IDE
+# IDE / OS
 .vscode/
 .idea/
 *.swp
-*.swo
-
-# OS
 .DS_Store
 Thumbs.db

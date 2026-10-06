@@ -1,0 +1,31 @@
+{
+  "num_chunks": 2594,
+  "num_docs": 230,
+  "embed_model": "BAAI/bge-small-en-v1.5",
+  "chunk_size": 1200,
+  "chunk_overlap": 150,
+  "corpus": {
+    "source": "https://github.com/docker/docs.git",
+    "commit": "6cf1b1c167f032e8a6629da211602300b623b20e",
+    "commit_date": "2026-10-06T10:32:33+02:00",
+    "license": "Apache-2.0",
+    "include_prefixes": [
+      "engine/",
+      "compose/",
+      "build/",
+      "desktop/setup/",
+      "desktop/troubleshoot-and-support/",
+      "desktop/settings-and-maintenance/",
+      "desktop/use-desktop/"
+    ],
+    "exclude_prefixes": [
+      "engine/release-notes/",
+      "engine/swarm/",
+      "build/ci/",
+      "build/policies/",
+      "compose/releases/"
+    ],
+    "num_pages": 242
+  },
+  "build_seconds": 55.3
+}

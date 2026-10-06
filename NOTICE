@@ -1,0 +1,12 @@
+This project is derived from "Self-Reflective Agentic RAG" in Hands-On-AI-Engineering
+by Sumanth077: https://github.com/Sumanth077/Hands-On-AI-Engineering/tree/main/ai_agents/agentic_rag_system
+(upstream commit da0091d6452e18dae9fd3119a194019f35306d27).
+
+The upstream repository states in its README that it is licensed under the MIT License.
+At the commit above the upstream repository did not ship a LICENSE file; the MIT grant
+is taken from that README statement. The original code has been substantially rewritten
+(Groq + local embeddings, hybrid retrieval, refusal, tracing, evaluation harness).
+
+The demo corpus under data/corpus/docker-docs/ is a copy of part of the Docker
+documentation (https://github.com/docker/docs), licensed under the Apache License 2.0;
+see data/corpus/SOURCES.md and data/corpus/docker-docs/LICENSE.
