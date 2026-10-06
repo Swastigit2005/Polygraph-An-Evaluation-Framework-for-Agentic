@@ -62,7 +62,7 @@ jobs:
           key: eval-${{ hashFiles('src/**', 'eval/golden_set.jsonl', 'eval/ci_subset.json') }}
           restore-keys: eval-
       - name: Run full config on the 20-item verified CI subset
-        run: python eval/run_eval.py --config full --ids-file eval/ci_subset.json --ragas-subset 0 --fresh
+        run: python eval/run_eval.py --config full --golden-source ai_reviewed --ids-file eval/ci_subset.json --ragas-subset 0 --fresh
       - name: Check regression thresholds
         run: python eval/check_thresholds.py --config full
       - uses: actions/upload-artifact@v4

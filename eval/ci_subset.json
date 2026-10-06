@@ -1,0 +1,30 @@
+{
+ "golden_source": "ai_reviewed",
+ "quota": {
+  "answerable": 10,
+  "vague": 3,
+  "unanswerable": 7
+ },
+ "ids": [
+  "a-engine/security/rootless/troubleshoot#001",
+  "a-engine/install/centos#010",
+  "a-desktop/troubleshoot-and-support/faqs/releases#000",
+  "a-desktop/setup/install/linux/debian#001",
+  "a-build/exporters/oci-docker#003",
+  "a-engine/storage/tmpfs#001",
+  "a-build/cache/optimize#009",
+  "a-desktop/use-desktop/builds#004",
+  "a-desktop/troubleshoot-and-support/faqs/general#007",
+  "a-desktop/use-desktop/images#001",
+  "v-desktop/settings-and-maintenance/backup-and-restore#001",
+  "v-compose/bridge/use-model-runner#001",
+  "v-engine/logging/dual-logging#008",
+  "u-016",
+  "u-027",
+  "u-010",
+  "u-030",
+  "u-022",
+  "u-021",
+  "u-017"
+ ]
+}

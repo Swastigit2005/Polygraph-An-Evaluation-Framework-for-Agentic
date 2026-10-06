@@ -42,9 +42,23 @@ RESULTS = EVAL_DIR / "results"
 PROGRESS = RESULTS / "progress"
 
 
-def load_golden(include_unverified: bool, path: Path = EVAL_DIR / "golden_set.jsonl") -> list[dict[str, Any]]:
-    """Verified (or, for dry runs, all non-rejected) golden items."""
+def load_golden(include_unverified: bool, source: str = "verified",
+                path: Path = EVAL_DIR / "golden_set.jsonl") -> list[dict[str, Any]]:
+    """Golden items for evaluation.
+
+    source="verified": items a human marked verified (dry runs: all non-rejected items).
+    source="ai_reviewed": items accepted in eval/ai_review_proposals.json (with its edits applied).
+    Results always record which source was used.
+    """
     items = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+    if source == "ai_reviewed":
+        props = json.loads((EVAL_DIR / "ai_review_proposals.json").read_text())["proposals"]
+        out = []
+        for it in items:
+            prop = props.get(it["id"])
+            if prop and prop["decision"] != "reject":
+                out.append({**it, **prop.get("edit", {})})
+        return out
     return [it for it in items if it.get("verified") or (include_unverified and not it.get("rejected"))]
 
 
@@ -92,7 +106,7 @@ def run_config(name: str, cfg: dict[str, Any], args: argparse.Namespace, base: S
 
         judge = Judge(s, llm, relevancy_strictness=args.relevancy_strictness)
 
-    items = load_golden(args.include_unverified)
+    items = load_golden(args.include_unverified, args.golden_source)
     wanted: set[str] = set(args.ids.split(",")) if args.ids else set()
     if args.ids_file:
         wanted |= set(json.loads(Path(args.ids_file).read_text())["ids"])
@@ -166,6 +180,7 @@ def run_config(name: str, cfg: dict[str, Any], args: argparse.Namespace, base: S
         "config_name": name, "description": cfg.get("description", ""), "config": snapshot,
         "judge_model": judge.model if judge else None, "timestamp": ts, "git_commit": git_commit(),
         "dry_run": bool(args.include_unverified), "complete": complete,
+        "golden_source": "dry run (unverified)" if args.include_unverified else args.golden_source,
         "n_target_items": len(items), "n_evaluated": len(records),
         "wall_seconds": round(time.perf_counter() - t_start, 1),
         "metrics": metrics, "records": records,
@@ -189,6 +204,8 @@ def main() -> None:
     ap.add_argument("--ids", default=None, help="comma-separated golden item ids")
     ap.add_argument("--ids-file", default=None, help='JSON file {"ids": [...]} (e.g. eval/ci_subset.json)')
     ap.add_argument("--no-judge", action="store_true", help="skip Ragas/DeepEval answer metrics")
+    ap.add_argument("--golden-source", choices=["verified", "ai_reviewed"], default="verified",
+                    help="verified = human-verified items; ai_reviewed = items accepted by the AI pre-review")
     ap.add_argument("--include-unverified", action="store_true", help="dry run on unverified items")
     ap.add_argument("--fresh", action="store_true", help="ignore saved per-item progress")
     ap.add_argument("--ragas-subset", type=int, default=30,

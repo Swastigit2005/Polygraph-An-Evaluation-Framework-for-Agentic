@@ -29,3 +29,4 @@ Thumbs.db
 # Eval scratch (dry runs on unverified items and resumable progress)
 eval/results/progress/
 eval/results/*__dryrun*
+eval/results/run_all.log
