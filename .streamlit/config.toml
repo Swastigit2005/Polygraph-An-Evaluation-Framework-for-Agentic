@@ -1,5 +1,7 @@
 [server]
 headless = true
+# Streamlit's module watcher trips over transformers' lazy imports; the cloud redeploys on push anyway.
+fileWatcherType = "none"
 maxUploadSize = 20
 
 [browser]
@@ -7,3 +9,9 @@ gatherUsageStats = false
 
 [theme]
 base = "light"
+primaryColor = "#4f46e5"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f5f7fb"
+textColor = "#0f172a"
+borderColor = "#e2e8f0"
+baseRadius = "medium"

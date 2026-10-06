@@ -33,3 +33,4 @@ eval/results/run_all.log
 
 # Streamlit secrets (contains your API key)
 .streamlit/secrets.toml
+eval/results/partial/

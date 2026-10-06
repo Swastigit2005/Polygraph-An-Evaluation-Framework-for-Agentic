@@ -185,13 +185,14 @@ def run_config(name: str, cfg: dict[str, Any], args: argparse.Namespace, base: S
         "wall_seconds": round(time.perf_counter() - t_start, 1),
         "metrics": metrics, "records": records,
     }
-    RESULTS.mkdir(parents=True, exist_ok=True)
+    out_dir = RESULTS if complete else RESULTS / "partial"  # partial snapshots stay out of git
+    out_dir.mkdir(parents=True, exist_ok=True)
     stem = f"{name}{suffix}_{ts}"
-    (RESULTS / f"{stem}.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
+    (out_dir / f"{stem}.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
     banner = "> **DRY RUN on unverified items — do not report.**\n\n" if args.include_unverified else ""
     partial = "" if complete else f"> Partial run: {len(records)}/{len(items)} items.\n\n"
-    (RESULTS / f"{stem}.md").write_text(f"# {name}\n\n{banner}{partial}{metrics_table({name: out})}\n")
-    print(f"\nWrote {RESULTS / stem}.json/.md ({len(records)}/{len(items)} items{'' if complete else ', PARTIAL'})")
+    (out_dir / f"{stem}.md").write_text(f"# {name}\n\n{banner}{partial}{metrics_table({name: out})}\n")
+    print(f"\nWrote {out_dir / stem}.json/.md ({len(records)}/{len(items)} items{'' if complete else ', PARTIAL'})")
     print(metrics_table({name: out}))
     return 0 if complete else 2
 
