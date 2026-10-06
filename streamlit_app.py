@@ -13,8 +13,14 @@ import sys
 import tempfile
 from pathlib import Path
 
-import streamlit as st
-from dotenv import load_dotenv
+# Hosted platforms close the progress-bar pipe; model downloads that print progress then crash with
+# BrokenPipeError. Silence progress bars and verbose logging before any ML library is imported.
+for _k, _v in {"HF_HUB_DISABLE_PROGRESS_BARS": "1", "TQDM_DISABLE": "1", "TRANSFORMERS_VERBOSITY": "error",
+               "TOKENIZERS_PARALLELISM": "false", "HF_HUB_DISABLE_TELEMETRY": "1"}.items():
+    os.environ.setdefault(_k, _v)
+
+import streamlit as st  # noqa: E402
+from dotenv import load_dotenv  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
@@ -60,8 +66,26 @@ def kb_agent() -> Agent:
     """One shared agent over the prebuilt Docker-docs index (fail-fast retries for the UI)."""
     s = get_settings().with_overrides(max_retries=2)
     retriever = Retriever.from_index(s)
-    retriever.retrieve("warm-up query", s)  # load embedder + reranker now, not on the first question
+    for attempt in range(2):  # first-start model downloads can fail transiently on hosted platforms
+        try:
+            retriever.retrieve("warm-up query", s)  # load embedder + reranker now, not on the first question
+            break
+        except Exception:  # noqa: BLE001
+            log.exception("model warm-up failed (attempt %d)", attempt + 1)
+            if attempt == 1:
+                raise
     return Agent(retriever, s, LLM(s))
+
+
+def get_agent() -> Agent | None:
+    """The shared agent, or None (with a friendly message) if it could not be initialised."""
+    try:
+        return kb_agent()
+    except Exception:  # noqa: BLE001 - not cached on failure, so the next click retries
+        log.exception("agent initialisation failed")
+        st.error("The models are still starting up or failed to load. Please wait a few seconds and press "
+                 "**Ask** again.")
+        return None
 
 
 @st.cache_data(ttl=600, show_spinner=False)
@@ -183,7 +207,8 @@ with tab_ask:
                                     placeholder="e.g. How do I limit how much memory a container can use?")
             submitted = st.form_submit_button("Ask", type="primary", disabled=not configured)
         if submitted:
-            trace = run_question(kb_agent(), question)
+            agent = get_agent()
+            trace = run_question(agent, question) if agent is not None else None
             if trace is not None:
                 st.session_state["last_trace"] = trace
         if st.session_state.get("last_trace") is not None:
