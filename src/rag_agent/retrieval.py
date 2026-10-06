@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import re
+import shutil
+import tempfile
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from functools import lru_cache
+from pathlib import Path
 from typing import Any
 
 from rag_agent.config import Settings, get_settings
@@ -98,7 +101,10 @@ class Retriever:
         chunks_path = s.index_dir / "chunks.jsonl"
         if not chunks_path.exists():
             raise FileNotFoundError(f"No index at {s.index_dir}; run `python -m rag_agent.ingest` first")
-        client = chromadb.PersistentClient(path=str(s.index_dir / "chroma"))
+        # Chroma writes to its sqlite file even on read; open a temp copy so the committed index stays clean.
+        tmp = Path(tempfile.mkdtemp(prefix="rag_index_")) / "chroma"
+        shutil.copytree(s.index_dir / "chroma", tmp)
+        client = chromadb.PersistentClient(path=str(tmp))
         return cls(read_chunks(chunks_path), s, client.get_collection(COLLECTION, embedding_function=None))
 
     @classmethod
