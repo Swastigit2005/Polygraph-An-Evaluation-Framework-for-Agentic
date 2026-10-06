@@ -17,8 +17,8 @@ short_description: Self-reflective RAG agent over Docker docs, with agent evals
 **A LangGraph RAG agent that grades its own retrieval, rewrites failed queries and refuses rather than guessing, plus an evaluation harness that measures each of those decisions, not just the final answer.**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Hugging%20Face%20Spaces-yellow)](HF_SPACE_URL)
-[![Code](https://img.shields.io/badge/Code-GitHub-black)](https://github.com/Swastigit2005/agentic-rag-evals)
-![CI](https://github.com/Swastigit2005/agentic-rag-evals/actions/workflows/ci.yml/badge.svg)
+[![Code](https://img.shields.io/badge/Code-GitHub-black)](https://github.com/Swastigit2005/Polygraph-An-Evaluation-Framework-for-Agentic)
+![CI](https://github.com/Swastigit2005/Polygraph-An-Evaluation-Framework-for-Agentic/actions/workflows/ci.yml/badge.svg)
 
 > Demo GIF: _placeholder._ To record one, open the Space, ask an answerable question and one of the "not in the
 > knowledge base" examples, expand **Agent trace**, then record with Kap (macOS, free) or ScreenToGif (Windows)
@@ -172,7 +172,7 @@ file is generated from the same results as the table above.
 ## Run locally
 
 ```bash
-git clone https://github.com/Swastigit2005/agentic-rag-evals && cd agentic-rag-evals
+git clone https://github.com/Swastigit2005/Polygraph-An-Evaluation-Framework-for-Agentic && cd Polygraph-An-Evaluation-Framework-for-Agentic
 uv venv -p 3.11 .venv && uv pip install -p .venv -r requirements.txt -r requirements-dev.txt -e .
 cp .env.example .env                       # add GROQ_API_KEY (free at console.groq.com)
 .venv/bin/python scripts/list_groq_models.py   # see which models your key can use; set them in .env
