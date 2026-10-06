@@ -202,6 +202,7 @@ def aggregate_judges(records: list[dict[str, Any]], correct_threshold: float = 0
     n_correct = sum(1 for x in corr if x >= correct_threshold)
     return {
         "n_answered": len(answered),
+        "n_ragas_scored": len(col("faithfulness")),
         "faithfulness": mean(col("faithfulness")),
         "answer_relevancy": mean(col("answer_relevancy")),
         "correctness_mean": mean(corr),

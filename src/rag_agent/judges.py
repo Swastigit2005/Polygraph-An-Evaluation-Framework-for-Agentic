@@ -164,7 +164,8 @@ class Judge:
         self.correctness.measure(tc, _show_indicator=False)
         return float(self.correctness.score), str(self.correctness.reason or "")
 
-    def score(self, question: str, answer: str, contexts: list[str], reference: str | None) -> dict[str, Any]:
+    def score(self, question: str, answer: str, contexts: list[str], reference: str | None,
+              ragas: bool = True) -> dict[str, Any]:
         """Run all judge metrics; failures are recorded per metric instead of aborting the run.
 
         Quota exhaustion is re-raised so the caller can stop and resume later; other errors
@@ -176,7 +177,7 @@ class Judge:
                 user_input=question, response=answer, retrieved_contexts=contexts)).value,
             "answer_relevancy": lambda: asyncio.run(self.relevancy.ascore(user_input=question, response=answer)).value,
         }
-        for name, fn in jobs.items():
+        for name, fn in (jobs.items() if ragas else ()):
             try:
                 out[name] = float(fn())
             except QuotaExhausted:

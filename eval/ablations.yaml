@@ -1,11 +1,15 @@
 # Each config is a set of Settings overrides (field names from src/rag_agent/config.py).
 # Anything not listed comes from the environment / .env (models, top_k, ...).
+# `ragas: true` also scores Ragas faithfulness + answer relevancy on a fixed subset of answerable
+# items (--ragas-subset, default 30); G-Eval correctness runs on every answerable item for every config.
+# Ragas runs on two configs only, to fit the Groq free-tier daily token budget of the judge model.
 configs:
   baseline:
     description: Dense retrieval only, no reranker, no reflection (generate straight after retrieval)
     retrieval_mode: dense
     use_reranker: false
     use_reflection: false
+    ragas: true
   hybrid:
     description: BM25 + dense fused with RRF, no reranker, no reflection
     retrieval_mode: hybrid
@@ -22,3 +26,4 @@ configs:
     use_reranker: true
     use_reflection: true
     max_rewrites: 2
+    ragas: true
