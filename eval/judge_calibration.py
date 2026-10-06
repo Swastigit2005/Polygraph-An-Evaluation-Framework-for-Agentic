@@ -25,7 +25,10 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from rag_agent.eval_metrics import cohen_kappa  # noqa: E402
+try:
+    from rag_agent.eval_metrics import cohen_kappa  # noqa: E402
+except ModuleNotFoundError as exc:  # pragma: no cover - environment guard
+    sys.exit(f"{exc}. Run with the project venv: .venv/bin/python eval/judge_calibration.py ...")
 
 RESULTS = Path(__file__).resolve().parent / "results"
 LABELS = RESULTS / "calibration_labels.jsonl"
