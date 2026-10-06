@@ -51,8 +51,11 @@ class Settings:
     fast_model: str = ""  # small model for grading / rewriting
     judge_model: str = ""  # eval judge; ideally differs from gen_model
     temperature: float = 0.0
+    # Forwarded as `reasoning_effort` to reasoning models; empty = provider default.
+    gen_reasoning_effort: str = "low"
+    fast_reasoning_effort: str = "low"
     max_output_tokens: int = 1024
-    # Client-side rate limits; set to (or slightly under) your Groq free-tier limits.
+    # Client-side rate limits, applied per model (Groq limits are per model).
     rpm_limit: int = 30
     tpm_limit: int = 6000
     max_retries: int = 6
@@ -95,6 +98,8 @@ class Settings:
             fast_model=_str("FAST_MODEL"),
             judge_model=_str("JUDGE_MODEL"),
             temperature=_float("LLM_TEMPERATURE", 0.0),
+            gen_reasoning_effort=_str("GEN_REASONING_EFFORT", "low"),
+            fast_reasoning_effort=_str("FAST_REASONING_EFFORT", "low"),
             max_output_tokens=_int("LLM_MAX_OUTPUT_TOKENS", 1024),
             rpm_limit=_int("GROQ_RPM_LIMIT", 30),
             tpm_limit=_int("GROQ_TPM_LIMIT", 6000),

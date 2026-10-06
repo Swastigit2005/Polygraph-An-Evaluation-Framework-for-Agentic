@@ -68,7 +68,7 @@ def build_graph(retriever: Retriever, settings: Settings | None = None, llm: LLM
         user = f"Question: {state['question']}\n\nRetrieved context:\n{format_context(state['hits'])}"
         verdict, _ = llm.complete_structured(
             [{"role": "system", "content": GRADER_SYSTEM}, {"role": "user", "content": user}],
-            s.fast_model, GradeVerdict, max_tokens=200)
+            s.fast_model, GradeVerdict, max_tokens=600, reasoning_effort=s.fast_reasoning_effort)
         return {"verdict": verdict}
 
     def rewrite_query(state: AgentState) -> AgentState:
@@ -76,14 +76,14 @@ def build_graph(retriever: Retriever, settings: Settings | None = None, llm: LLM
         user = (f"Question: {state['question']}\nPrevious query: {state['query']}\n"
                 f"Why it failed: {verdict.reason if verdict else 'n/a'}")
         res = llm.complete([{"role": "system", "content": REWRITE_SYSTEM}, {"role": "user", "content": user}],
-                           s.fast_model, max_tokens=60)
+                           s.fast_model, max_tokens=400, reasoning_effort=s.fast_reasoning_effort)
         new_query = res.text.strip().strip('"').splitlines()[0] if res.text.strip() else state["question"]
         return {"query": new_query, "rewrites": state.get("rewrites", 0) + 1}
 
     def generate(state: AgentState) -> AgentState:
         user = f"Question: {state['question']}\n\nContext:\n{format_context(state['hits'])}"
         msgs = [{"role": "system", "content": GENERATE_SYSTEM}, {"role": "user", "content": user}]
-        res = llm.complete(msgs, s.gen_model)
+        res = llm.complete(msgs, s.gen_model, reasoning_effort=s.gen_reasoning_effort)
         return {"answer": res.text}
 
     def route_after_grade(state: AgentState) -> str:

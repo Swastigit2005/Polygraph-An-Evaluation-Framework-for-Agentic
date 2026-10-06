@@ -171,11 +171,16 @@ class LLM:
             # We handle retries ourselves so that we can honour long retry-after values.
             client = groq.Groq(api_key=self.s.groq_api_key, max_retries=0)
         self._client = client
-        self._limiter = RateLimiter(self.s.rpm_limit, self.s.tpm_limit)
+        self._limiters: dict[str, RateLimiter] = {}  # Groq limits apply per model
         self._cache = DiskCache(self.s.cache_dir / "llm_cache.sqlite") if self.s.use_llm_cache else None
         self._prices = parse_prices(self.s.model_prices)
         self._no_json_schema: set[str] = set()  # models that rejected json_schema
         self.last_rate_headers: dict[str, str] = {}
+
+    def _limiter(self, model: str) -> RateLimiter:
+        if model not in self._limiters:
+            self._limiters[model] = RateLimiter(self.s.rpm_limit, self.s.tpm_limit)
+        return self._limiters[model]
 
     # ------------------------------------------------------------------ public API
     def complete(
@@ -186,8 +191,12 @@ class LLM:
         max_tokens: int | None = None,
         temperature: float | None = None,
         response_format: dict[str, Any] | None = None,
+        reasoning_effort: str | None = None,
     ) -> LLMResult:
-        """Run a chat completion and return its text and usage."""
+        """Run a chat completion and return its text and usage.
+
+        `reasoning_effort` is forwarded only when set (reasoning models such as gpt-oss).
+        """
         params: dict[str, Any] = {
             "model": model,
             "messages": messages,
@@ -196,6 +205,8 @@ class LLM:
         }
         if response_format:
             params["response_format"] = response_format
+        if reasoning_effort:
+            params["reasoning_effort"] = reasoning_effort
 
         key = hashlib.sha256(json.dumps(params, sort_keys=True).encode()).hexdigest()
         if self._cache and (hit := self._cache.get(key)):
@@ -214,6 +225,7 @@ class LLM:
         schema: type[T],
         *,
         max_tokens: int | None = None,
+        reasoning_effort: str | None = None,
     ) -> tuple[T, LLMResult]:
         """Run a completion constrained to `schema` and return the parsed object and raw result.
 
@@ -225,7 +237,8 @@ class LLM:
             fmt = {"type": "json_schema",
                    "json_schema": {"name": schema.__name__, "schema": json_schema}}
             try:
-                res = self.complete(messages, model, max_tokens=max_tokens, response_format=fmt)
+                res = self.complete(messages, model, max_tokens=max_tokens, response_format=fmt,
+                                    reasoning_effort=reasoning_effort)
                 return schema.model_validate_json(res.text), res
             except LLMError:
                 raise
@@ -240,7 +253,8 @@ class LLM:
         hint = ("Respond with a single JSON object (no prose) that validates against this JSON schema:\n"
                 + json.dumps(json_schema))
         msgs = [*messages[:-1], {**messages[-1], "content": messages[-1]["content"] + "\n\n" + hint}]
-        res = self.complete(msgs, model, max_tokens=max_tokens, response_format={"type": "json_object"})
+        res = self.complete(msgs, model, max_tokens=max_tokens, response_format={"type": "json_object"},
+                            reasoning_effort=reasoning_effort)
         return schema.model_validate_json(res.text), res
 
     # ------------------------------------------------------------------ internals
@@ -254,7 +268,7 @@ class LLM:
         est = estimate_tokens(json.dumps(params["messages"])) + min(params["max_completion_tokens"], 512)
         delay = 2.0
         for attempt in range(self.s.max_retries + 1):
-            handle = self._limiter.acquire(est)
+            handle = self._limiter(params["model"]).acquire(est)
             t0 = time.perf_counter()
             try:
                 raw = self._client.chat.completions.with_raw_response.create(**params)
@@ -283,7 +297,7 @@ class LLM:
             u = resp.usage
             prompt_t = getattr(u, "prompt_tokens", 0) or 0
             completion_t = getattr(u, "completion_tokens", 0) or 0
-            self._limiter.record_actual(handle, prompt_t + completion_t)
+            self._limiter(params["model"]).record_actual(handle, prompt_t + completion_t)
             text = (resp.choices[0].message.content or "").strip()
             usage = Usage(model=params["model"], prompt_tokens=prompt_t, completion_tokens=completion_t,
                           cost_usd=self._cost(params["model"], prompt_t, completion_t), latency_s=latency)
