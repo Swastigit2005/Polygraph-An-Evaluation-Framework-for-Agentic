@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 .venv/bin/python eval/make_report.py
-git add README.md eval/results/*.json eval/results/*.md eval/thresholds.json eval/ci_subset.json 2>/dev/null || true
+git add README.md eval/results eval/thresholds.json eval/ci_subset.json
 git commit -m "Update evaluation results" || echo "(no result changes to commit)"
 git push origin main
 .venv/bin/python scripts/deploy_space.py
