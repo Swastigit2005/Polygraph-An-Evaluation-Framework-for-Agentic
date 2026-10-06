@@ -1,0 +1,15 @@
+{
+  "_comment": "CI regression gate for the `full` config on eval/ci_subset.json. Values are set from the first real full run minus a tolerance (see README). null = not set yet; check_thresholds.py fails until they are set.",
+  "source_result": null,
+  "min": {
+    "refusal.correct_refusal_rate": null,
+    "grader.set_level.precision": null,
+    "grader.set_level.recall": null,
+    "retrieval.recall@4": null,
+    "answer.end_to_end_accuracy": null
+  },
+  "max": {
+    "refusal.false_refusal_rate": null,
+    "steps.loop_rate": null
+  }
+}

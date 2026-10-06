@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-test:
+    if: github.event_name != 'pull_request' || github.event.action != 'labeled'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install (light; unit tests need no torch/models/network)
+        run: |
+          pip install $(grep -E '^(pydantic|langgraph|langchain-core|langchain-text-splitters|rank-bm25|pyyaml|python-dotenv|numpy)==' requirements.txt) -r requirements-dev.txt
+      - name: Ruff
+        run: ruff check .
+      - name: Unit tests
+        run: pytest -q
+
+  eval-gate:
+    # Manual trigger, or a PR carrying the `run-evals` label.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-evals'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GEN_MODEL: ${{ vars.GEN_MODEL || 'openai/gpt-oss-120b' }}
+      FAST_MODEL: ${{ vars.FAST_MODEL || 'openai/gpt-oss-20b' }}
+      JUDGE_MODEL: ${{ vars.JUDGE_MODEL || 'qwen/qwen3.8-27b' }}
+      JSON_MODE_MODELS: qwen/qwen3.8-27b
+      MODEL_MAX_OUTPUT: qwen/qwen3.8-27b=900
+      GROQ_RPM_LIMIT: "28"
+      GROQ_TPM_LIMIT: "7500"
+      MODEL_PRICES: openai/gpt-oss-120b=0.15/0.60,openai/gpt-oss-20b=0.075/0.30,qwen/qwen3.8-27b=0.80/4.00
+      HF_HUB_DISABLE_TELEMETRY: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Restore LLM response cache and models
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache
+            ~/.cache/huggingface
+          key: eval-${{ hashFiles('src/**', 'eval/golden_set.jsonl', 'eval/ci_subset.json') }}
+          restore-keys: eval-
+      - name: Run full config on the 20-item verified CI subset
+        run: python eval/run_eval.py --config full --ids-file eval/ci_subset.json --ragas-subset 0 --fresh
+      - name: Check regression thresholds
+        run: python eval/check_thresholds.py --config full
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-results
+          path: eval/results/full_*

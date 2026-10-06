@@ -93,8 +93,10 @@ def run_config(name: str, cfg: dict[str, Any], args: argparse.Namespace, base: S
         judge = Judge(s, llm, relevancy_strictness=args.relevancy_strictness)
 
     items = load_golden(args.include_unverified)
-    if args.ids:
-        wanted = set(args.ids.split(","))
+    wanted: set[str] = set(args.ids.split(",")) if args.ids else set()
+    if args.ids_file:
+        wanted |= set(json.loads(Path(args.ids_file).read_text())["ids"])
+    if wanted:
         items = [it for it in items if it["id"] in wanted]
     if args.limit is not None:
         items = items[: args.limit]
@@ -185,6 +187,7 @@ def main() -> None:
     ap.add_argument("--config", required=True, help="config name from ablations.yaml, or 'all'")
     ap.add_argument("--limit", type=int, default=None, help="evaluate only the first N items")
     ap.add_argument("--ids", default=None, help="comma-separated golden item ids")
+    ap.add_argument("--ids-file", default=None, help='JSON file {"ids": [...]} (e.g. eval/ci_subset.json)')
     ap.add_argument("--no-judge", action="store_true", help="skip Ragas/DeepEval answer metrics")
     ap.add_argument("--include-unverified", action="store_true", help="dry run on unverified items")
     ap.add_argument("--fresh", action="store_true", help="ignore saved per-item progress")

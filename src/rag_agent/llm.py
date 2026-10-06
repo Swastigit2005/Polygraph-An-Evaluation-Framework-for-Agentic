@@ -21,6 +21,7 @@ from typing import Any, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
+from rag_agent import tracing
 from rag_agent.config import Settings, get_settings
 
 log = logging.getLogger(__name__)
@@ -233,7 +234,13 @@ class LLM:
             usage = Usage(**{**hit["usage"], "cached": True})
             return LLMResult(text=hit["text"], usage=usage)
 
-        result = self._call_with_retries(params)
+        with tracing.observation(f"llm:{model}", as_type="generation", model=model, input=messages,
+                                 model_parameters={"max_completion_tokens": params["max_completion_tokens"]}) as obs:
+            result = self._call_with_retries(params)
+            u = result.usage
+            obs.update(output=result.text,
+                       usage_details={"input": u.prompt_tokens, "output": u.completion_tokens},
+                       cost_details={"total": u.cost_usd} if u.cost_usd is not None else None)
         if self._cache:
             self._cache.set(key, {"text": result.text, "usage": asdict(result.usage)})
             self._cache.add_usage(model, result.usage.total_tokens)

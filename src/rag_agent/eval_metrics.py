@@ -211,3 +211,15 @@ def aggregate_judges(records: list[dict[str, Any]], correct_threshold: float = 0
         "end_to_end_accuracy": safe_div(n_correct, len(ans)),
         "judge_errors": sum(1 for r in answered if r["judge"].get("errors")),
     }
+
+
+# --------------------------------------------------------------------------- judge calibration
+def cohen_kappa(a: Sequence[bool], b: Sequence[bool]) -> float | None:
+    """Cohen's kappa for two binary raters: (p_o - p_e) / (1 - p_e). None if undefined (p_e == 1)."""
+    if len(a) != len(b) or not a:
+        raise ValueError("ratings must be non-empty and the same length")
+    n = len(a)
+    p_o = sum(x == y for x, y in zip(a, b, strict=True)) / n
+    pa, pb = sum(a) / n, sum(b) / n
+    p_e = pa * pb + (1 - pa) * (1 - pb)
+    return None if p_e == 1 else (p_o - p_e) / (1 - p_e)

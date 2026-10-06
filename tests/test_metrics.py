@@ -137,3 +137,30 @@ def test_aggregate_judges_counts_refusals_as_incorrect_end_to_end() -> None:
     assert m["correct_rate_answered"] == 0.5
     assert m["end_to_end_accuracy"] == pytest.approx(1 / 3)
     assert m["faithfulness"] == 0.75 and m["n_ragas_scored"] == 2
+
+
+def test_threshold_check() -> None:
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "eval"))
+    from check_thresholds import check
+
+    metrics = {"refusal": {"correct_refusal_rate": 0.8, "false_refusal_rate": 0.1}, "retrieval": {"recall@4": 0.7}}
+    th = {"min": {"refusal.correct_refusal_rate": 0.75, "retrieval.recall@4": 0.72},
+          "max": {"refusal.false_refusal_rate": 0.15}}
+    assert check(metrics, th) == ["retrieval.recall@4: 0.700 < min 0.720"]
+    assert check(metrics, {"min": {"refusal.correct_refusal_rate": None}})[0].endswith("not set (run a full eval "
+                                                                                      "and set eval/thresholds.json)")
+
+
+def test_cohen_kappa_hand_computed() -> None:
+    from rag_agent.eval_metrics import cohen_kappa
+
+    # 10 items: both yes 4, both no 3, judge yes/human no 2, judge no/human yes 1.
+    judge = [True] * 4 + [False] * 3 + [True] * 2 + [False]
+    human = [True] * 4 + [False] * 3 + [False] * 2 + [True]
+    # p_o = 0.7; p_judge = 0.6, p_human = 0.5; p_e = 0.3 + 0.2 = 0.5; kappa = 0.2 / 0.5 = 0.4
+    assert cohen_kappa(judge, human) == pytest.approx(0.4)
+    assert cohen_kappa([True, False], [True, False]) == 1.0
+    assert cohen_kappa([True, True], [True, True]) is None

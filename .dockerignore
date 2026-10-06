@@ -1,0 +1,11 @@
+.env
+.venv/
+.cache/
+.git/
+.github/
+**/__pycache__/
+.pytest_cache/
+.ruff_cache/
+tests/
+eval/results/progress/
+eval/results/*__dryrun*

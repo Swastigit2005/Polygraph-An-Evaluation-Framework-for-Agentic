@@ -20,6 +20,7 @@ from typing import Annotated, Any, TypedDict
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel, Field
 
+from rag_agent import tracing
 from rag_agent.config import Settings, get_settings
 from rag_agent.llm import LLM, LLMResult, Usage, get_llm
 from rag_agent.retrieval import Retrieved, Retriever
@@ -178,7 +179,9 @@ class Agent:
     def _timed(self, name: str, fn: NodeFn) -> Callable[[AgentState], AgentState]:
         def node(state: AgentState) -> AgentState:
             t0 = time.perf_counter()
-            update, data, results = fn(state)
+            with tracing.observation(name, input={"query": state.get("query") or state["question"]}) as obs:
+                update, data, results = fn(state)
+                obs.update(output=data)
             rec = StepRecord(node=name, latency_s=round(time.perf_counter() - t0, 4), data=data,
                              usage=[r.usage for r in results])
             return {**update, "steps": [rec]}
@@ -286,7 +289,11 @@ class Agent:
         config: dict[str, Any] = {"recursion_limit": 4 * (self.s.max_rewrites + 2)}
         if callbacks:
             config["callbacks"] = callbacks
-        final = self.graph.invoke({"question": question, "rewrites": 0, "verdict": None, "steps": []}, config)
+        with tracing.observation("rag_agent", as_type="agent", input=question,
+                                 metadata=self.config_snapshot()) as obs:
+            final = self.graph.invoke({"question": question, "rewrites": 0, "verdict": None, "steps": []}, config)
+            obs.update(output={"answer": final.get("answer"), "refused": bool(final.get("refused")),
+                               "citations": [c["id"] for c in final.get("citations", [])]})
         return Trace(question=question, steps=final.get("steps", []), answer=final.get("answer", ""),
                      refused=bool(final.get("refused")), citations=final.get("citations", []),
                      config=self.config_snapshot(), latency_s=round(time.perf_counter() - t0, 4))

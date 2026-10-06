@@ -1,3 +1,8 @@
+# Pinned runtime dependencies (also installed by Hugging Face Spaces).
+# Linux gets the CPU-only torch wheel (no CUDA libraries); macOS/Windows use PyPI.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1+cpu ; sys_platform == "linux"
+torch==2.14.1 ; sys_platform != "linux"
 chromadb==1.5.9
 deepeval==2.9.3
 gradio==6.29.1
@@ -5,6 +10,7 @@ groq==1.7.0
 langchain-community==0.4.1
 langchain-core==1.6.6
 langchain-text-splitters==1.1.3
+langfuse==4.17.0
 langgraph==1.2.13
 numpy==2.4.6
 pydantic==2.13.5
@@ -14,5 +20,4 @@ pyyaml==6.0.3
 ragas==0.4.3
 rank-bm25==0.2.2
 sentence-transformers==6.1.0
-torch==2.14.1
 transformers==5.18.0
