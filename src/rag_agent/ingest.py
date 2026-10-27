@@ -159,22 +159,6 @@ def load_corpus(s: Settings) -> list[Chunk]:
     return chunks
 
 
-def load_pdf(path: str | Path, s: Settings) -> list[Chunk]:
-    """Chunk an uploaded PDF (one section per page) for the optional upload tab."""
-    from pypdf import PdfReader
-
-    reader = PdfReader(str(path))
-    name = Path(path).stem
-    splitter = RecursiveCharacterTextSplitter(chunk_size=s.chunk_size, chunk_overlap=s.chunk_overlap)
-    chunks: list[Chunk] = []
-    for page_no, page in enumerate(reader.pages, start=1):
-        for piece in splitter.split_text(page.extract_text() or ""):
-            if len(piece.strip()) >= 40:
-                chunks.append(Chunk(id=f"pdf:{name}#{len(chunks):03d}", doc_id=f"pdf:{name}", title=name,
-                                    section=f"page {page_no}", url="", text=piece.strip()))
-    return chunks
-
-
 # --------------------------------------------------------------------------- persistence
 def write_chunks(chunks: Iterable[Chunk], path: Path) -> None:
     """Write chunks as JSON lines."""
@@ -234,9 +218,27 @@ def build_index(s: Settings) -> dict:
     return meta
 
 
+def build_onnx_vectors(s: Settings) -> Path:
+    """Embed the existing chunks.jsonl with the ONNX embedder (index for the serverless demo)."""
+    import numpy as np
+
+    from rag_agent.retrieval import ONNX_VECTORS, get_embedder
+
+    chunks = read_chunks(s.index_dir / "chunks.jsonl")
+    vectors = get_embedder(s.embed_model, "onnx", s.onnx_dir).encode([c.embed_text() for c in chunks])
+    out = s.index_dir / ONNX_VECTORS
+    np.save(out, vectors.astype(np.float16))  # float16 halves the file; cosine ranks are unaffected
+    return out
+
+
 def main() -> None:
     """CLI entry point: build the index from the configured corpus."""
-    argparse.ArgumentParser(description="Build the retrieval index").parse_args()
+    ap = argparse.ArgumentParser(description="Build the retrieval index")
+    ap.add_argument("--onnx-vectors", action="store_true",
+                    help="only (re)write data/index/embeddings_onnx.npy from the existing chunks")
+    if ap.parse_args().onnx_vectors:
+        print(build_onnx_vectors(get_settings()))
+        return
     meta = build_index(get_settings())
     print(json.dumps(meta, indent=2))
 

@@ -13,15 +13,15 @@
   "embed_model": "BAAI/bge-small-en-v1.5",
   "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
  },
- "judge_model": null,
- "timestamp": "20261006T112038Z",
- "git_commit": "604c982",
+ "judge_model": "qwen/qwen3.8-27b",
+ "timestamp": "20261008T160255Z",
+ "git_commit": "96cac52",
  "dry_run": false,
  "complete": true,
  "golden_source": "ai_reviewed",
  "n_target_items": 70,
  "n_evaluated": 70,
- "wall_seconds": 985.7,
+ "wall_seconds": 123.8,
  "metrics": {
   "n_items": 70,
   "n_answerable": 50,
@@ -68,28 +68,28 @@
    "loop_rate": 0.3
   },
   "latency_s": {
-   "p50": 3.5501,
-   "p95": 54.762435,
+   "p50": 2.4240328540050773,
+   "p95": 6.769663570951799,
    "per_node": {
     "generate": {
-     "p50": 1.00365,
-     "p95": 1.6939049999999987
+     "p50": 0.9880253750017495,
+     "p95": 1.4435271357411505
     },
     "grade_context": {
-     "p50": 1.0720439589934656,
-     "p95": 48.67728
+     "p50": 0.7119611670062411,
+     "p95": 1.4892523334036813
     },
     "refuse": {
      "p50": 0.0,
      "p95": 0.0
     },
     "retrieve": {
-     "p50": 0.2721,
-     "p95": 0.37716000000000005
+     "p50": 0.3299,
+     "p95": 1.1866800000000013
     },
     "rewrite_query": {
-     "p50": 0.497,
-     "p95": 1.2067099999999997
+     "p50": 0.48365583301347215,
+     "p95": 0.9889691329954071
     }
    }
   },
@@ -101,7 +101,19 @@
    "mean": 0.00038349914285714287,
    "total": 0.02684494,
    "priced_queries": 70
-  }
+  },
+  "answer": {
+   "n_answered": 49,
+   "n_ragas_scored": 29,
+   "faithfulness": 0.8703189530775739,
+   "answer_relevancy": 0.9130701205394042,
+   "correctness_mean": 0.9795918367346939,
+   "correct_rate_answered": 0.9795918367346939,
+   "end_to_end_accuracy": 0.96,
+   "judge_errors": 0,
+   "ragas_subset_size": 30
+  },
+  "judge_tokens_total": 158453
  },
  "records": [
   {
@@ -137,7 +149,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2826,
+      "latency_s": 0.2927,
       "data": {
        "query": "Can I configure the BuildKit version or pass extra BuildKit parameters when using the default Docker driver with buildx?",
        "retrieved_ids": [
@@ -247,7 +259,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.0028,
+      "latency_s": 0.0016,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly states that the BuildKit version and parameters cannot be configured when using the default Docker driver with buildx.",
@@ -268,13 +280,14 @@
         "completion_tokens": 204,
         "cost_usd": 0.000123225,
         "latency_s": 0.7986251659895061,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.0013,
+      "latency_s": 0.0002,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -295,7 +308,8 @@
         "completion_tokens": 118,
         "cost_usd": 0.0001743,
         "latency_s": 0.7263730410049902,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -322,7 +336,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 0.2896,
+    "latency_s": 0.298,
     "total_tokens": 1839,
     "cost_usd": 0.00029752,
     "rewrites": 0,
@@ -372,7 +386,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.227,
+      "latency_s": 0.2425,
       "data": {
        "query": "How do I control the start and stop of a multi‑container application defined in a compose.yaml file using Docker?",
        "retrieved_ids": [
@@ -501,13 +515,14 @@
         "completion_tokens": 166,
         "cost_usd": 0.00013192500000000002,
         "latency_s": 0.7818716670008143,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.0022,
+      "latency_s": 0.0003,
       "data": {
        "from": "How do I control the start and stop of a multi‑container application defined in a compose.yaml file using Docker?",
        "to": "docker compose start stop down multi‑container application",
@@ -520,13 +535,14 @@
         "completion_tokens": 33,
         "cost_usd": 2.8049999999999997e-05,
         "latency_s": 0.423427375004394,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.209,
+      "latency_s": 0.2669,
       "data": {
        "query": "docker compose start stop down multi‑container application",
        "retrieved_ids": [
@@ -659,7 +675,8 @@
         "completion_tokens": 165,
         "cost_usd": 0.000132825,
         "latency_s": 0.8416673339961562,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -686,7 +703,8 @@
         "completion_tokens": 335,
         "cost_usd": 0.00034710000000000003,
         "latency_s": 1.355761375001748,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -713,7 +731,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 0.4436,
+    "latency_s": 0.5141,
     "total_tokens": 4121,
     "cost_usd": 0.0006399,
     "rewrites": 1,
@@ -762,7 +780,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3825,
+      "latency_s": 0.3025,
       "data": {
        "query": "How do I hide or reorder tabs in Docker Desktop’s left‑hand navigation?",
        "retrieved_ids": [
@@ -872,7 +890,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.0023,
+      "latency_s": 0.0005,
       "data": {
        "relevant": true,
        "reason": "The context explicitly explains how to hide or reorder tabs by right‑clicking the left‑hand navigation, selecting Customize, and then selecting, deselecting, or re‑ordering the tabs.",
@@ -893,7 +911,8 @@
         "completion_tokens": 177,
         "cost_usd": 0.0001302,
         "latency_s": 0.750369999994291,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -920,7 +939,8 @@
         "completion_tokens": 62,
         "cost_usd": 0.00017085,
         "latency_s": 0.4967404170020018,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -947,7 +967,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 0.3865,
+    "latency_s": 0.304,
     "total_tokens": 2158,
     "cost_usd": 0.00030105,
     "rewrites": 0,
@@ -998,7 +1018,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2955,
+      "latency_s": 0.27,
       "data": {
        "query": "How do I manually install Docker Engine on CentOS if I can't use the Docker rpm repository, and how can I start it automatically on boot?",
        "retrieved_ids": [
@@ -1108,7 +1128,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6108,
+      "latency_s": 0.0005,
       "data": {
        "relevant": true,
        "reason": "The context provides the exact steps for manually installing Docker Engine on CentOS from an RPM file and shows how to enable it to start automatically on boot using `systemctl enable --now docker`.",
@@ -1129,13 +1149,14 @@
         "completion_tokens": 125,
         "cost_usd": 0.000146625,
         "latency_s": 0.6079797919956036,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.1404,
+      "latency_s": 0.0002,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -1156,7 +1177,8 @@
         "completion_tokens": 274,
         "cost_usd": 0.0003621,
         "latency_s": 1.1370450829999754,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -1183,7 +1205,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.0493,
+    "latency_s": 0.2713,
     "total_tokens": 3172,
     "cost_usd": 0.00050873,
     "rewrites": 0,
@@ -1233,7 +1255,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2251,
+      "latency_s": 0.2379,
       "data": {
        "query": "How can I set a limit for a pod's ephemeral storage when using the Kubernetes driver?",
        "retrieved_ids": [
@@ -1343,7 +1365,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7235,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The context lists the `limits.ephemeral-storage` driver option, which directly answers how to set a limit for a pod's ephemeral storage.",
@@ -1365,13 +1387,14 @@
         "completion_tokens": 132,
         "cost_usd": 0.00011880000000000001,
         "latency_s": 0.7206060830067145,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.1168,
+      "latency_s": 0.0003,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -1392,7 +1415,8 @@
         "completion_tokens": 173,
         "cost_usd": 0.00024164999999999996,
         "latency_s": 1.1139563750039088,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -1419,7 +1443,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.0683,
+    "latency_s": 0.2392,
     "total_tokens": 2280,
     "cost_usd": 0.00036045,
     "rewrites": 0,
@@ -1469,7 +1493,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2695,
+      "latency_s": 0.2445,
       "data": {
        "query": "How can I pass an existing shell environment variable like DEBUG into a container using Docker Compose without specifying its value, and will I get a warning if it’s missing?",
        "retrieved_ids": [
@@ -1579,7 +1603,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6923,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that you can pass an existing shell environment variable like DEBUG by listing it without a value in the Compose file or using `-e DEBUG` on the CLI, and that no warning is issued if the variable is missing in the shell environment.",
@@ -1601,13 +1625,14 @@
         "completion_tokens": 152,
         "cost_usd": 0.0001308,
         "latency_s": 0.6890354999923147,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.8267,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -1628,7 +1653,8 @@
         "completion_tokens": 178,
         "cost_usd": 0.00025665,
         "latency_s": 0.8241236250032671,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -1655,7 +1681,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.7918,
+    "latency_s": 0.2456,
     "total_tokens": 2465,
     "cost_usd": 0.00038745,
     "rewrites": 0,
@@ -1704,7 +1730,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2554,
+      "latency_s": 0.2105,
       "data": {
        "query": "How do I install Docker Desktop on a Mac using the command line after downloading the Docker.dmg file?",
        "retrieved_ids": [
@@ -1814,7 +1840,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.645,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The context provides the exact command-line steps to install Docker Desktop on a Mac after downloading Docker.dmg.",
@@ -1835,13 +1861,14 @@
         "completion_tokens": 112,
         "cost_usd": 0.0001179,
         "latency_s": 0.6399197499995353,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.8649,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -1862,7 +1889,8 @@
         "completion_tokens": 195,
         "cost_usd": 0.00026504999999999996,
         "latency_s": 0.8609941250033444,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -1889,7 +1917,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.7702,
+    "latency_s": 0.2115,
     "total_tokens": 2418,
     "cost_usd": 0.00038295,
     "rewrites": 0,
@@ -1939,7 +1967,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3199,
+      "latency_s": 0.3162,
       "data": {
        "query": "How can I identify which process is keeping a Docker path busy so I can remove a container that fails with a 'filesystem busy' error?",
        "retrieved_ids": [
@@ -1968,8 +1996,8 @@
          "desktop/troubleshoot-and-support/troubleshoot#008",
          "engine/manage-resources/pruning#002",
          "engine/storage/drivers/select-storage-driver#008",
-         "engine/storage/drivers/zfs-driver#013",
-         "desktop/troubleshoot-and-support/faqs/linuxfaqs#007"
+         "desktop/troubleshoot-and-support/faqs/linuxfaqs#007",
+         "desktop/troubleshoot-and-support/troubleshoot#006"
         ],
         "bm25": [
          "engine/daemon/troubleshoot#022",
@@ -2049,7 +2077,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6644,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The context includes a specific instruction to use `lsof` to find the process that is keeping the Docker path busy, which directly answers how to identify the process.",
@@ -2070,13 +2098,14 @@
         "completion_tokens": 142,
         "cost_usd": 0.00014984999999999998,
         "latency_s": 0.6606305409950437,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.4645,
+      "latency_s": 0.0021,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -2097,7 +2126,8 @@
         "completion_tokens": 244,
         "cost_usd": 0.00034035,
         "latency_s": 1.461441166989971,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -2124,7 +2154,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.4519,
+    "latency_s": 0.3194,
     "total_tokens": 3109,
     "cost_usd": 0.0004902,
     "rewrites": 0,
@@ -2172,7 +2202,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2819,
+      "latency_s": 0.4192,
       "data": {
        "query": "How can I enable all experimental build checks when running `docker build`?",
        "retrieved_ids": [
@@ -2282,7 +2312,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6063,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly states how to enable all experimental checks using the build argument or Dockerfile directive.",
@@ -2303,13 +2333,14 @@
         "completion_tokens": 103,
         "cost_usd": 0.00012127500000000001,
         "latency_s": 0.6031700000021374,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.9965,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -2330,7 +2361,8 @@
         "completion_tokens": 139,
         "cost_usd": 0.00024359999999999996,
         "latency_s": 0.9934720000019297,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -2357,7 +2389,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.8872,
+    "latency_s": 0.4207,
     "total_tokens": 2515,
     "cost_usd": 0.00036487,
     "rewrites": 0,
@@ -2407,7 +2439,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2353,
+      "latency_s": 0.4006,
       "data": {
        "query": "How do I combine multiple Docker Compose files for a project?",
        "retrieved_ids": [
@@ -2517,7 +2549,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.4516,
+      "latency_s": 0.0006,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explains how to combine multiple Compose files using the `-f` flag and the `include` top‑level element, directly answering the question.",
@@ -2539,13 +2571,14 @@
         "completion_tokens": 192,
         "cost_usd": 0.0001392,
         "latency_s": 0.4494297920027748,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.1426,
+      "latency_s": 0.0002,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -2567,7 +2600,8 @@
         "completion_tokens": 318,
         "cost_usd": 0.00033345,
         "latency_s": 1.1396024999994552,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -2600,7 +2634,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.8319,
+    "latency_s": 0.4029,
     "total_tokens": 2549,
     "cost_usd": 0.00047265,
     "rewrites": 0,
@@ -2648,7 +2682,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2976,
+      "latency_s": 2.0524,
       "data": {
        "query": "What additional packages do I need to install on Fedora if I'm using a non‑GNOME desktop to get terminal access from Docker Desktop?",
        "retrieved_ids": [
@@ -2758,7 +2792,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.4489,
+      "latency_s": 0.0007,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that on Fedora, if not using GNOME, you must install `gnome-terminal` to enable terminal access from Docker Desktop.",
@@ -2779,13 +2813,14 @@
         "completion_tokens": 99,
         "cost_usd": 0.000114375,
         "latency_s": 0.4465815000003204,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.6933,
+      "latency_s": 0.0024,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -2806,7 +2841,8 @@
         "completion_tokens": 92,
         "cost_usd": 0.00020399999999999997,
         "latency_s": 0.6899165830109268,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -2833,7 +2869,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.4426,
+    "latency_s": 2.0574,
     "total_tokens": 2312,
     "cost_usd": 0.00031837,
     "rewrites": 0,
@@ -2883,7 +2919,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3259,
+      "latency_s": 0.9405,
       "data": {
        "query": "Can I reference a variable defined in a .env file directly in the compose.yaml's environment section, and how does Docker Compose handle the substitution?",
        "retrieved_ids": [
@@ -2993,7 +3029,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6185,
+      "latency_s": 0.0006,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly states that a variable defined in a .env file can be referenced directly in the compose.yaml’s environment section and that Docker Compose replaces the placeholder with the value from the .env file.",
@@ -3014,13 +3050,14 @@
         "completion_tokens": 147,
         "cost_usd": 0.0001359,
         "latency_s": 0.6172671669919509,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.1987,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -3042,7 +3079,8 @@
         "completion_tokens": 200,
         "cost_usd": 0.00028304999999999997,
         "latency_s": 1.1968507080018753,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -3075,7 +3113,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.1452,
+    "latency_s": 0.943,
     "total_tokens": 2658,
     "cost_usd": 0.00041895,
     "rewrites": 0,
@@ -3125,7 +3163,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2471,
+      "latency_s": 0.5266,
       "data": {
        "query": "How can I identify unused or dangling images in Docker Desktop's Images view?",
        "retrieved_ids": [
@@ -3235,7 +3273,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6674,
+      "latency_s": 0.0005,
       "data": {
        "relevant": true,
        "reason": "The context includes explicit instructions on how to identify unused or dangling images in Docker Desktop’s Images view, including sorting options and status icons.",
@@ -3257,13 +3295,14 @@
         "completion_tokens": 139,
         "cost_usd": 0.00012,
         "latency_s": 0.6634049580025021,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.0225,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -3284,7 +3323,8 @@
         "completion_tokens": 212,
         "cost_usd": 0.00026325,
         "latency_s": 1.019167791993823,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -3311,7 +3351,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.9404,
+    "latency_s": 0.529,
     "total_tokens": 2302,
     "cost_usd": 0.00038325,
     "rewrites": 0,
@@ -3364,7 +3404,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2849,
+      "latency_s": 1.0199,
       "data": {
        "query": "On Arch Linux, what sysctl setting do I need to add for Docker rootless mode and how do I apply it?",
        "retrieved_ids": [
@@ -3474,7 +3514,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6112,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any mention of the sysctl setting required for Docker rootless mode on Arch Linux, nor instructions on how to apply it.",
@@ -3493,13 +3533,14 @@
         "completion_tokens": 77,
         "cost_usd": 9.449999999999998e-05,
         "latency_s": 0.608348665991798,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.5907,
+      "latency_s": 0.0,
       "data": {
        "from": "On Arch Linux, what sysctl setting do I need to add for Docker rootless mode and how do I apply it?",
        "to": "archlinux docker rootless sysctl setting apply rootless mode configuration",
@@ -3512,167 +3553,14 @@
         "completion_tokens": 28,
         "cost_usd": 2.4525e-05,
         "latency_s": 0.5875280839973129,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2641,
-      "data": {
-       "query": "archlinux docker rootless sysctl setting apply rootless mode configuration",
-       "retrieved_ids": [
-        "engine/security/rootless#000",
-        "engine/daemon/proxy#003",
-        "engine/security/rootless#001",
-        "engine/security/rootless#003"
-       ],
-       "stages": {
-        "dense": [
-         "engine/security/rootless#000",
-         "engine/security/rootless#005",
-         "engine/security/rootless#003",
-         "engine/security/rootless/tips#002",
-         "engine/security/rootless/tips#007",
-         "engine/install/fedora#016",
-         "engine/security/rootless#001",
-         "engine/install/rhel#016",
-         "engine/install/raspberry-pi-os#016",
-         "engine/install/debian#016",
-         "engine/install/ubuntu#016",
-         "engine/security/rootless/tips#003",
-         "engine/install/centos#016",
-         "engine/security/rootless#004",
-         "engine/security/rootless#002",
-         "engine/security/rootless/troubleshoot#003",
-         "build/builders/drivers/kubernetes#021",
-         "engine/daemon/proxy#003",
-         "engine/install/linux-postinstall#005",
-         "engine/install/fedora#015"
-        ],
-        "bm25": [
-         "engine/security/rootless/uid-gid-mapping#000",
-         "engine/security/rootless#000",
-         "engine/install/fedora#016",
-         "engine/install/centos#016",
-         "engine/install/debian#016",
-         "engine/install/rhel#016",
-         "engine/install/ubuntu#016",
-         "engine/install/raspberry-pi-os#016",
-         "build/builders/drivers/kubernetes#021",
-         "engine/daemon/proxy#003",
-         "engine/security/rootless#001",
-         "engine/daemon#002",
-         "engine/security/rootless#005",
-         "engine/storage/drivers/select-storage-driver#003",
-         "engine/storage/drivers/select-storage-driver#005",
-         "engine/security/rootless/troubleshoot#003",
-         "engine/security/rootless/tips#002",
-         "engine/security/rootless#003",
-         "engine/security/rootless#004",
-         "engine/security/rootless/troubleshoot#011"
-        ],
-        "rrf": [
-         "engine/security/rootless#000",
-         "engine/install/fedora#016",
-         "engine/install/rhel#016",
-         "engine/security/rootless#005",
-         "engine/install/debian#016",
-         "engine/install/centos#016",
-         "engine/install/raspberry-pi-os#016",
-         "engine/security/rootless#001",
-         "engine/install/ubuntu#016",
-         "engine/security/rootless#003",
-         "engine/security/rootless/tips#002",
-         "build/builders/drivers/kubernetes#021",
-         "engine/daemon/proxy#003",
-         "engine/security/rootless/troubleshoot#003",
-         "engine/security/rootless#004",
-         "engine/security/rootless/uid-gid-mapping#000",
-         "engine/security/rootless/tips#007",
-         "engine/security/rootless/tips#003",
-         "engine/daemon#002",
-         "engine/storage/drivers/select-storage-driver#003"
-        ],
-        "rerank": [
-         "engine/security/rootless#000",
-         "engine/daemon/proxy#003",
-         "engine/security/rootless#001",
-         "engine/security/rootless#003",
-         "engine/security/rootless#005",
-         "engine/security/rootless#004",
-         "engine/security/rootless/uid-gid-mapping#000",
-         "engine/security/rootless/tips#002",
-         "engine/security/rootless/troubleshoot#003",
-         "build/builders/drivers/kubernetes#021",
-         "engine/install/ubuntu#016",
-         "engine/install/rhel#016",
-         "engine/storage/drivers/select-storage-driver#003",
-         "engine/install/raspberry-pi-os#016",
-         "engine/install/centos#016",
-         "engine/install/debian#016",
-         "engine/install/fedora#016",
-         "engine/daemon#002",
-         "engine/security/rootless/tips#007",
-         "engine/security/rootless/tips#003"
-        ]
-       },
-       "scores": [
-        4.2131,
-        4.0604,
-        3.6565,
-        3.026
-       ]
-      },
-      "usage": []
-     },
-     {
-      "node": "grade_context",
-      "latency_s": 0.9345,
-      "data": {
-       "relevant": false,
-       "reason": "The provided context does not contain any mention of the specific sysctl setting required for Docker rootless mode or instructions on how to apply it.",
-       "relevant_chunk_ids": [],
-       "graded_ids": [
-        "engine/security/rootless#000",
-        "engine/daemon/proxy#003",
-        "engine/security/rootless#001",
-        "engine/security/rootless#003"
-       ]
-      },
-      "usage": [
-       {
-        "model": "openai/gpt-oss-20b",
-        "prompt_tokens": 1158,
-        "completion_tokens": 141,
-        "cost_usd": 0.00012914999999999997,
-        "latency_s": 0.9310259170015343,
-        "cached": false
-       }
-      ]
-     },
-     {
-      "node": "rewrite_query",
-      "latency_s": 0.5343,
-      "data": {
-       "from": "archlinux docker rootless sysctl setting apply rootless mode configuration",
-       "to": "archlinux docker rootless sysctl setting apply rootless mode configuration",
-       "attempt": 2
-      },
-      "usage": [
-       {
-        "model": "openai/gpt-oss-20b",
-        "prompt_tokens": 201,
-        "completion_tokens": 28,
-        "cost_usd": 2.3475e-05,
-        "latency_s": 0.5319367089978186,
-        "cached": false
-       }
-      ]
-     },
-     {
-      "node": "retrieve",
-      "latency_s": 0.2636,
+      "latency_s": 0.2928,
       "data": {
        "query": "archlinux docker rootless sysctl setting apply rootless mode configuration",
        "retrieved_ids": [
@@ -3801,7 +3689,164 @@
         "completion_tokens": 141,
         "cost_usd": 0.00012914999999999997,
         "latency_s": 0.9310259170015343,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
+       }
+      ]
+     },
+     {
+      "node": "rewrite_query",
+      "latency_s": 0.0,
+      "data": {
+       "from": "archlinux docker rootless sysctl setting apply rootless mode configuration",
+       "to": "archlinux docker rootless sysctl setting apply rootless mode configuration",
+       "attempt": 2
+      },
+      "usage": [
+       {
+        "model": "openai/gpt-oss-20b",
+        "prompt_tokens": 201,
+        "completion_tokens": 28,
+        "cost_usd": 2.3475e-05,
+        "latency_s": 0.5319367089978186,
+        "cached": true,
+        "wait_s": 0.0
+       }
+      ]
+     },
+     {
+      "node": "retrieve",
+      "latency_s": 0.3299,
+      "data": {
+       "query": "archlinux docker rootless sysctl setting apply rootless mode configuration",
+       "retrieved_ids": [
+        "engine/security/rootless#000",
+        "engine/daemon/proxy#003",
+        "engine/security/rootless#001",
+        "engine/security/rootless#003"
+       ],
+       "stages": {
+        "dense": [
+         "engine/security/rootless#000",
+         "engine/security/rootless#005",
+         "engine/security/rootless#003",
+         "engine/security/rootless/tips#002",
+         "engine/security/rootless/tips#007",
+         "engine/install/fedora#016",
+         "engine/security/rootless#001",
+         "engine/install/rhel#016",
+         "engine/install/raspberry-pi-os#016",
+         "engine/install/debian#016",
+         "engine/install/ubuntu#016",
+         "engine/security/rootless/tips#003",
+         "engine/install/centos#016",
+         "engine/security/rootless#004",
+         "engine/security/rootless#002",
+         "engine/security/rootless/troubleshoot#003",
+         "build/builders/drivers/kubernetes#021",
+         "engine/daemon/proxy#003",
+         "engine/install/linux-postinstall#005",
+         "engine/install/fedora#015"
+        ],
+        "bm25": [
+         "engine/security/rootless/uid-gid-mapping#000",
+         "engine/security/rootless#000",
+         "engine/install/fedora#016",
+         "engine/install/centos#016",
+         "engine/install/debian#016",
+         "engine/install/rhel#016",
+         "engine/install/ubuntu#016",
+         "engine/install/raspberry-pi-os#016",
+         "build/builders/drivers/kubernetes#021",
+         "engine/daemon/proxy#003",
+         "engine/security/rootless#001",
+         "engine/daemon#002",
+         "engine/security/rootless#005",
+         "engine/storage/drivers/select-storage-driver#003",
+         "engine/storage/drivers/select-storage-driver#005",
+         "engine/security/rootless/troubleshoot#003",
+         "engine/security/rootless/tips#002",
+         "engine/security/rootless#003",
+         "engine/security/rootless#004",
+         "engine/security/rootless/troubleshoot#011"
+        ],
+        "rrf": [
+         "engine/security/rootless#000",
+         "engine/install/fedora#016",
+         "engine/install/rhel#016",
+         "engine/security/rootless#005",
+         "engine/install/debian#016",
+         "engine/install/centos#016",
+         "engine/install/raspberry-pi-os#016",
+         "engine/security/rootless#001",
+         "engine/install/ubuntu#016",
+         "engine/security/rootless#003",
+         "engine/security/rootless/tips#002",
+         "build/builders/drivers/kubernetes#021",
+         "engine/daemon/proxy#003",
+         "engine/security/rootless/troubleshoot#003",
+         "engine/security/rootless#004",
+         "engine/security/rootless/uid-gid-mapping#000",
+         "engine/security/rootless/tips#007",
+         "engine/security/rootless/tips#003",
+         "engine/daemon#002",
+         "engine/storage/drivers/select-storage-driver#003"
+        ],
+        "rerank": [
+         "engine/security/rootless#000",
+         "engine/daemon/proxy#003",
+         "engine/security/rootless#001",
+         "engine/security/rootless#003",
+         "engine/security/rootless#005",
+         "engine/security/rootless#004",
+         "engine/security/rootless/uid-gid-mapping#000",
+         "engine/security/rootless/tips#002",
+         "engine/security/rootless/troubleshoot#003",
+         "build/builders/drivers/kubernetes#021",
+         "engine/install/ubuntu#016",
+         "engine/install/rhel#016",
+         "engine/storage/drivers/select-storage-driver#003",
+         "engine/install/raspberry-pi-os#016",
+         "engine/install/centos#016",
+         "engine/install/debian#016",
+         "engine/install/fedora#016",
+         "engine/daemon#002",
+         "engine/security/rootless/tips#007",
+         "engine/security/rootless/tips#003"
+        ]
+       },
+       "scores": [
+        4.2131,
+        4.0604,
+        3.6565,
+        3.026
+       ]
+      },
+      "usage": []
+     },
+     {
+      "node": "grade_context",
+      "latency_s": 0.0003,
+      "data": {
+       "relevant": false,
+       "reason": "The provided context does not contain any mention of the specific sysctl setting required for Docker rootless mode or instructions on how to apply it.",
+       "relevant_chunk_ids": [],
+       "graded_ids": [
+        "engine/security/rootless#000",
+        "engine/daemon/proxy#003",
+        "engine/security/rootless#001",
+        "engine/security/rootless#003"
+       ]
+      },
+      "usage": [
+       {
+        "model": "openai/gpt-oss-20b",
+        "prompt_tokens": 1158,
+        "completion_tokens": 141,
+        "cost_usd": 0.00012914999999999997,
+        "latency_s": 0.9310259170015343,
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -3830,7 +3875,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 3.4889,
+    "latency_s": 1.6461,
     "total_tokens": 4099,
     "cost_usd": 0.0004008,
     "rewrites": 2,
@@ -3873,7 +3918,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3721,
+      "latency_s": 0.5352,
       "data": {
        "query": "What compression type is used by default when exporting an image with the OCI exporter?",
        "retrieved_ids": [
@@ -3983,7 +4028,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7316,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that the default compression type for the OCI exporter is `gzip`.",
@@ -4004,13 +4049,14 @@
         "completion_tokens": 87,
         "cost_usd": 9.727499999999999e-05,
         "latency_s": 0.7283387089992175,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.8619,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -4031,7 +4077,8 @@
         "completion_tokens": 72,
         "cost_usd": 0.000165,
         "latency_s": 0.8594697920052567,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -4058,7 +4105,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.9672,
+    "latency_s": 0.5366,
     "total_tokens": 1920,
     "cost_usd": 0.00026227,
     "rewrites": 0,
@@ -4107,7 +4154,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2052,
+      "latency_s": 0.3319,
       "data": {
        "query": "When should I use `docker compose up` versus `docker compose run` or `docker compose start`?",
        "retrieved_ids": [
@@ -4217,7 +4264,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.0044,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The retrieved context includes a detailed explanation of when to use `docker compose up`, `docker compose run`, and `docker compose start`.",
@@ -4238,13 +4285,14 @@
         "completion_tokens": 97,
         "cost_usd": 0.00010919999999999998,
         "latency_s": 0.7875289579969831,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.0002,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -4265,7 +4313,8 @@
         "completion_tokens": 312,
         "cost_usd": 0.00032685,
         "latency_s": 1.3197877499915194,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -4292,14 +4341,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 0.2129,
+    "latency_s": 0.3335,
     "total_tokens": 2408,
     "cost_usd": 0.00043605,
     "rewrites": 0,
     "prompt_tokens": 1999,
     "completion_tokens": 409
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output accurately covers all key facts from the expected output: it correctly defines `docker compose up` for starting/restarting all services, `docker compose run` for one-off tasks with dependencies, and `docker compose start` for restarting existing stopped containers without creating new ones. The additional table and details are correct and relevant.",
+    "tokens": 885,
+    "cost_usd": 0.00098
+   }
   },
   {
    "key": "55f84a2c9394e55f",
@@ -4332,7 +4387,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.1892,
+      "latency_s": 0.3271,
       "data": {
        "query": "How can I install Docker Desktop on Windows so it runs without needing admin rights?",
        "retrieved_ids": [
@@ -4442,7 +4497,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.8499,
+      "latency_s": 0.0005,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly states that Docker Desktop can be installed on Windows without admin rights by running the installer with the `--always-run-service` flag, and explains the necessary steps and prerequisites.",
@@ -4465,13 +4520,14 @@
         "completion_tokens": 169,
         "cost_usd": 0.000134325,
         "latency_s": 0.843660041995463,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.0546,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -4493,7 +4549,8 @@
         "completion_tokens": 302,
         "cost_usd": 0.0003279,
         "latency_s": 1.0514928749907995,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -4526,14 +4583,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.0959,
+    "latency_s": 0.329,
     "total_tokens": 2564,
     "cost_usd": 0.00046223,
     "rewrites": 0,
     "prompt_tokens": 2093,
     "completion_tokens": 471
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.42857142857142855,
+    "answer_relevancy": 0.94855509093036,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the key fact from the expected output: using the command line with the `--always-run-service` flag and the specific installer command. It provides the exact command string required and adds relevant context without contradicting the expected information.",
+    "tokens": 5570,
+    "cost_usd": 0.0084208
+   }
   },
   {
    "key": "3f34b906555650d0",
@@ -4567,7 +4632,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2724,
+      "latency_s": 0.4695,
       "data": {
        "query": "Why might I need to manually run `modprobe ip6_tables` when using Docker-in-Docker, and how can I avoid loading the module?",
        "retrieved_ids": [
@@ -4677,7 +4742,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7023,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that when using Docker-in-Docker on a host with legacy iptables, the ip6_tables module may not be loaded automatically and must be manually loaded, and it also mentions using the daemon option --ip6tables=false to avoid loading the module.",
@@ -4698,13 +4763,14 @@
         "completion_tokens": 158,
         "cost_usd": 0.00011857499999999998,
         "latency_s": 0.698600040996098,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 3.2049,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -4725,7 +4791,8 @@
         "completion_tokens": 231,
         "cost_usd": 0.0002604,
         "latency_s": 3.202329292005743,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -4752,14 +4819,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 4.1824,
+    "latency_s": 0.4714,
     "total_tokens": 2150,
     "cost_usd": 0.00037897,
     "rewrites": 0,
     "prompt_tokens": 1761,
     "completion_tokens": 389
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.8840538335159054,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies that older Docker-in-Docker images may fail to auto-load the `ip6_tables` module, requiring manual execution of `modprobe ip6_tables`. It also accurately provides the `--ip6tables=false` flag as the method to avoid loading the module, matching all key facts in the expected output.",
+    "tokens": 5334,
+    "cost_usd": 0.008286400000000001
+   }
   },
   {
    "key": "801dc77218eac8cc",
@@ -4791,7 +4866,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.337,
+      "latency_s": 0.5874,
       "data": {
        "query": "What happens if I run `docker buildx bake` without specifying a target, and how can I build the default target defined in my bake file?",
        "retrieved_ids": [
@@ -4901,7 +4976,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7531,
+      "latency_s": 0.0005,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that running `docker buildx bake` without a target builds the target named `default`, and shows how to invoke it.",
@@ -4922,13 +4997,14 @@
         "completion_tokens": 182,
         "cost_usd": 0.000133125,
         "latency_s": 0.7496782080124831,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.7604,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -4949,7 +5025,8 @@
         "completion_tokens": 140,
         "cost_usd": 0.0002205,
         "latency_s": 0.7582077910046792,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -4976,14 +5053,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.8531,
+    "latency_s": 0.5895,
     "total_tokens": 2279,
     "cost_usd": 0.00035362,
     "rewrites": 0,
     "prompt_tokens": 1957,
     "completion_tokens": 322
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies that running the command without arguments builds the 'default' target and provides the exact command `docker buildx bake` to achieve this, matching all key facts in the expected output.",
+    "tokens": 649,
+    "cost_usd": 0.0007112
+   }
   },
   {
    "key": "c63a16cabf900084",
@@ -5015,7 +5098,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2897,
+      "latency_s": 0.7043,
       "data": {
        "query": "How can I remove the Docker Compose CLI plugin installed for all users when I encounter a “Permission denied” error?",
        "retrieved_ids": [
@@ -5125,7 +5208,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.8942,
+      "latency_s": 0.0006,
       "data": {
        "relevant": true,
        "reason": "The context provides the exact command to remove the Docker Compose CLI plugin from the system directory for all users and explains that a Permission denied error can be resolved by using sudo.",
@@ -5146,13 +5229,14 @@
         "completion_tokens": 120,
         "cost_usd": 0.0001014,
         "latency_s": 0.8909363330021733,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.8181,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -5173,7 +5257,8 @@
         "completion_tokens": 112,
         "cost_usd": 0.00017744999999999998,
         "latency_s": 0.8147409580124076,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -5200,14 +5285,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.0046,
+    "latency_s": 0.7067,
     "total_tokens": 1839,
     "cost_usd": 0.00027885,
     "rewrites": 0,
     "prompt_tokens": 1607,
     "completion_tokens": 232
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the specific file path (/usr/local/lib/docker/cli-plugins/docker-compose) and the use of sudo to resolve the permission error, matching all key facts in the expected output.",
+    "tokens": 614,
+    "cost_usd": 0.0006768
+   }
   },
   {
    "key": "9141a7e2a8a1767b",
@@ -5238,7 +5329,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3434,
+      "latency_s": 1.0313,
       "data": {
        "query": "How can I change the idle timeout for Docker Desktop's Resource Saver mode to a custom value, and do I need to restart Docker Desktop after editing the setting?",
        "retrieved_ids": [
@@ -5348,7 +5439,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7789,
+      "latency_s": 0.0006,
       "data": {
        "relevant": true,
        "reason": "The context includes the exact steps to change the idle timeout by editing `autoPauseTimeoutSeconds` in the settings-store.json file and states that no restart is required.",
@@ -5369,13 +5460,14 @@
         "completion_tokens": 133,
         "cost_usd": 0.0001086,
         "latency_s": 0.776053834008053,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.922,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -5396,7 +5488,8 @@
         "completion_tokens": 174,
         "cost_usd": 0.00022125,
         "latency_s": 0.9191698749928037,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -5423,14 +5516,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.0466,
+    "latency_s": 1.0337,
     "total_tokens": 2002,
     "cost_usd": 0.00032985,
     "rewrites": 0,
     "prompt_tokens": 1695,
     "completion_tokens": 307
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the `autoPauseTimeoutSeconds` field in `settings-store.json`, specifies the value must be greater than 30 seconds, and confirms that no restart is required, matching all key facts in the expected output.",
+    "tokens": 686,
+    "cost_usd": 0.0007632
+   }
   },
   {
    "key": "2d35f0e9fe386807",
@@ -5461,7 +5560,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3257,
+      "latency_s": 1.056,
       "data": {
        "query": "What installation options are available for Docker Engine on Raspberry Pi OS (32-bit / armhf)?",
        "retrieved_ids": [
@@ -5571,7 +5670,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6965,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The context lists the available installation methods for Docker Engine on Raspberry Pi OS (32‑bit / armhf).",
@@ -5592,13 +5691,14 @@
         "completion_tokens": 150,
         "cost_usd": 0.0001188,
         "latency_s": 0.6932623339962447,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.9294,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -5619,7 +5719,8 @@
         "completion_tokens": 173,
         "cost_usd": 0.00023085,
         "latency_s": 0.9267695420130622,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -5646,14 +5747,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.9539,
+    "latency_s": 1.0577,
     "total_tokens": 2154,
     "cost_usd": 0.00034965,
     "rewrites": 0,
     "prompt_tokens": 1831,
     "completion_tokens": 323
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly lists all four installation methods (Docker Desktop, APT repository, manual package, and convenience script) mentioned in the expected output, including the specific caveat about the convenience script being for testing/development.",
+    "tokens": 673,
+    "cost_usd": 0.0007432000000000001
+   }
   },
   {
    "key": "4c07afe7b278ffac",
@@ -5684,7 +5791,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2204,
+      "latency_s": 0.3093,
       "data": {
        "query": "Will changing only the modification time of files copied with ADD or COPY cause the Docker build cache to be invalidated?",
        "retrieved_ids": [
@@ -5794,7 +5901,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 46.5509,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that the modification time of a file is not considered when calculating the cache checksum for ADD and COPY, so changing only the mtime does not invalidate the cache.",
@@ -5815,13 +5922,14 @@
         "completion_tokens": 112,
         "cost_usd": 0.00011257499999999999,
         "latency_s": 0.6621127499965951,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.8538,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -5842,7 +5950,8 @@
         "completion_tokens": 100,
         "cost_usd": 0.0001974,
         "latency_s": 0.6702412919985363,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -5869,14 +5978,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 47.6275,
+    "latency_s": 0.3107,
     "total_tokens": 2181,
     "cost_usd": 0.00030997,
     "rewrites": 0,
     "prompt_tokens": 1969,
     "completion_tokens": 212
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly answers 'No' and explains that modification time is not included in the checksum for ADD and COPY, matching the key facts in the expected output. It omits the mention of RUN --mount=type=bind, but since the input specifically asked about ADD or COPY, this omission does not contradict the specific question asked and the core logic is accurate.",
+    "tokens": 622,
+    "cost_usd": 0.0007952
+   }
   },
   {
    "key": "9e7cbe05afcc435b",
@@ -5909,7 +6024,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2535,
+      "latency_s": 0.3193,
       "data": {
        "query": "How can I make my Compose services use a bridge network that I created manually with `docker network create`?",
        "retrieved_ids": [
@@ -6019,7 +6134,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.9859,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The context includes the exact Compose configuration snippet showing how to connect services to a manually created bridge network by marking it as external.",
@@ -6040,13 +6155,14 @@
         "completion_tokens": 97,
         "cost_usd": 0.0001113,
         "latency_s": 0.5810908330022357,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.3087,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -6067,7 +6183,8 @@
         "completion_tokens": 200,
         "cost_usd": 0.00026385000000000004,
         "latency_s": 1.1885978339996655,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -6094,14 +6211,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.5505,
+    "latency_s": 0.3207,
     "total_tokens": 2352,
     "cost_usd": 0.00037515,
     "rewrites": 0,
     "prompt_tokens": 2055,
     "completion_tokens": 297
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the key facts from the expected output: declaring the network under the top-level `networks` key, using the existing name, and setting `external: true`. It also correctly notes that Compose will connect services to this pre-created network instead of creating the default one, matching the expected behavior.",
+    "tokens": 724,
+    "cost_usd": 0.000848
+   }
   },
   {
    "key": "afdf90520d5dd876",
@@ -6134,7 +6257,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2625,
+      "latency_s": 0.3376,
       "data": {
        "query": "What DNS entries does the Docker Desktop privileged helper add to the Windows hosts file and why?",
        "retrieved_ids": [
@@ -6244,7 +6367,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.7734,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The context explicitly lists the DNS entries added to the Windows hosts file and explains their purpose for Kubernetes context sharing and host IP resolution.",
@@ -6265,13 +6388,14 @@
         "completion_tokens": 113,
         "cost_usd": 0.00011729999999999998,
         "latency_s": 0.6822317499900237,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.0382,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -6292,7 +6416,8 @@
         "completion_tokens": 202,
         "cost_usd": 0.00026744999999999997,
         "latency_s": 0.9663593329896685,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -6319,14 +6444,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 4.0762,
+    "latency_s": 0.3392,
     "total_tokens": 2402,
     "cost_usd": 0.00038475,
     "rewrites": 0,
     "prompt_tokens": 2087,
     "completion_tokens": 315
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9034499652843756,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the three specific DNS entries (kubernetes.docker.internal, host.docker.internal, gateway.docker.internal) and accurately explains their purposes (sharing Kubernetes contexts and mapping to the host IP) as stated in the expected output.",
+    "tokens": 5384,
+    "cost_usd": 0.008496
+   }
   },
   {
    "key": "fb63d2e76733fb3b",
@@ -6358,7 +6491,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3359,
+      "latency_s": 0.4569,
       "data": {
        "query": "When should I use a tmpfs mount in Docker, and does the data ever get written to disk?",
        "retrieved_ids": [
@@ -6468,7 +6601,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7653,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly explains when to use tmpfs mounts (for non‑persistent, temporary, or sensitive data) and states that data is stored in memory and not written to disk, except that it may be swapped to disk.",
@@ -6491,13 +6624,14 @@
         "completion_tokens": 197,
         "cost_usd": 0.0001302,
         "latency_s": 0.7621004160027951,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.0581,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -6519,7 +6653,8 @@
         "completion_tokens": 278,
         "cost_usd": 0.00028845,
         "latency_s": 1.0557295409962535,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -6552,14 +6687,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.1615,
+    "latency_s": 0.4584,
     "total_tokens": 2234,
     "cost_usd": 0.00041865,
     "rewrites": 0,
     "prompt_tokens": 1759,
     "completion_tokens": 475
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.957162274889492,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the key use cases (non-persistent, security, performance) and accurately explains that while data is in RAM, it can be swapped to disk, matching all key facts in the expected output without contradiction.",
+    "tokens": 5605,
+    "cost_usd": 0.0086984
+   }
   },
   {
    "key": "8d5d7ac673a16b30",
@@ -6594,7 +6737,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2083,
+      "latency_s": 0.2962,
       "data": {
        "query": "When using a build driver that doesn't automatically load the image into the local image store, how can I make the build result appear locally?",
        "retrieved_ids": [
@@ -6704,7 +6847,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7081,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that for drivers that do not automatically load images, you can use the `--load` flag (or configure `default-load=true`) to make the build result appear in the local image store.",
@@ -6727,13 +6870,14 @@
         "completion_tokens": 160,
         "cost_usd": 0.00012764999999999999,
         "latency_s": 0.7034885830071289,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.2261,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -6755,7 +6899,8 @@
         "completion_tokens": 99,
         "cost_usd": 0.00019815000000000002,
         "latency_s": 1.2233117919968208,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -6788,14 +6933,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.1447,
+    "latency_s": 0.2978,
     "total_tokens": 2246,
     "cost_usd": 0.0003258,
     "rewrites": 0,
     "prompt_tokens": 1987,
     "completion_tokens": 259
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.9628468630576402,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the `--load` flag as the solution, matching the key fact in the expected output. It also provides an equivalent command (`--output type=docker`) and explains the mechanism, which are acceptable additional details without contradicting the expected answer.",
+    "tokens": 4630,
+    "cost_usd": 0.0068368000000000005
+   }
   },
   {
    "key": "a86e2d4c168a70e9",
@@ -6826,7 +6979,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2611,
+      "latency_s": 0.3514,
       "data": {
        "query": "When should I use a post-start hook in a Docker Compose service, and can I rely on it running before the container's entrypoint finishes?",
        "retrieved_ids": [
@@ -6936,7 +7089,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 48.0973,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The context explains that post‑start hooks run after the container has started and that there is no ordering guarantee with the container’s entrypoint, so they should be used for tasks that don’t need to finish before the application starts.",
@@ -6957,13 +7110,14 @@
         "completion_tokens": 173,
         "cost_usd": 0.000130875,
         "latency_s": 0.7589711670007091,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.0108,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -6984,7 +7138,8 @@
         "completion_tokens": 237,
         "cost_usd": 0.0002796,
         "latency_s": 1.0081057499919552,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -7011,14 +7166,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 49.3714,
+    "latency_s": 0.3531,
     "total_tokens": 2379,
     "cost_usd": 0.00041047,
     "rewrites": 0,
     "prompt_tokens": 1969,
     "completion_tokens": 410
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.7777777777777778,
+    "answer_relevancy": 0.9263285528796739,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies that post-start hooks are for tasks not requiring completion before the app serves (e.g., registering with external systems) and explicitly states that timing is not guaranteed relative to the entrypoint, matching the key facts in the expected output.",
+    "tokens": 5473,
+    "cost_usd": 0.008532
+   }
   },
   {
    "key": "d3905268bc65698a",
@@ -7052,7 +7215,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3026,
+      "latency_s": 0.4397,
       "data": {
        "query": "After installing Docker Desktop on RHEL with the provided RPM, what symlinks does the post‑install script create and where do they point?",
        "retrieved_ids": [
@@ -7162,7 +7325,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.595,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly lists the symlinks created by the post‑install script and their target paths.",
@@ -7183,13 +7346,14 @@
         "completion_tokens": 125,
         "cost_usd": 0.000123375,
         "latency_s": 0.49388908299442846,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.0302,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -7210,7 +7374,8 @@
         "completion_tokens": 258,
         "cost_usd": 0.000306,
         "latency_s": 1.0271377500030212,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -7237,14 +7402,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.9302,
+    "latency_s": 0.4413,
     "total_tokens": 2536,
     "cost_usd": 0.00042938,
     "rewrites": 0,
     "prompt_tokens": 2153,
     "completion_tokens": 383
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies both symlinks (/usr/local/bin/com.docker.cli to /usr/bin/docker and /usr/libexec/qemu-kvm to /usr/local/bin/qemu-system-x86_64) exactly as specified in the expected output, with no contradictions or omissions.",
+    "tokens": 728,
+    "cost_usd": 0.0008352
+   }
   },
   {
    "key": "8daecbb711d20eb7",
@@ -7277,7 +7448,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3311,
+      "latency_s": 0.6275,
       "data": {
        "query": "How does Docker handle OOM priority for the Docker daemon versus individual containers on a Linux host?",
        "retrieved_ids": [
@@ -7387,7 +7558,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.0453,
+      "latency_s": 0.0005,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that Docker adjusts the OOM priority on the daemon but not on containers, answering the question.",
@@ -7408,13 +7579,14 @@
         "completion_tokens": 100,
         "cost_usd": 0.000108375,
         "latency_s": 0.6545756670093397,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.0249,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -7435,7 +7607,8 @@
         "completion_tokens": 196,
         "cost_usd": 0.0002538,
         "latency_s": 1.0203904579975642,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -7462,14 +7635,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 4.4037,
+    "latency_s": 0.6297,
     "total_tokens": 2249,
     "cost_usd": 0.00036218,
     "rewrites": 0,
     "prompt_tokens": 1953,
     "completion_tokens": 296
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies that Docker lowers the OOM priority (via oom-score-adj) for the daemon and leaves containers at default, matching the key facts in the expected output. The additional details provided are accurate and do not contradict the expected information.",
+    "tokens": 708,
+    "cost_usd": 0.0007936
+   }
   },
   {
    "key": "e5f55e0952b02e9a",
@@ -7504,7 +7683,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2854,
+      "latency_s": 0.7686,
       "data": {
        "query": "When I use a bind mount in a Docker build with `--mount=type=bind`, can I write files to the mounted directory and have those changes appear in the final image?",
        "retrieved_ids": [
@@ -7614,7 +7793,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.8374,
+      "latency_s": 0.0007,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that changes made to a bind mount during a RUN instruction are not persisted in the final image.",
@@ -7635,13 +7814,14 @@
         "completion_tokens": 130,
         "cost_usd": 0.000134925,
         "latency_s": 0.7439770000055432,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.9196,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -7662,7 +7842,8 @@
         "completion_tokens": 141,
         "cost_usd": 0.0002559,
         "latency_s": 0.9173437499994179,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -7689,14 +7870,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.0445,
+    "latency_s": 0.7714,
     "total_tokens": 2692,
     "cost_usd": 0.00039083,
     "rewrites": 0,
     "prompt_tokens": 2421,
     "completion_tokens": 271
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9283032287811015,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies that changes to bind mounts are not persisted in the final image or build cache, matching the key facts in the expected output. It also correctly notes the temporary nature of writes during the RUN instruction, adding relevant detail without contradiction.",
+    "tokens": 4629,
+    "cost_usd": 0.005898400000000001
+   }
   },
   {
    "key": "fda21885c8d52702",
@@ -7730,7 +7919,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3609,
+      "latency_s": 1.0005,
       "data": {
        "query": "Why should I use a digest instead of a tag when including an OCI image in a Compose file?",
        "retrieved_ids": [
@@ -7840,7 +8029,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6615,
+      "latency_s": 0.0006,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly states that tags are mutable and can be overwritten, whereas digests are immutable, ensuring the referenced image content does not change unexpectedly, which is why using a digest is recommended.",
@@ -7863,13 +8052,14 @@
         "completion_tokens": 165,
         "cost_usd": 0.000144375,
         "latency_s": 0.6593252500024391,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.7994,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -7890,7 +8080,8 @@
         "completion_tokens": 154,
         "cost_usd": 0.00026159999999999996,
         "latency_s": 0.796260874994914,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -7917,14 +8108,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.8245,
+    "latency_s": 1.0032,
     "total_tokens": 2712,
     "cost_usd": 0.00040597,
     "rewrites": 0,
     "prompt_tokens": 2393,
     "completion_tokens": 319
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies that tags are mutable and can be overwritten, while digests are immutable, ensuring the referenced content remains consistent, which aligns perfectly with the key facts in the expected output.",
+    "tokens": 648,
+    "cost_usd": 0.0007072000000000001
+   }
   },
   {
    "key": "8a1cb48ed0eb6fc4",
@@ -7957,7 +8154,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2163,
+      "latency_s": 0.6341,
       "data": {
        "query": "How can I view details for a specific platform when inspecting a multi‑platform build in Docker Desktop?",
        "retrieved_ids": [
@@ -8067,7 +8264,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 48.6646,
+      "latency_s": 0.001,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that a drop‑down menu in the top‑right of the Info tab allows filtering to a specific platform when inspecting a multi‑platform build.",
@@ -8088,13 +8285,14 @@
         "completion_tokens": 167,
         "cost_usd": 0.00011115,
         "latency_s": 0.8048724160034908,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.634,
+      "latency_s": 0.0002,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -8115,7 +8313,8 @@
         "completion_tokens": 97,
         "cost_usd": 0.00015975,
         "latency_s": 0.6305360830010613,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -8142,14 +8341,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 49.5176,
+    "latency_s": 0.6373,
     "total_tokens": 1755,
     "cost_usd": 0.0002709,
     "rewrites": 0,
     "prompt_tokens": 1491,
     "completion_tokens": 264
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.8780697090175555,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the Info tab and the top-right drop-down menu to filter by platform, matching all key facts in the expected output without contradiction or omission.",
+    "tokens": 3691,
+    "cost_usd": 0.0043511999999999995
+   }
   },
   {
    "key": "0a9bdb8803be4677",
@@ -8184,7 +8391,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2537,
+      "latency_s": 0.4354,
       "data": {
        "query": "How can I override a variable defined in a Bake file using an environment variable?",
        "retrieved_ids": [
@@ -8294,7 +8501,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.344,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly explains that environment variables can override `variable` blocks in a Bake file, providing an example and the necessary steps.",
@@ -8315,13 +8522,14 @@
         "completion_tokens": 123,
         "cost_usd": 0.00012419999999999998,
         "latency_s": 0.8622912080027163,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 2.1512,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -8342,7 +8550,8 @@
         "completion_tokens": 319,
         "cost_usd": 0.00034544999999999997,
         "latency_s": 2.148186333011836,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -8369,14 +8578,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 3.7516,
+    "latency_s": 0.4375,
     "total_tokens": 2633,
     "cost_usd": 0.00046965,
     "rewrites": 0,
     "prompt_tokens": 2191,
     "completion_tokens": 442
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9385812260267861,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the key facts from the expected output: defining a variable in the Bake file and setting an environment variable with the same name to override the default value. It provides specific examples and confirms the mechanism described in the expected output without contradictions or omissions.",
+    "tokens": 5833,
+    "cost_usd": 0.0085032
+   }
   },
   {
    "key": "c1545a9be8056e93",
@@ -8411,7 +8628,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3857,
+      "latency_s": 0.5989,
       "data": {
        "query": "How do I start the Compose services with GPU access and what output confirms the container can see the GPU?",
        "retrieved_ids": [
@@ -8521,7 +8738,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.5543,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context explains how to configure GPU access in a Compose file but does not describe how to start the services or what output confirms GPU visibility.",
@@ -8540,13 +8757,14 @@
         "completion_tokens": 103,
         "cost_usd": 9.779999999999998e-05,
         "latency_s": 0.7090151669981424,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.5098,
+      "latency_s": 0.0,
       "data": {
        "from": "How do I start the Compose services with GPU access and what output confirms the container can see the GPU?",
        "to": "docker compose run --gpus all <service> --check-gpu or docker compose up --gpus all and check nvidia-smi output in container logs.",
@@ -8559,13 +8777,14 @@
         "completion_tokens": 47,
         "cost_usd": 2.9475e-05,
         "latency_s": 0.5071204999985639,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.3883,
+      "latency_s": 0.4066,
       "data": {
        "query": "docker compose run --gpus all <service> --check-gpu or docker compose up --gpus all and check nvidia-smi output in container logs.",
        "retrieved_ids": [
@@ -8675,7 +8894,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.56,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context includes a Compose file example and mentions using `nvidia-smi` as the command, but it does not specify the exact Docker Compose command to start the services nor does it describe the output that confirms the container can see the GPU. Therefore, the context does not contain the answer-relevant information.",
@@ -8694,13 +8913,14 @@
         "completion_tokens": 166,
         "cost_usd": 0.00011834999999999999,
         "latency_s": 1.1076467080129078,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.7152,
+      "latency_s": 0.0,
       "data": {
        "from": "docker compose run --gpus all <service> --check-gpu or docker compose up --gpus all and check nvidia-smi output in container logs.",
        "to": "docker compose up --gpus all <service> and verify nvidia-smi output in container logs to confirm GPU visibility.",
@@ -8713,13 +8933,14 @@
         "completion_tokens": 39,
         "cost_usd": 3.0524999999999997e-05,
         "latency_s": 0.7129215829918394,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.3817,
+      "latency_s": 0.3641,
       "data": {
        "query": "docker compose up --gpus all <service> and verify nvidia-smi output in container logs to confirm GPU visibility.",
        "retrieved_ids": [
@@ -8829,7 +9050,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7439,
+      "latency_s": 0.0002,
       "data": {
        "relevant": true,
        "reason": "The retrieved context includes a Compose file example with GPU reservation and shows the nvidia-smi output that confirms the container can see the GPU.",
@@ -8851,13 +9072,14 @@
         "completion_tokens": 168,
         "cost_usd": 0.000132825,
         "latency_s": 0.7398305840033572,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.4196,
+      "latency_s": 0.0022,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -8879,7 +9101,8 @@
         "completion_tokens": 453,
         "cost_usd": 0.00041610000000000003,
         "latency_s": 1.4168655419925926,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -8912,14 +9135,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 7.6652,
+    "latency_s": 1.3748,
     "total_tokens": 5299,
     "cost_usd": 0.00082507,
     "rewrites": 2,
     "prompt_tokens": 4323,
     "completion_tokens": 976
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.8571428571428571,
+    "answer_relevancy": 0.9215380502821502,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies `docker compose up` as the start command and confirms GPU access via `nvidia-smi` logs showing driver, CUDA, and Tesla T4 details, matching all key facts in the expected output.",
+    "tokens": 6565,
+    "cost_usd": 0.0097416
+   }
   },
   {
    "key": "38f9f0f55f0a52c3",
@@ -8953,7 +9184,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.1909,
+      "latency_s": 0.1679,
       "data": {
        "query": "How often does Docker Desktop release new versions and how can I make sure I get notified and download them automatically?",
        "retrieved_ids": [
@@ -9063,7 +9294,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6184,
+      "latency_s": 0.0002,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that Docker Desktop releases new versions weekly, explains how to enable automatic update checks and downloads, and describes notification mechanisms.",
@@ -9084,13 +9315,14 @@
         "completion_tokens": 106,
         "cost_usd": 8.594999999999999e-05,
         "latency_s": 0.6153035000024829,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.9607,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -9111,7 +9343,8 @@
         "completion_tokens": 204,
         "cost_usd": 0.00021014999999999999,
         "latency_s": 0.9578314170066733,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -9138,14 +9371,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.7724,
+    "latency_s": 0.1688,
     "total_tokens": 1617,
     "cost_usd": 0.0002961,
     "rewrites": 0,
     "prompt_tokens": 1307,
     "completion_tokens": 310
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.8888888888888888,
+    "answer_relevancy": 0.9651149590814991,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the weekly release frequency and the specific settings ('Automatically check for updates' and 'Always download updates') mentioned in the expected output, including the notification details.",
+    "tokens": 4655,
+    "cost_usd": 0.006837600000000001
+   }
   },
   {
    "key": "7d21ed6d535216ab",
@@ -9180,7 +9421,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2574,
+      "latency_s": 0.2325,
       "data": {
        "query": "What happens to files that already exist in a container directory when I bind‑mount a host file or directory over it, and how can I get those original files back?",
        "retrieved_ids": [
@@ -9290,7 +9531,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 48.0493,
+      "latency_s": 0.0002,
       "data": {
        "relevant": true,
        "reason": "The context explains that bind‑mounting over existing data obscures the original files and that the only way to recover them is to recreate the container, which directly answers the question.",
@@ -9312,13 +9553,14 @@
         "completion_tokens": 136,
         "cost_usd": 0.000126,
         "latency_s": 0.7075650409969967,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.8598,
+      "latency_s": 0.0,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -9339,7 +9581,8 @@
         "completion_tokens": 169,
         "cost_usd": 0.00025125,
         "latency_s": 0.8566192920116009,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -9366,14 +9609,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 49.1692,
+    "latency_s": 0.2335,
     "total_tokens": 2440,
     "cost_usd": 0.00037725,
     "rewrites": 0,
     "prompt_tokens": 2135,
     "completion_tokens": 305
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.9579939858797344,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies that files are hidden/obscured and that the container must be recreated without the mount to recover them, matching all key facts in the expected output.",
+    "tokens": 4803,
+    "cost_usd": 0.0065336
+   }
   },
   {
    "key": "52b3010319ad3239",
@@ -9406,7 +9657,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2339,
+      "latency_s": 0.2114,
       "data": {
        "query": "How can I run a single Docker build and simultaneously push the image to a registry, save the build output to a local directory, and load the image into my local Docker daemon?",
        "retrieved_ids": [
@@ -9516,7 +9767,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.9487,
+      "latency_s": 0.0002,
       "data": {
        "relevant": true,
        "reason": "The context includes a complete example that shows how to run a single Docker build while simultaneously pushing to a registry, saving the build output locally, and loading the image into the local Docker daemon.",
@@ -9537,13 +9788,14 @@
         "completion_tokens": 112,
         "cost_usd": 0.00011535,
         "latency_s": 0.9438806660036789,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.2619,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -9564,7 +9816,8 @@
         "completion_tokens": 173,
         "cost_usd": 0.00024675,
         "latency_s": 1.2591642920015147,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -9591,14 +9844,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.4468,
+    "latency_s": 0.2123,
     "total_tokens": 2328,
     "cost_usd": 0.0003621,
     "rewrites": 0,
     "prompt_tokens": 2043,
     "completion_tokens": 285
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9742517139048394,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the `docker buildx build` command and accurately lists the three required exporters (`type=registry`, `type=local`, and `--load`) matching the key facts in the expected output.",
+    "tokens": 4985,
+    "cost_usd": 0.0070216
+   }
   },
   {
    "key": "ee5e93943cbca1ac",
@@ -9631,7 +9892,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2543,
+      "latency_s": 0.2552,
       "data": {
        "query": "What additional packages do I need to install on Debian 12 if I'm using a non‑GNOME desktop so that Docker Desktop can open a terminal?",
        "retrieved_ids": [
@@ -9741,7 +10002,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.3554,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that for non‑GNOME desktops you must install `gnome-terminal` to enable terminal access from Docker Desktop.",
@@ -9762,13 +10023,14 @@
         "completion_tokens": 131,
         "cost_usd": 0.00011009999999999999,
         "latency_s": 0.6659574160003103,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.6117,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -9789,7 +10051,8 @@
         "completion_tokens": 77,
         "cost_usd": 0.00016725,
         "latency_s": 0.6069946659990819,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -9816,14 +10079,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.2239,
+    "latency_s": 0.2563,
     "total_tokens": 1959,
     "cost_usd": 0.00027735,
     "rewrites": 0,
     "prompt_tokens": 1751,
     "completion_tokens": 208
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9062306608888481,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the required package 'gnome-terminal' and provides the equivalent installation command 'sudo apt install gnome-terminal', matching the key facts in the expected output without contradiction or omission.",
+    "tokens": 3705,
+    "cost_usd": 0.0041448
+   }
   },
   {
    "key": "8b9a1a19dff11ee1",
@@ -9856,7 +10127,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3516,
+      "latency_s": 0.5578,
       "data": {
        "query": "What happens if I try to run `docker build` with content trust enabled and the Dockerfile's FROM line references a tag that doesn't have trust data?",
        "retrieved_ids": [
@@ -9966,7 +10237,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.3116,
+      "latency_s": 0.0005,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly states that when content trust is enabled, attempting to build from a Dockerfile that references a tag without trust data causes the build to fail with an error message.",
@@ -9988,13 +10259,14 @@
         "completion_tokens": 198,
         "cost_usd": 0.0001593,
         "latency_s": 1.4842813330033096,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.9152,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -10015,7 +10287,8 @@
         "completion_tokens": 166,
         "cost_usd": 0.00027885000000000003,
         "latency_s": 0.9124799160053954,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -10042,14 +10315,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 3.5807,
+    "latency_s": 0.5599,
     "total_tokens": 2891,
     "cost_usd": 0.00043815,
     "rewrites": 0,
     "prompt_tokens": 2527,
     "completion_tokens": 364
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9215340732426557,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies that the build fails and includes the specific error message 'unable to process Dockerfile: No trust data for <tag>' found in the expected output, accurately explaining that the base image lacks signed trust data.",
+    "tokens": 4864,
+    "cost_usd": 0.0061503999999999994
+   }
   },
   {
    "key": "38a453ccd2c8e640",
@@ -10084,7 +10365,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2057,
+      "latency_s": 0.9941,
       "data": {
        "query": "How can I make the Docker tool send usage data somewhere so I can see what it's doing?",
        "retrieved_ids": [
@@ -10194,7 +10475,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.0786,
+      "latency_s": 0.0011,
       "data": {
        "relevant": true,
        "reason": "The context explains that Docker CLI can emit OpenTelemetry metrics by setting the DOCKER_CLI_OTEL_EXPORTER_OTLP_ENDPOINT environment variable to point to a collector, which then forwards data to a backend such as Prometheus, InfluxDB, or Grafana.",
@@ -10213,13 +10494,14 @@
         "completion_tokens": 185,
         "cost_usd": 0.000127725,
         "latency_s": 1.0759580000012647,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.9855,
+      "latency_s": 0.0002,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -10241,7 +10523,8 @@
         "completion_tokens": 234,
         "cost_usd": 0.00026430000000000003,
         "latency_s": 0.9822787500015693,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -10274,14 +10557,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.2722,
+    "latency_s": 0.9983,
     "total_tokens": 2208,
     "cost_usd": 0.00039203,
     "rewrites": 0,
     "prompt_tokens": 1789,
     "completion_tokens": 419
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies that Docker CLI uses OpenTelemetry, is disabled by default, and requires setting an endpoint (via environment variable) to send data, matching all key facts in the expected output.",
+    "tokens": 719,
+    "cost_usd": 0.0007672
+   }
   },
   {
    "key": "1e4a5324e763ff01",
@@ -10316,7 +10605,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2457,
+      "latency_s": 1.4485,
       "data": {
        "query": "How do I make the model runner use the host's address instead of running its own container?",
        "retrieved_ids": [
@@ -10426,7 +10715,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 48.3744,
+      "latency_s": 0.0005,
       "data": {
        "relevant": true,
        "reason": "The context explicitly states that setting `modelRunner.enabled` to `false` configures workloads to connect to the host’s Docker Model Runner endpoint, thereby using the host’s address instead of deploying a container.",
@@ -10447,13 +10736,14 @@
         "completion_tokens": 202,
         "cost_usd": 0.0001281,
         "latency_s": 0.6620629999961238,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.6132,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -10474,7 +10764,8 @@
         "completion_tokens": 129,
         "cost_usd": 0.00019185,
         "latency_s": 0.6084196669980884,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -10501,14 +10792,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 49.2358,
+    "latency_s": 1.4511,
     "total_tokens": 1994,
     "cost_usd": 0.00031995,
     "rewrites": 0,
     "prompt_tokens": 1663,
     "completion_tokens": 331
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.75,
+    "answer_relevancy": 0.873766618941436,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies setting `modelRunner.enabled` to false and provides the specific host endpoint URL (`http://host.docker.internal:12434/engines/v1/`) required by the expected output, matching all key facts.",
+    "tokens": 4162,
+    "cost_usd": 0.0054416
+   }
   },
   {
    "key": "e40efbc7ed265a33",
@@ -10543,7 +10842,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2287,
+      "latency_s": 0.3413,
       "data": {
        "query": "How can I try out container orchestration on my computer without setting up a full external cluster?",
        "retrieved_ids": [
@@ -10653,7 +10952,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.0984,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The context explains that Docker Desktop includes a built‑in standalone Kubernetes server that can be enabled for local testing, allowing users to try container orchestration on their own machine without setting up an external cluster.",
@@ -10676,13 +10975,14 @@
         "completion_tokens": 156,
         "cost_usd": 0.000112425,
         "latency_s": 1.0954014580056537,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.9213,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -10704,7 +11004,8 @@
         "completion_tokens": 172,
         "cost_usd": 0.0002139,
         "latency_s": 0.9181203339976491,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -10737,14 +11038,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.2507,
+    "latency_s": 0.343,
     "total_tokens": 1941,
     "cost_usd": 0.00032632,
     "rewrites": 0,
     "prompt_tokens": 1613,
     "completion_tokens": 328
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.9,
+    "answer_relevancy": 0.737629275090369,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies Docker Desktop's built-in Kubernetes as the solution, matching the key fact in the expected output. It accurately describes running the server and client locally to test orchestration without external infrastructure, and includes additional correct details about enabling it via settings.",
+    "tokens": 4917,
+    "cost_usd": 0.0078536
+   }
   },
   {
    "key": "c12e9dad479d7d9d",
@@ -10779,7 +11088,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.1942,
+      "latency_s": 0.2525,
       "data": {
        "query": "Why can't my containers talk to each other across different machines?",
        "retrieved_ids": [
@@ -10889,7 +11198,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7249,
+      "latency_s": 0.0004,
       "data": {
        "relevant": true,
        "reason": "The context explains that bridge networks only work on the same Docker host and that communication across different hosts requires an overlay network or OS-level routing.",
@@ -10908,13 +11217,14 @@
         "completion_tokens": 146,
         "cost_usd": 0.00012052499999999999,
         "latency_s": 0.7220012089965167,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.6151,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -10935,7 +11245,8 @@
         "completion_tokens": 124,
         "cost_usd": 0.00020730000000000002,
         "latency_s": 0.6116798750008456,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -10962,14 +11273,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.5363,
+    "latency_s": 0.2541,
     "total_tokens": 2179,
     "cost_usd": 0.00032783,
     "rewrites": 0,
     "prompt_tokens": 1909,
     "completion_tokens": 270
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.8,
+    "answer_relevancy": 0.777642087115157,
+    "correctness": 0.2,
+    "correctness_reason": "The actual output correctly identifies that overlay networks are needed for cross-machine communication but completely omits the specific key facts from the expected output: the requirement for a Docker swarm and the specific ports (2377/tcp, 4789/udp, 7946/tcp & udp) that must be open.",
+    "tokens": 4288,
+    "cost_usd": 0.005712
+   }
   },
   {
    "key": "ab4f514f32745d41",
@@ -11005,7 +11324,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.1964,
+      "latency_s": 0.2374,
       "data": {
        "query": "The old Compose tool I used to run seems to be unsupported now — which versions are actually supported?",
        "retrieved_ids": [
@@ -11115,7 +11434,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.5181,
+      "latency_s": 0.0024,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly states that the supported Docker Compose CLI versions are Compose v2 and Compose v5.",
@@ -11136,13 +11455,14 @@
         "completion_tokens": 113,
         "cost_usd": 0.00010792499999999998,
         "latency_s": 0.5150133749993984,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.6128,
+      "latency_s": 0.0,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -11163,7 +11483,8 @@
         "completion_tokens": 59,
         "cost_usd": 0.0001629,
         "latency_s": 0.6098219169944059,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -11190,14 +11511,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.3297,
+    "latency_s": 0.2408,
     "total_tokens": 2009,
     "cost_usd": 0.00027082,
     "rewrites": 0,
     "prompt_tokens": 1837,
     "completion_tokens": 172
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.8242317410533518,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies Compose v2 and Compose v5 as the supported versions, matching the key facts in the expected output without contradiction or omission.",
+    "tokens": 3727,
+    "cost_usd": 0.0041336
+   }
   },
   {
    "key": "c569f7dc7cf4f0ad",
@@ -11234,7 +11563,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2616,
+      "latency_s": 0.2356,
       "data": {
        "query": "Why can't I bind low-numbered ports on my Mac and how do I stop the background service that's supposed to help with that?",
        "retrieved_ids": [
@@ -11344,7 +11673,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.3739,
+      "latency_s": 0.0002,
       "data": {
        "relevant": true,
        "reason": "The context explains that Docker Desktop uses a privileged helper to bind ports below 1024 and shows how to stop it by unloading the launchd service.",
@@ -11366,13 +11695,14 @@
         "completion_tokens": 132,
         "cost_usd": 0.00012697499999999998,
         "latency_s": 0.6133210419939132,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.8816,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -11393,7 +11723,8 @@
         "completion_tokens": 265,
         "cost_usd": 0.00031319999999999997,
         "latency_s": 1.008258083005785,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -11420,14 +11751,20 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 3.5195,
+    "latency_s": 0.2366,
     "total_tokens": 2590,
     "cost_usd": 0.00044017,
     "rewrites": 0,
     "prompt_tokens": 2193,
     "completion_tokens": 397
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the privileged helper (com.docker.vmnetd) and provides the exact command (sudo launchctl unload -w /Library/LaunchDaemons/com.docker.vmnetd.plist) to stop it, matching all key facts in the expected output.",
+    "tokens": 780,
+    "cost_usd": 0.0008544
+   }
   },
   {
    "key": "41b7293c66bd6fb6",
@@ -11460,7 +11797,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2345,
+      "latency_s": 0.2143,
       "data": {
        "query": "Why am I sometimes missing log output from my container when the logging setup has problems?",
        "retrieved_ids": [
@@ -11570,7 +11907,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6126,
+      "latency_s": 0.0002,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explains that logs can be missing due to network issues, write failures, ring buffer limits, dual logging disabled, or applications writing to files instead of stdout/stderr, which directly addresses why logs may be missing when the logging setup has problems.",
@@ -11589,13 +11926,14 @@
         "completion_tokens": 199,
         "cost_usd": 0.00013402500000000002,
         "latency_s": 0.6096426670119399,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 0.8528,
+      "latency_s": 0.0,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -11616,7 +11954,8 @@
         "completion_tokens": 174,
         "cost_usd": 0.0002325,
         "latency_s": 0.8509585830033757,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -11643,14 +11982,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 1.7019,
+    "latency_s": 0.2153,
     "total_tokens": 2218,
     "cost_usd": 0.00036653,
     "rewrites": 0,
     "prompt_tokens": 1845,
     "completion_tokens": 373
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.8335992873614944,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the key facts from the expected output: that logging failures (network, permissions, full filesystem) result in logs not being written to the local cache and being lost because the ring buffer does not retry failed writes. It includes all necessary details without contradiction.",
+    "tokens": 5051,
+    "cost_usd": 0.007996
+   }
   },
   {
    "key": "291ec1f76e3f34ab",
@@ -11684,7 +12031,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2623,
+      "latency_s": 0.2348,
       "data": {
        "query": "I want to run a build using a different builder than the default, but the command I'm using seems to ignore my custom builder. How can I make it use the one I chose?",
        "retrieved_ids": [
@@ -11794,7 +12141,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 48.8988,
+      "latency_s": 0.0002,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explicitly explains how to use a custom builder with `docker build` via the `--builder` flag or `BUILDX_BUILDER` environment variable, and how to set a default builder with `docker buildx use`, directly addressing the user’s issue.",
@@ -11817,13 +12164,14 @@
         "completion_tokens": 177,
         "cost_usd": 0.000126375,
         "latency_s": 0.7256990839960054,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.1246,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -11847,7 +12195,8 @@
         "completion_tokens": 258,
         "cost_usd": 0.00028079999999999994,
         "latency_s": 1.1216140000033192,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -11892,14 +12241,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 50.2878,
+    "latency_s": 0.2357,
     "total_tokens": 2252,
     "cost_usd": 0.00040717,
     "rewrites": 0,
     "prompt_tokens": 1817,
     "completion_tokens": 435
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.8745611740270002,
+    "correctness": 0.9,
+    "correctness_reason": "The actual output correctly identifies the `--builder` flag and `BUILDX_BUILDER` environment variable mentioned in the expected output. It omits the specific recommendation to prefer `docker buildx build` but provides equivalent valid methods (`docker buildx use`) to achieve the goal, with no contradictions.",
+    "tokens": 5506,
+    "cost_usd": 0.0084912
+   }
   },
   {
    "key": "9a3a5ca9ef18bd8d",
@@ -11934,7 +12291,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3167,
+      "latency_s": 0.5706,
       "data": {
        "query": "How can I make a one‑time setup task run automatically before my main app starts without it showing up as a separate stopped container?",
        "retrieved_ids": [
@@ -12044,7 +12401,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.2682,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The retrieved context explains that using `pre_start` init containers runs one‑time setup tasks before the main service starts and that these tasks do not appear as separate stopped containers.",
@@ -12067,13 +12424,14 @@
         "completion_tokens": 157,
         "cost_usd": 0.0001326,
         "latency_s": 0.7116611670062412,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.09,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -12095,7 +12453,8 @@
         "completion_tokens": 247,
         "cost_usd": 0.00029864999999999997,
         "latency_s": 1.0870195000024978,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -12128,14 +12487,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 3.6774,
+    "latency_s": 0.5723,
     "total_tokens": 2547,
     "cost_usd": 0.00043125,
     "rewrites": 0,
     "prompt_tokens": 2143,
     "completion_tokens": 404
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.8888888888888888,
+    "answer_relevancy": 0.8845102951914856,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies the `pre_start` option and explains that it runs as a subordinate step (init container) that does not appear as a separate stopped or exited service in `docker compose ps`, matching all key facts in the expected output.",
+    "tokens": 5548,
+    "cost_usd": 0.0084448
+   }
   },
   {
    "key": "e8612bb821f958ed",
@@ -12170,7 +12537,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.281,
+      "latency_s": 0.2543,
       "data": {
        "query": "How can I make sure the changes inside my running containers are saved before I move my Docker Desktop to another machine?",
        "retrieved_ids": [
@@ -12280,7 +12647,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7378,
+      "latency_s": 0.0003,
       "data": {
        "relevant": true,
        "reason": "The retrieved context includes explicit instructions on committing containers to images and backing up images, which directly addresses how to preserve changes before moving Docker Desktop.",
@@ -12302,13 +12669,14 @@
         "completion_tokens": 176,
         "cost_usd": 0.00013769999999999999,
         "latency_s": 0.734112041987828,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.3274,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -12329,7 +12697,8 @@
         "completion_tokens": 355,
         "cost_usd": 0.00036225,
         "latency_s": 1.3249609580088872,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -12356,14 +12725,22 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 2.3483,
+    "latency_s": 0.2554,
     "total_tokens": 2658,
     "cost_usd": 0.00049995,
     "rewrites": 0,
     "prompt_tokens": 2127,
     "completion_tokens": 531
    },
-   "judge": null
+   "judge": {
+    "judge_model": "qwen/qwen3.8-27b",
+    "faithfulness": 0.9090909090909091,
+    "answer_relevancy": 0.9206690007082683,
+    "correctness": 1.0,
+    "correctness_reason": "The actual output correctly identifies committing containers to images, pushing to a registry, or saving to a tar file, matching all key facts in the expected output while adding relevant details about volumes.",
+    "tokens": 5891,
+    "cost_usd": 0.008844
+   }
   },
   {
    "key": "2c61d534d15fb4a6",
@@ -12396,7 +12773,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2789,
+      "latency_s": 0.2729,
       "data": {
        "query": "How do I configure a Kubernetes Ingress controller to expose my Dockerized application?",
        "retrieved_ids": [
@@ -12506,7 +12883,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.5017,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about configuring a Kubernetes Ingress controller to expose a Dockerized application.",
@@ -12525,13 +12902,14 @@
         "completion_tokens": 84,
         "cost_usd": 0.000108825,
         "latency_s": 0.498108959000092,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4497,
+      "latency_s": 0.0021,
       "data": {
        "from": "How do I configure a Kubernetes Ingress controller to expose my Dockerized application?",
        "to": "Configure Kubernetes Ingress controller to expose Docker container application with Ingress rules and service type LoadBalancer or NodePort.",
@@ -12544,13 +12922,14 @@
         "completion_tokens": 37,
         "cost_usd": 2.52e-05,
         "latency_s": 0.4463160000013886,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.287,
+      "latency_s": 0.3168,
       "data": {
        "query": "Configure Kubernetes Ingress controller to expose Docker container application with Ingress rules and service type LoadBalancer or NodePort.",
        "retrieved_ids": [
@@ -12660,7 +13039,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.8624,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about configuring a Kubernetes Ingress controller to expose a Dockerized application.",
@@ -12679,13 +13058,14 @@
         "completion_tokens": 85,
         "cost_usd": 0.00011685,
         "latency_s": 1.107245207997039,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 1.0223,
+      "latency_s": 0.0,
       "data": {
        "from": "Configure Kubernetes Ingress controller to expose Docker container application with Ingress rules and service type LoadBalancer or NodePort.",
        "to": "Configure Kubernetes Ingress controller to expose a Dockerized application using Ingress rules and Service type LoadBalancer or NodePort.",
@@ -12698,13 +13078,14 @@
         "completion_tokens": 38,
         "cost_usd": 2.6025e-05,
         "latency_s": 1.019641082995804,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2839,
+      "latency_s": 0.3618,
       "data": {
        "query": "Configure Kubernetes Ingress controller to expose a Dockerized application using Ingress rules and Service type LoadBalancer or NodePort.",
        "retrieved_ids": [
@@ -12814,7 +13195,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 48.154,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context does not mention configuring a Kubernetes Ingress controller or any ingress-related settings for exposing a Dockerized application.",
@@ -12833,7 +13214,8 @@
         "completion_tokens": 94,
         "cost_usd": 0.00011947499999999999,
         "latency_s": 0.6691057499992894,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -12862,7 +13244,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 52.8462,
+    "latency_s": 0.9566,
     "total_tokens": 4271,
     "cost_usd": 0.00039638,
     "rewrites": 2,
@@ -12902,7 +13284,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2202,
+      "latency_s": 0.2446,
       "data": {
        "query": "Can you explain the pricing tiers for Docker Hub and how to upgrade my organization plan?",
        "retrieved_ids": [
@@ -13012,7 +13394,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.4294,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker Desktop sign‑in and image management, but it does not mention Docker Hub pricing tiers or how to upgrade an organization plan.",
@@ -13031,13 +13413,14 @@
         "completion_tokens": 80,
         "cost_usd": 9.24e-05,
         "latency_s": 0.5961771669972222,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.5093,
+      "latency_s": 0.0,
       "data": {
        "from": "Can you explain the pricing tiers for Docker Hub and how to upgrade my organization plan?",
        "to": "Docker Hub pricing tiers and upgrading an organization plan",
@@ -13050,13 +13433,14 @@
         "completion_tokens": 24,
         "cost_usd": 2.2049999999999997e-05,
         "latency_s": 0.5074990830034949,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2084,
+      "latency_s": 0.1816,
       "data": {
        "query": "Docker Hub pricing tiers and upgrading an organization plan",
        "retrieved_ids": [
@@ -13166,7 +13550,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.3587,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about Docker Hub pricing tiers or how to upgrade an organization plan.",
@@ -13185,13 +13569,14 @@
         "completion_tokens": 71,
         "cost_usd": 9.4125e-05,
         "latency_s": 0.5857424999994691,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.3144,
+      "latency_s": 0.0,
       "data": {
        "from": "Docker Hub pricing tiers and upgrading an organization plan",
        "to": "Docker Hub pricing tiers and how to upgrade an organization plan",
@@ -13204,13 +13589,14 @@
         "completion_tokens": 26,
         "cost_usd": 2.145e-05,
         "latency_s": 0.3125618750054855,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.3382,
+      "latency_s": 0.2957,
       "data": {
        "query": "Docker Hub pricing tiers and how to upgrade an organization plan",
        "retrieved_ids": [
@@ -13320,7 +13706,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.6492,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context does not mention Docker Hub pricing tiers or how to upgrade an organization plan.",
@@ -13339,7 +13725,8 @@
         "completion_tokens": 68,
         "cost_usd": 9.322499999999999e-05,
         "latency_s": 0.5434587909985567,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -13368,7 +13755,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 8.0338,
+    "latency_s": 0.7243,
     "total_tokens": 3503,
     "cost_usd": 0.00032325,
     "rewrites": 2,
@@ -13403,7 +13790,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2375,
+      "latency_s": 0.2095,
       "data": {
        "query": "How can I configure containerd as the container runtime for my Kubernetes nodes?",
        "retrieved_ids": [
@@ -13513,7 +13900,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.1653,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about configuring containerd as the container runtime for Kubernetes nodes.",
@@ -13532,13 +13919,14 @@
         "completion_tokens": 91,
         "cost_usd": 0.00010755,
         "latency_s": 0.9603510839951923,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.511,
+      "latency_s": 0.0,
       "data": {
        "from": "How can I configure containerd as the container runtime for my Kubernetes nodes?",
        "to": "configure containerd as container runtime for Kubernetes nodes Docker documentation",
@@ -13551,13 +13939,14 @@
         "completion_tokens": 26,
         "cost_usd": 2.1599999999999996e-05,
         "latency_s": 0.5086470419919351,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2501,
+      "latency_s": 0.2056,
       "data": {
        "query": "configure containerd as container runtime for Kubernetes nodes Docker documentation",
        "retrieved_ids": [
@@ -13667,7 +14056,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 48.8054,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker Desktop settings and containerd shims, but does not contain instructions on configuring containerd as the container runtime for Kubernetes nodes.",
@@ -13686,13 +14075,14 @@
         "completion_tokens": 97,
         "cost_usd": 9.644999999999999e-05,
         "latency_s": 0.6255322090000845,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4765,
+      "latency_s": 0.0,
       "data": {
        "from": "configure containerd as container runtime for Kubernetes nodes Docker documentation",
        "to": "configure containerd as container runtime for Kubernetes nodes Docker documentation how to set containerd as kubelet runtime Docker docs",
@@ -13705,13 +14095,14 @@
         "completion_tokens": 37,
         "cost_usd": 2.5424999999999998e-05,
         "latency_s": 0.4733474170061527,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2491,
+      "latency_s": 0.2341,
       "data": {
        "query": "configure containerd as container runtime for Kubernetes nodes Docker documentation how to set containerd as kubelet runtime Docker docs",
        "retrieved_ids": [
@@ -13821,7 +14212,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.0559,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses configuring containerd shims for Docker, not how to set containerd as the container runtime for Kubernetes nodes.",
@@ -13840,7 +14231,8 @@
         "completion_tokens": 78,
         "cost_usd": 0.00010784999999999999,
         "latency_s": 0.6810765840054955,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -13869,7 +14261,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 55.757,
+    "latency_s": 0.6516,
     "total_tokens": 3798,
     "cost_usd": 0.00035887,
     "rewrites": 2,
@@ -13909,7 +14301,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2867,
+      "latency_s": 0.3436,
       "data": {
        "query": "What is the process for deploying a Docker image to AWS Elastic Container Service (ECS) using Fargate?",
        "retrieved_ids": [
@@ -14019,7 +14411,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.6698,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context does not include any information about deploying a Docker image to AWS ECS Fargate.",
@@ -14038,13 +14430,14 @@
         "completion_tokens": 65,
         "cost_usd": 0.0001131,
         "latency_s": 0.5530322919948958,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4347,
+      "latency_s": 0.0,
       "data": {
        "from": "What is the process for deploying a Docker image to AWS Elastic Container Service (ECS) using Fargate?",
        "to": "deploy Docker image to AWS ECS Fargate steps",
@@ -14057,13 +14450,14 @@
         "completion_tokens": 25,
         "cost_usd": 2.25e-05,
         "latency_s": 0.43188533298962284,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2728,
+      "latency_s": 0.4344,
       "data": {
        "query": "deploy Docker image to AWS ECS Fargate steps",
        "retrieved_ids": [
@@ -14173,7 +14567,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.9245,
+      "latency_s": 0.0006,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses publishing Docker Compose applications as OCI artifacts and does not contain any information about deploying a Docker image to AWS Elastic Container Service (ECS) using Fargate.",
@@ -14192,13 +14586,14 @@
         "completion_tokens": 96,
         "cost_usd": 9.255e-05,
         "latency_s": 0.8394938750134315,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 1.3745,
+      "latency_s": 0.0001,
       "data": {
        "from": "deploy Docker image to AWS ECS Fargate steps",
        "to": "deploy Docker image to AWS ECS Fargate workflow steps",
@@ -14211,13 +14606,14 @@
         "completion_tokens": 26,
         "cost_usd": 2.31e-05,
         "latency_s": 1.3713560000032885,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2727,
+      "latency_s": 1.3095,
       "data": {
        "query": "deploy Docker image to AWS ECS Fargate workflow steps",
        "retrieved_ids": [
@@ -14327,7 +14723,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7189,
+      "latency_s": 0.0012,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about deploying a Docker image to AWS Elastic Container Service (ECS) using Fargate.",
@@ -14346,7 +14742,8 @@
         "completion_tokens": 106,
         "cost_usd": 0.000102675,
         "latency_s": 0.7156890829937765,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -14375,7 +14772,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 6.9605,
+    "latency_s": 2.0939,
     "total_tokens": 3765,
     "cost_usd": 0.00035392,
     "rewrites": 2,
@@ -14413,7 +14810,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2941,
+      "latency_s": 1.1048,
       "data": {
        "query": "How do I set up Azure Kubernetes Service (AKS) to pull images from a private Docker registry?",
        "retrieved_ids": [
@@ -14523,7 +14920,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 49.8812,
+      "latency_s": 0.0005,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses configuring Docker Desktop’s Kubernetes control plane to use a custom image registry, but it does not address how to configure Azure Kubernetes Service (AKS) to pull images from a private Docker registry.",
@@ -14542,13 +14939,14 @@
         "completion_tokens": 108,
         "cost_usd": 0.00012119999999999999,
         "latency_s": 1.4954588340042392,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.6126,
+      "latency_s": 0.0001,
       "data": {
        "from": "How do I set up Azure Kubernetes Service (AKS) to pull images from a private Docker registry?",
        "to": "Configure AKS to pull images from a private Docker registry using imagePullSecrets and Azure Container Registry integration.",
@@ -14561,13 +14959,14 @@
         "completion_tokens": 35,
         "cost_usd": 2.685e-05,
         "latency_s": 0.6093484589946456,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2903,
+      "latency_s": 0.4713,
       "data": {
        "query": "Configure AKS to pull images from a private Docker registry using imagePullSecrets and Azure Container Registry integration.",
        "retrieved_ids": [
@@ -14677,7 +15076,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.7658,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker Desktop Kubernetes image configuration and BuildKit registry mirroring, but it does not contain any information about configuring Azure Kubernetes Service (AKS) to pull images from a private Docker registry.",
@@ -14696,13 +15095,14 @@
         "completion_tokens": 112,
         "cost_usd": 0.00013357499999999998,
         "latency_s": 1.4382758330029901,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4244,
+      "latency_s": 0.0001,
       "data": {
        "from": "Configure AKS to pull images from a private Docker registry using imagePullSecrets and Azure Container Registry integration.",
        "to": "Configure AKS to pull images from a private Docker registry using imagePullSecrets and Azure Container Registry integration.",
@@ -14715,13 +15115,14 @@
         "completion_tokens": 35,
         "cost_usd": 2.6774999999999997e-05,
         "latency_s": 0.42175104199850466,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2859,
+      "latency_s": 0.3963,
       "data": {
        "query": "Configure AKS to pull images from a private Docker registry using imagePullSecrets and Azure Container Registry integration.",
        "retrieved_ids": [
@@ -14831,7 +15232,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.0003,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker Desktop Kubernetes image configuration and BuildKit registry mirroring, but it does not contain any information about configuring Azure Kubernetes Service (AKS) to pull images from a private Docker registry.",
@@ -14850,7 +15251,8 @@
         "completion_tokens": 112,
         "cost_usd": 0.00013357499999999998,
         "latency_s": 1.4382758330029901,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -14879,7 +15281,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 54.5589,
+    "latency_s": 1.9773,
     "total_tokens": 4687,
     "cost_usd": 0.00044197,
     "rewrites": 2,
@@ -14918,7 +15320,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.281,
+      "latency_s": 0.3298,
       "data": {
        "query": "What commands are needed to create a Docker Swarm service with rolling updates and health checks?",
        "retrieved_ids": [
@@ -15028,7 +15430,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6713,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain the specific commands for creating a Docker Swarm service with rolling updates and health checks; it only includes swarm initialization, network creation, and service update examples without rolling update or healthcheck syntax.",
@@ -15047,13 +15449,14 @@
         "completion_tokens": 106,
         "cost_usd": 0.00013417500000000002,
         "latency_s": 0.6681019999959972,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 1.5261,
+      "latency_s": 0.0,
       "data": {
        "from": "What commands are needed to create a Docker Swarm service with rolling updates and health checks?",
        "to": "docker swarm service create rolling update healthcheck syntax commands",
@@ -15066,13 +15469,14 @@
         "completion_tokens": 25,
         "cost_usd": 2.355e-05,
         "latency_s": 0.19774791700183414,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.28,
+      "latency_s": 0.27,
       "data": {
        "query": "docker swarm service create rolling update healthcheck syntax commands",
        "retrieved_ids": [
@@ -15182,7 +15586,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.5605,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context does not include any commands for creating a Docker Swarm service with rolling updates or health checks.",
@@ -15201,13 +15605,14 @@
         "completion_tokens": 104,
         "cost_usd": 0.00011609999999999999,
         "latency_s": 0.548797082999954,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.497,
+      "latency_s": 0.0,
       "data": {
        "from": "docker swarm service create rolling update healthcheck syntax commands",
        "to": "docker swarm service create rolling-update health-check options",
@@ -15220,13 +15625,14 @@
         "completion_tokens": 24,
         "cost_usd": 2.1075e-05,
         "latency_s": 0.49524666700745,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.29,
+      "latency_s": 0.2695,
       "data": {
        "query": "docker swarm service create rolling-update health-check options",
        "retrieved_ids": [
@@ -15336,7 +15742,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 48.6963,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context only contains overlay network creation and service update commands; it does not include any commands for creating a Docker Swarm service with rolling updates or health checks.",
@@ -15355,7 +15761,8 @@
         "completion_tokens": 98,
         "cost_usd": 9.36e-05,
         "latency_s": 0.6300397079903632,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -15384,7 +15791,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 54.81,
+    "latency_s": 0.8719,
     "total_tokens": 4109,
     "cost_usd": 0.0003885,
     "rewrites": 2,
@@ -15421,7 +15828,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3367,
+      "latency_s": 0.2979,
       "data": {
        "query": "How do I enable Docker Hub organization members to push images to a shared repository?",
        "retrieved_ids": [
@@ -15531,7 +15938,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.5985,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about configuring Docker Hub organization members to push images to a shared repository.",
@@ -15550,13 +15957,14 @@
         "completion_tokens": 74,
         "cost_usd": 8.625e-05,
         "latency_s": 0.5934598750027362,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4879,
+      "latency_s": 0.0,
       "data": {
        "from": "How do I enable Docker Hub organization members to push images to a shared repository?",
        "to": "enable Docker Hub organization members push access to shared repository permissions settings",
@@ -15569,13 +15977,14 @@
         "completion_tokens": 27,
         "cost_usd": 2.22e-05,
         "latency_s": 0.48365583301347215,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2234,
+      "latency_s": 0.2037,
       "data": {
        "query": "enable Docker Hub organization members push access to shared repository permissions settings",
        "retrieved_ids": [
@@ -15685,7 +16094,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.0372,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses installer flags and sign‑in options, but it does not contain any information about granting Docker Hub organization members permission to push images to a shared repository.",
@@ -15704,13 +16113,14 @@
         "completion_tokens": 94,
         "cost_usd": 9.997499999999999e-05,
         "latency_s": 0.5902445829997305,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.5149,
+      "latency_s": 0.0,
       "data": {
        "from": "enable Docker Hub organization members push access to shared repository permissions settings",
        "to": "grant push access to Docker Hub organization members shared repository permissions settings",
@@ -15723,13 +16133,14 @@
         "completion_tokens": 27,
         "cost_usd": 2.2875e-05,
         "latency_s": 0.5130912079912378,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.219,
+      "latency_s": 0.2195,
       "data": {
        "query": "grant push access to Docker Hub organization members shared repository permissions settings",
        "retrieved_ids": [
@@ -15839,7 +16250,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.6353,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about configuring Docker Hub organization members to push images to a shared repository.",
@@ -15858,7 +16269,8 @@
         "completion_tokens": 74,
         "cost_usd": 9.015000000000001e-05,
         "latency_s": 0.5256383329979144,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -15887,7 +16299,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 6.0586,
+    "latency_s": 0.7236,
     "total_tokens": 3398,
     "cost_usd": 0.00032145,
     "rewrites": 2,
@@ -15927,7 +16339,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3357,
+      "latency_s": 0.3904,
       "data": {
        "query": "How can I configure a Cloud Run service to automatically scale based on request latency for my container?",
        "retrieved_ids": [
@@ -16037,7 +16449,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.0701,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker CPU scheduling and Prometheus metrics, but does not contain any information about configuring Cloud Run to scale based on request latency.",
@@ -16056,13 +16468,14 @@
         "completion_tokens": 75,
         "cost_usd": 8.4225e-05,
         "latency_s": 1.0665159589989344,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.5165,
+      "latency_s": 0.0,
       "data": {
        "from": "How can I configure a Cloud Run service to automatically scale based on request latency for my container?",
        "to": "Cloud Run auto‑scaling based on request latency configuration Docker container",
@@ -16075,13 +16488,14 @@
         "completion_tokens": 36,
         "cost_usd": 2.5875e-05,
         "latency_s": 0.4612362909974763,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.3105,
+      "latency_s": 0.6669,
       "data": {
        "query": "Cloud Run auto‑scaling based on request latency configuration Docker container",
        "retrieved_ids": [
@@ -16191,7 +16605,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.4066,
+      "latency_s": 0.0006,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker resource constraints, daemon configuration, Docker Desktop settings, and Buildx exporters, but it does not mention Cloud Run, request latency, or how to configure automatic scaling based on latency.",
@@ -16210,13 +16624,14 @@
         "completion_tokens": 91,
         "cost_usd": 0.000105975,
         "latency_s": 0.683017707997351,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4461,
+      "latency_s": 0.0023,
       "data": {
        "from": "Cloud Run auto‑scaling based on request latency configuration Docker container",
        "to": "Cloud Run auto‑scaling based on request latency configuration Docker container",
@@ -16229,13 +16644,14 @@
         "completion_tokens": 34,
         "cost_usd": 2.5799999999999997e-05,
         "latency_s": 0.44416329100204166,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.312,
+      "latency_s": 1.8526,
       "data": {
        "query": "Cloud Run auto‑scaling based on request latency configuration Docker container",
        "retrieved_ids": [
@@ -16345,7 +16761,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.0003,
+      "latency_s": 0.0006,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker resource constraints, daemon configuration, Docker Desktop settings, and Buildx exporters, but it does not mention Cloud Run, request latency, or how to configure automatic scaling based on latency.",
@@ -16364,7 +16780,8 @@
         "completion_tokens": 91,
         "cost_usd": 0.000105975,
         "latency_s": 0.683017707997351,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -16393,7 +16810,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 5.4024,
+    "latency_s": 2.917,
     "total_tokens": 3657,
     "cost_usd": 0.00034785,
     "rewrites": 2,
@@ -16432,7 +16849,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2571,
+      "latency_s": 0.7106,
       "data": {
        "query": "What steps are required to set up persistent storage for a stateful application in Kubernetes using Docker images?",
        "retrieved_ids": [
@@ -16542,7 +16959,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 50.8405,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses persistent volume claims for BuildKit build cache in Buildx, not steps for setting up persistent storage for a stateful application using Docker images in Kubernetes.",
@@ -16561,13 +16978,14 @@
         "completion_tokens": 108,
         "cost_usd": 0.0001125,
         "latency_s": 2.1568451250059297,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 1.1231,
+      "latency_s": 0.0001,
       "data": {
        "from": "What steps are required to set up persistent storage for a stateful application in Kubernetes using Docker images?",
        "to": "persistent volume claim setup for stateful application using Docker images in Kubernetes",
@@ -16580,13 +16998,14 @@
         "completion_tokens": 38,
         "cost_usd": 2.7e-05,
         "latency_s": 1.1190523330005817,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2865,
+      "latency_s": 0.4073,
       "data": {
        "query": "persistent volume claim setup for stateful application using Docker images in Kubernetes",
        "retrieved_ids": [
@@ -16696,7 +17115,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7378,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The retrieved context describes using Buildx to store build cache in a persistent volume claim for Kubernetes builds, not the steps for setting up persistent storage for a stateful application using Docker images.",
@@ -16715,13 +17134,14 @@
         "completion_tokens": 109,
         "cost_usd": 0.000102,
         "latency_s": 0.7343119590077549,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4558,
+      "latency_s": 0.0,
       "data": {
        "from": "persistent volume claim setup for stateful application using Docker images in Kubernetes",
        "to": "persistent storage setup steps for a stateful application in Kubernetes using Docker images",
@@ -16734,13 +17154,14 @@
         "completion_tokens": 41,
         "cost_usd": 2.7675e-05,
         "latency_s": 0.4525159999902826,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2864,
+      "latency_s": 0.3875,
       "data": {
        "query": "persistent storage setup steps for a stateful application in Kubernetes using Docker images",
        "retrieved_ids": [
@@ -16850,7 +17271,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.1009,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Buildx persistent volume claims for build cache, not the steps to set up persistent storage for a stateful application using Docker images in Kubernetes.",
@@ -16869,7 +17290,8 @@
         "completion_tokens": 102,
         "cost_usd": 0.000115425,
         "latency_s": 0.9623719160008477,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -16898,7 +17320,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 55.0931,
+    "latency_s": 1.5094,
     "total_tokens": 3934,
     "cost_usd": 0.0003846,
     "rewrites": 2,
@@ -16937,7 +17359,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3872,
+      "latency_s": 0.5158,
       "data": {
        "query": "What are the best practices for securing a Docker Swarm manager node against unauthorized access?",
        "retrieved_ids": [
@@ -17047,7 +17469,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.5803,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses general Docker daemon security and container capabilities but does not contain specific best practices for securing a Docker Swarm manager node against unauthorized access.",
@@ -17066,13 +17488,14 @@
         "completion_tokens": 100,
         "cost_usd": 9.127500000000001e-05,
         "latency_s": 0.5773430419940269,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.5606,
+      "latency_s": 0.0,
       "data": {
        "from": "What are the best practices for securing a Docker Swarm manager node against unauthorized access?",
        "to": "Docker Swarm manager node security best practices for preventing unauthorized access",
@@ -17085,13 +17508,14 @@
         "completion_tokens": 27,
         "cost_usd": 2.295e-05,
         "latency_s": 0.5578354169992963,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.3813,
+      "latency_s": 0.3615,
       "data": {
        "query": "Docker Swarm manager node security best practices for preventing unauthorized access",
        "retrieved_ids": [
@@ -17201,7 +17625,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.8353,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses general Docker Engine security and remote access settings, but does not contain specific best practices for securing a Docker Swarm manager node against unauthorized access.",
@@ -17220,13 +17644,14 @@
         "completion_tokens": 102,
         "cost_usd": 0.000117525,
         "latency_s": 1.2258885000046575,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.1607,
+      "latency_s": 0.0,
       "data": {
        "from": "Docker Swarm manager node security best practices for preventing unauthorized access",
        "to": "Docker Swarm manager node security best practices to prevent unauthorized access",
@@ -17239,13 +17664,14 @@
         "completion_tokens": 27,
         "cost_usd": 2.28e-05,
         "latency_s": 0.15741895799874328,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.3744,
+      "latency_s": 0.359,
       "data": {
        "query": "Docker Swarm manager node security best practices to prevent unauthorized access",
        "retrieved_ids": [
@@ -17355,7 +17781,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 49.4193,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses general Docker Engine security and remote access settings, but does not contain specific best practices for securing a Docker Swarm manager node against unauthorized access.",
@@ -17374,7 +17800,8 @@
         "completion_tokens": 100,
         "cost_usd": 0.0001176,
         "latency_s": 0.7964487499993993,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -17403,7 +17830,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 54.7043,
+    "latency_s": 1.2386,
     "total_tokens": 3894,
     "cost_usd": 0.00037215,
     "rewrites": 2,
@@ -17441,7 +17868,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3063,
+      "latency_s": 0.2757,
       "data": {
        "query": "How can I view and manage my Docker Hub billing history and invoices?",
        "retrieved_ids": [
@@ -17551,7 +17978,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.1451,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context only describes image management in Docker Desktop and does not mention Docker Hub billing history or invoices.",
@@ -17570,13 +17997,14 @@
         "completion_tokens": 71,
         "cost_usd": 8.52e-05,
         "latency_s": 0.6798355000064475,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.5146,
+      "latency_s": 0.0,
       "data": {
        "from": "How can I view and manage my Docker Hub billing history and invoices?",
        "to": "view Docker Hub billing history invoices manage billing history Docker Hub invoices query",
@@ -17589,13 +18017,14 @@
         "completion_tokens": 28,
         "cost_usd": 2.2125e-05,
         "latency_s": 0.5124285409983713,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2343,
+      "latency_s": 0.2302,
       "data": {
        "query": "view Docker Hub billing history invoices manage billing history Docker Hub invoices query",
        "retrieved_ids": [
@@ -17724,13 +18153,14 @@
         "completion_tokens": 71,
         "cost_usd": 8.52e-05,
         "latency_s": 0.6798355000064475,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4474,
+      "latency_s": 0.0,
       "data": {
        "from": "view Docker Hub billing history invoices manage billing history Docker Hub invoices query",
        "to": "view Docker Hub billing history invoices manage billing history Docker Hub invoices query",
@@ -17743,13 +18173,14 @@
         "completion_tokens": 27,
         "cost_usd": 2.1825e-05,
         "latency_s": 0.44496062499820255,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2344,
+      "latency_s": 0.288,
       "data": {
        "query": "view Docker Hub billing history invoices manage billing history Docker Hub invoices query",
        "retrieved_ids": [
@@ -17859,7 +18290,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.0002,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context only describes image management in Docker Desktop and does not mention Docker Hub billing history or invoices.",
@@ -17878,7 +18309,8 @@
         "completion_tokens": 71,
         "cost_usd": 8.52e-05,
         "latency_s": 0.6798355000064475,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -17907,7 +18339,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 4.8863,
+    "latency_s": 0.7965,
     "total_tokens": 3190,
     "cost_usd": 0.00029955,
     "rewrites": 2,
@@ -17947,7 +18379,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2585,
+      "latency_s": 0.417,
       "data": {
        "query": "What is the procedure to migrate my Docker images from Docker Hub to a self-hosted Harbor registry?",
        "retrieved_ids": [
@@ -18057,7 +18489,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.6268,
+      "latency_s": 0.0005,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about migrating Docker images from Docker Hub to a self-hosted Harbor registry.",
@@ -18076,13 +18508,14 @@
         "completion_tokens": 90,
         "cost_usd": 0.00012082500000000001,
         "latency_s": 0.6233297920116456,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4502,
+      "latency_s": 0.0001,
       "data": {
        "from": "What is the procedure to migrate my Docker images from Docker Hub to a self-hosted Harbor registry?",
        "to": "migrate Docker images from Docker Hub to self-hosted Harbor registry steps",
@@ -18095,13 +18528,14 @@
         "completion_tokens": 29,
         "cost_usd": 2.3474999999999998e-05,
         "latency_s": 0.44801620799989905,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.264,
+      "latency_s": 1.0841,
       "data": {
        "query": "migrate Docker images from Docker Hub to self-hosted Harbor registry steps",
        "retrieved_ids": [
@@ -18126,12 +18560,12 @@
          "engine/security/trust#008",
          "build/buildkit/configure#001",
          "build/buildkit/configure#002",
-         "engine/network/firewall-nftables#012",
          "engine/network/port-publishing#004",
          "build/buildkit/configure#011",
          "engine/network/firewall-nftables#010",
          "build/concepts/dockerfile#009",
-         "build/building/base-images#000"
+         "build/building/base-images#000",
+         "engine/storage/drivers#009"
         ],
         "bm25": [
          "engine/security/trust/trust_delegation#001",
@@ -18211,7 +18645,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.9341,
+      "latency_s": 0.0012,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about migrating Docker images from Docker Hub to a self-hosted Harbor registry.",
@@ -18230,13 +18664,14 @@
         "completion_tokens": 99,
         "cost_usd": 0.000136425,
         "latency_s": 1.5467274580005324,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4403,
+      "latency_s": 0.0001,
       "data": {
        "from": "migrate Docker images from Docker Hub to self-hosted Harbor registry steps",
        "to": "migrate Docker images from Docker Hub to self-hosted Harbor registry steps",
@@ -18249,13 +18684,14 @@
         "completion_tokens": 29,
         "cost_usd": 2.3024999999999997e-05,
         "latency_s": 0.4390901250008028,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2772,
+      "latency_s": 1.3559,
       "data": {
        "query": "migrate Docker images from Docker Hub to self-hosted Harbor registry steps",
        "retrieved_ids": [
@@ -18280,12 +18716,12 @@
          "engine/security/trust#008",
          "build/buildkit/configure#001",
          "build/buildkit/configure#002",
-         "engine/network/firewall-nftables#012",
          "engine/network/port-publishing#004",
          "build/buildkit/configure#011",
          "engine/network/firewall-nftables#010",
          "build/concepts/dockerfile#009",
-         "build/building/base-images#000"
+         "build/building/base-images#000",
+         "engine/storage/drivers#009"
         ],
         "bm25": [
          "engine/security/trust/trust_delegation#001",
@@ -18365,7 +18801,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.0003,
+      "latency_s": 0.0006,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about migrating Docker images from Docker Hub to a self-hosted Harbor registry.",
@@ -18384,7 +18820,8 @@
         "completion_tokens": 99,
         "cost_usd": 0.000136425,
         "latency_s": 1.5467274580005324,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -18413,7 +18850,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 6.2549,
+    "latency_s": 2.8642,
     "total_tokens": 4831,
     "cost_usd": 0.00044018,
     "rewrites": 2,
@@ -18453,7 +18890,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.3637,
+      "latency_s": 0.7083,
       "data": {
        "query": "How do I enable GPU support in Docker containers running on a Kubernetes cluster?",
        "retrieved_ids": [
@@ -18563,7 +19000,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 48.3808,
+      "latency_s": 0.0007,
       "data": {
        "relevant": true,
        "reason": "The retrieved context includes a Helm chart configuration section that explicitly describes enabling GPU support in Docker Model Runner deployments, which directly answers how to enable GPU support in Docker containers on Kubernetes.",
@@ -18584,13 +19021,14 @@
         "completion_tokens": 104,
         "cost_usd": 0.000123225,
         "latency_s": 0.6267797500040615,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "generate",
-      "latency_s": 1.0117,
+      "latency_s": 0.0001,
       "data": {
        "refused": false,
        "cited_ids": [
@@ -18611,7 +19049,8 @@
         "completion_tokens": 236,
         "cost_usd": 0.00030510000000000004,
         "latency_s": 1.009018290991662,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      }
@@ -18638,7 +19077,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 49.7578,
+    "latency_s": 0.7104,
     "total_tokens": 2657,
     "cost_usd": 0.00042833,
     "rewrites": 0,
@@ -18678,7 +19117,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2038,
+      "latency_s": 0.3216,
       "data": {
        "query": "What are the specific environment variables required for Docker Scout to authenticate with Docker Hub?",
        "retrieved_ids": [
@@ -18788,7 +19227,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.0391,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses legacy container links and environment variables for inter-container communication, but it does not mention any environment variables required for Docker Scout authentication with Docker Hub.",
@@ -18807,13 +19246,14 @@
         "completion_tokens": 90,
         "cost_usd": 0.000107625,
         "latency_s": 1.0220877499959897,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 1.216,
+      "latency_s": 0.0,
       "data": {
        "from": "What are the specific environment variables required for Docker Scout to authenticate with Docker Hub?",
        "to": "docker scout authentication environment variables Docker Hub required",
@@ -18826,13 +19266,14 @@
         "completion_tokens": 23,
         "cost_usd": 2.175e-05,
         "latency_s": 0.5313266659941291,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2317,
+      "latency_s": 0.3929,
       "data": {
        "query": "docker scout authentication environment variables Docker Hub required",
        "retrieved_ids": [
@@ -18942,7 +19383,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.0458,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about Docker Scout or the environment variables it requires for Docker Hub authentication.",
@@ -18961,13 +19402,14 @@
         "completion_tokens": 77,
         "cost_usd": 9.907499999999998e-05,
         "latency_s": 1.4372015410044696,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.608,
+      "latency_s": 0.0001,
       "data": {
        "from": "docker scout authentication environment variables Docker Hub required",
        "to": "docker scout docker hub authentication environment variables required for login",
@@ -18980,13 +19422,14 @@
         "completion_tokens": 24,
         "cost_usd": 2.0775e-05,
         "latency_s": 0.6053690409898991,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2429,
+      "latency_s": 0.2613,
       "data": {
        "query": "docker scout docker hub authentication environment variables required for login",
        "retrieved_ids": [
@@ -19096,7 +19539,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.0816,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context does not mention Docker Scout or any environment variables needed for authenticating with Docker Hub.",
@@ -19115,7 +19558,8 @@
         "completion_tokens": 99,
         "cost_usd": 0.000123,
         "latency_s": 1.638205334005761,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -19144,7 +19588,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 9.6746,
+    "latency_s": 0.9794,
     "total_tokens": 4024,
     "cost_usd": 0.00037222,
     "rewrites": 2,
@@ -19183,7 +19627,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2667,
+      "latency_s": 0.2444,
       "data": {
        "query": "How can I configure Podman to run rootless containers on a CentOS host?",
        "retrieved_ids": [
@@ -19293,7 +19737,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7069,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context explains what rootless mode is and mentions that instructions exist, but it does not contain the specific steps or configuration details for enabling rootless containers on a CentOS host.",
@@ -19312,13 +19756,14 @@
         "completion_tokens": 92,
         "cost_usd": 9.262499999999999e-05,
         "latency_s": 0.7034096249990398,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.6124,
+      "latency_s": 0.0,
       "data": {
        "from": "How can I configure Podman to run rootless containers on a CentOS host?",
        "to": "podman rootless configuration CentOS 8 enable rootless containers steps",
@@ -19331,13 +19776,14 @@
         "completion_tokens": 29,
         "cost_usd": 2.4075e-05,
         "latency_s": 0.6099018340028124,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2627,
+      "latency_s": 0.2364,
       "data": {
        "query": "podman rootless configuration CentOS 8 enable rootless containers steps",
        "retrieved_ids": [
@@ -19447,7 +19893,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 47.6202,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker rootless mode and installation on CentOS, but does not contain any information about configuring Podman for rootless containers on a CentOS host.",
@@ -19466,13 +19912,14 @@
         "completion_tokens": 93,
         "cost_usd": 9.0375e-05,
         "latency_s": 0.7279316250060219,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4495,
+      "latency_s": 0.0,
       "data": {
        "from": "podman rootless configuration CentOS 8 enable rootless containers steps",
        "to": "podman rootless enable CentOS 8 configuration steps",
@@ -19485,13 +19932,14 @@
         "completion_tokens": 26,
         "cost_usd": 2.2800000000000002e-05,
         "latency_s": 0.4467927920049988,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2652,
+      "latency_s": 0.2364,
       "data": {
        "query": "podman rootless enable CentOS 8 configuration steps",
        "retrieved_ids": [
@@ -19601,7 +20049,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.0661,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker installation and rootless mode, not Podman configuration on CentOS.",
@@ -19620,7 +20068,8 @@
         "completion_tokens": 78,
         "cost_usd": 0.000105,
         "latency_s": 0.6604368330008583,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -19649,7 +20098,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 51.2553,
+    "latency_s": 0.7194,
     "total_tokens": 3511,
     "cost_usd": 0.00033487,
     "rewrites": 2,
@@ -19687,7 +20136,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2411,
+      "latency_s": 0.2253,
       "data": {
        "query": "What is the correct syntax for defining a CRI-O runtime class in a Kubernetes pod spec?",
        "retrieved_ids": [
@@ -19797,7 +20246,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 4.2601,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about CRI‑O runtime class syntax in a Kubernetes pod spec.",
@@ -19816,13 +20265,14 @@
         "completion_tokens": 74,
         "cost_usd": 9.240000000000001e-05,
         "latency_s": 1.0717439589934656,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4225,
+      "latency_s": 0.0,
       "data": {
        "from": "What is the correct syntax for defining a CRI-O runtime class in a Kubernetes pod spec?",
        "to": "CRI‑O runtimeClass syntax in Kubernetes pod spec definition",
@@ -19835,13 +20285,14 @@
         "completion_tokens": 26,
         "cost_usd": 2.2349999999999998e-05,
         "latency_s": 0.41867445899697486,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2278,
+      "latency_s": 0.2482,
       "data": {
        "query": "CRI‑O runtimeClass syntax in Kubernetes pod spec definition",
        "retrieved_ids": [
@@ -19970,13 +20421,14 @@
         "completion_tokens": 74,
         "cost_usd": 9.240000000000001e-05,
         "latency_s": 1.0717439589934656,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4733,
+      "latency_s": 0.0,
       "data": {
        "from": "CRI‑O runtimeClass syntax in Kubernetes pod spec definition",
        "to": "CRI-O runtimeClass definition in Kubernetes pod spec syntax",
@@ -19989,13 +20441,14 @@
         "completion_tokens": 25,
         "cost_usd": 2.16e-05,
         "latency_s": 0.47154045799106825,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.223,
+      "latency_s": 0.2828,
       "data": {
        "query": "CRI-O runtimeClass definition in Kubernetes pod spec syntax",
        "retrieved_ids": [
@@ -20124,7 +20577,8 @@
         "completion_tokens": 74,
         "cost_usd": 9.240000000000001e-05,
         "latency_s": 1.0717439589934656,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -20153,7 +20607,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 5.8516,
+    "latency_s": 0.7591,
     "total_tokens": 3463,
     "cost_usd": 0.00032115,
     "rewrites": 2,
@@ -20192,7 +20646,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2684,
+      "latency_s": 0.4509,
       "data": {
        "query": "What are the steps to configure network policies in Kubernetes for containers built with Docker?",
        "retrieved_ids": [
@@ -20302,7 +20756,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 2.6893,
+      "latency_s": 0.0006,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about configuring network policies in Kubernetes for containers built with Docker.",
@@ -20321,13 +20775,14 @@
         "completion_tokens": 95,
         "cost_usd": 9.457500000000001e-05,
         "latency_s": 1.6454441660025623,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4131,
+      "latency_s": 0.0001,
       "data": {
        "from": "What are the steps to configure network policies in Kubernetes for containers built with Docker?",
        "to": "Configure Kubernetes network policies for Docker‑based containers: steps, YAML examples, and required annotations.",
@@ -20340,13 +20795,14 @@
         "completion_tokens": 33,
         "cost_usd": 2.385e-05,
         "latency_s": 0.4101387499977136,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2922,
+      "latency_s": 1.4657,
       "data": {
        "query": "Configure Kubernetes network policies for Docker‑based containers: steps, YAML examples, and required annotations.",
        "retrieved_ids": [
@@ -20456,7 +20912,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.618,
+      "latency_s": 0.0007,
       "data": {
        "relevant": false,
        "reason": "The retrieved context does not provide explicit steps for configuring network policies in Kubernetes for Docker-built containers; it only mentions that network policies are generated, not how to configure them.",
@@ -20475,13 +20931,14 @@
         "completion_tokens": 101,
         "cost_usd": 0.00011055,
         "latency_s": 0.6151288330001989,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.6113,
+      "latency_s": 0.0001,
       "data": {
        "from": "Configure Kubernetes network policies for Docker‑based containers: steps, YAML examples, and required annotations.",
        "to": "Configure Kubernetes network policies for Docker‑built containers: step‑by‑step YAML example and required annotations.",
@@ -20494,13 +20951,14 @@
         "completion_tokens": 35,
         "cost_usd": 2.5725000000000002e-05,
         "latency_s": 0.6085440839960938,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.308,
+      "latency_s": 0.9397,
       "data": {
        "query": "Configure Kubernetes network policies for Docker‑built containers: step‑by‑step YAML example and required annotations.",
        "retrieved_ids": [
@@ -20610,7 +21068,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 47.5152,
+      "latency_s": 0.0005,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain explicit steps or instructions for configuring network policies in Kubernetes for Docker-built containers.",
@@ -20629,7 +21087,8 @@
         "completion_tokens": 105,
         "cost_usd": 0.000108075,
         "latency_s": 1.0221074580040295,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -20658,7 +21117,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 52.7204,
+    "latency_s": 2.8621,
     "total_tokens": 3730,
     "cost_usd": 0.00036278,
     "rewrites": 2,
@@ -20697,7 +21156,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2971,
+      "latency_s": 0.485,
       "data": {
        "query": "How do I configure a Docker Swarm secret to be used by a service at runtime?",
        "retrieved_ids": [
@@ -20807,7 +21266,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.7963,
+      "latency_s": 0.0004,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about configuring Docker Swarm secrets for services at runtime.",
@@ -20826,13 +21285,14 @@
         "completion_tokens": 91,
         "cost_usd": 0.00011789999999999999,
         "latency_s": 0.27136454099672846,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.3343,
+      "latency_s": 0.0001,
       "data": {
        "from": "How do I configure a Docker Swarm secret to be used by a service at runtime?",
        "to": "docker swarm secret service runtime configuration how to use secret in service definition",
@@ -20845,13 +21305,14 @@
         "completion_tokens": 28,
         "cost_usd": 2.2575e-05,
         "latency_s": 0.3310954589978792,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2604,
+      "latency_s": 0.2667,
       "data": {
        "query": "docker swarm secret service runtime configuration how to use secret in service definition",
        "retrieved_ids": [
@@ -20961,7 +21422,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.8345,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker Compose secrets, not Docker Swarm secrets or runtime service configuration for Swarm.",
@@ -20980,13 +21441,14 @@
         "completion_tokens": 89,
         "cost_usd": 0.00010515000000000001,
         "latency_s": 0.6082545839890372,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.5382,
+      "latency_s": 0.0,
       "data": {
        "from": "docker swarm secret service runtime configuration how to use secret in service definition",
        "to": "docker swarm service secret runtime usage configure secret in service definition",
@@ -20999,13 +21461,14 @@
         "completion_tokens": 32,
         "cost_usd": 2.3625e-05,
         "latency_s": 0.5344811250106432,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2688,
+      "latency_s": 0.2528,
       "data": {
        "query": "docker swarm service secret runtime usage configure secret in service definition",
        "retrieved_ids": [
@@ -21115,7 +21578,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.7145,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker Compose secrets and how to inject them into containers, but it does not contain any information about configuring Docker Swarm secrets for services at runtime.",
@@ -21134,7 +21597,8 @@
         "completion_tokens": 101,
         "cost_usd": 0.00010875,
         "latency_s": 1.406283208008972,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -21163,7 +21627,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 10.0496,
+    "latency_s": 1.0078,
     "total_tokens": 4017,
     "cost_usd": 0.000378,
     "rewrites": 2,
@@ -21201,7 +21665,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2935,
+      "latency_s": 0.2736,
       "data": {
        "query": "How can I integrate Docker Hub image scanning results into Azure DevOps pipelines?",
        "retrieved_ids": [
@@ -21311,7 +21775,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 1.2839,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker Desktop image views and Docker Scout, but does not mention Azure DevOps pipelines or how to integrate Docker Hub image scanning results into them.",
@@ -21330,13 +21794,14 @@
         "completion_tokens": 108,
         "cost_usd": 0.00010875,
         "latency_s": 0.6221894170012092,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.4901,
+      "latency_s": 0.0,
       "data": {
        "from": "How can I integrate Docker Hub image scanning results into Azure DevOps pipelines?",
        "to": "docker hub image scanning results azure devops pipeline integration",
@@ -21349,13 +21814,14 @@
         "completion_tokens": 25,
         "cost_usd": 2.22e-05,
         "latency_s": 0.48696395799925085,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2725,
+      "latency_s": 0.2466,
       "data": {
        "query": "docker hub image scanning results azure devops pipeline integration",
        "retrieved_ids": [
@@ -21465,7 +21931,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 47.4095,
+      "latency_s": 0.0002,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses Docker Desktop image views and Docker Hub repositories, but does not mention Azure DevOps pipelines or how to integrate Docker Hub image scanning results into them.",
@@ -21484,13 +21950,14 @@
         "completion_tokens": 101,
         "cost_usd": 0.00011235,
         "latency_s": 0.7670199169951957,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.1507,
+      "latency_s": 0.0,
       "data": {
        "from": "docker hub image scanning results azure devops pipeline integration",
        "to": "docker hub image scanning results integration azure devops pipeline",
@@ -21503,13 +21970,14 @@
         "completion_tokens": 25,
         "cost_usd": 2.1975000000000002e-05,
         "latency_s": 0.14647229200636502,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2721,
+      "latency_s": 0.2525,
       "data": {
        "query": "docker hub image scanning results integration azure devops pipeline",
        "retrieved_ids": [
@@ -21638,7 +22106,8 @@
         "completion_tokens": 101,
         "cost_usd": 0.00011235,
         "latency_s": 0.7670199169951957,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -21667,7 +22136,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 50.1768,
+    "latency_s": 0.775,
     "total_tokens": 3955,
     "cost_usd": 0.00037762,
     "rewrites": 2,
@@ -21706,7 +22175,7 @@
     "steps": [
      {
       "node": "retrieve",
-      "latency_s": 0.2641,
+      "latency_s": 0.2878,
       "data": {
        "query": "What is the recommended way to set up a CI pipeline in CircleCI for building Docker images with BuildKit?",
        "retrieved_ids": [
@@ -21816,7 +22285,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.9484,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context does not contain any information about setting up a CI pipeline in CircleCI for building Docker images with BuildKit.",
@@ -21835,13 +22304,14 @@
         "completion_tokens": 85,
         "cost_usd": 9.6225e-05,
         "latency_s": 0.5590615419932874,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.61,
+      "latency_s": 0.0,
       "data": {
        "from": "What is the recommended way to set up a CI pipeline in CircleCI for building Docker images with BuildKit?",
        "to": "circleci buildkit docker image build pipeline configuration Dockerfile buildx setup",
@@ -21854,13 +22324,14 @@
         "completion_tokens": 29,
         "cost_usd": 2.3925e-05,
         "latency_s": 0.6066970420069993,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2721,
+      "latency_s": 0.3183,
       "data": {
        "query": "circleci buildkit docker image build pipeline configuration Dockerfile buildx setup",
        "retrieved_ids": [
@@ -21970,7 +22441,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 3.7807,
+      "latency_s": 0.0003,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses BuildKit configuration and CNI networking, but does not mention CircleCI or how to set up a CI pipeline for building Docker images with BuildKit.",
@@ -21989,13 +22460,14 @@
         "completion_tokens": 107,
         "cost_usd": 0.00010365000000000001,
         "latency_s": 1.1285322080075275,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "rewrite_query",
-      "latency_s": 0.307,
+      "latency_s": 0.0,
       "data": {
        "from": "circleci buildkit docker image build pipeline configuration Dockerfile buildx setup",
        "to": "circleci buildkit docker image build pipeline configuration buildx setup",
@@ -22008,13 +22480,14 @@
         "completion_tokens": 27,
         "cost_usd": 2.3475e-05,
         "latency_s": 0.3044335000013234,
-        "cached": false
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
      {
       "node": "retrieve",
-      "latency_s": 0.2761,
+      "latency_s": 0.4457,
       "data": {
        "query": "circleci buildkit docker image build pipeline configuration buildx setup",
        "retrieved_ids": [
@@ -22124,7 +22597,7 @@
      },
      {
       "node": "grade_context",
-      "latency_s": 0.0003,
+      "latency_s": 0.0005,
       "data": {
        "relevant": false,
        "reason": "The provided context discusses BuildKit configuration and CNI networking, but does not mention CircleCI or how to set up a CI pipeline for building Docker images with BuildKit.",
@@ -22143,7 +22616,8 @@
         "completion_tokens": 107,
         "cost_usd": 0.00010365000000000001,
         "latency_s": 1.1285322080075275,
-        "cached": true
+        "cached": true,
+        "wait_s": 0.0
        }
       ]
      },
@@ -22172,7 +22646,7 @@
      "embed_model": "BAAI/bge-small-en-v1.5",
      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
     },
-    "latency_s": 6.4626,
+    "latency_s": 1.0553,
     "total_tokens": 3614,
     "cost_usd": 0.00035093,
     "rewrites": 2,

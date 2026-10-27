@@ -1,0 +1,17 @@
+# Everything for indexing and the evaluation harness (PyTorch models, Chroma, judges).
+# The web demo needs only requirements.txt.
+-r requirements.txt
+# Linux x86_64 gets the CPU-only torch wheel (no CUDA libraries); other platforms use PyPI.
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and platform_machine == "x86_64" and python_version == "3.11"
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and platform_machine == "x86_64" and python_version == "3.12"
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and platform_machine == "x86_64" and python_version == "3.13"
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp314-cp314-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and platform_machine == "x86_64" and python_version == "3.14"
+torch==2.14.1 ; sys_platform != "linux" or platform_machine != "x86_64"
+chromadb==1.5.9
+deepeval==2.9.3
+huggingface-hub==1.33.0
+langchain-community==0.4.1
+langfuse==4.17.0
+ragas==0.4.3
+sentence-transformers==6.1.0
+transformers==5.18.0

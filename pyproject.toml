@@ -5,7 +5,7 @@ description = "Self-reflective agentic RAG over Docker docs, with an evaluation 
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-# Runtime dependencies are pinned in requirements.txt (also used by Hugging Face Spaces).
+# Dependencies are pinned in requirements.txt (web demo) and requirements-full.txt (indexing + evals).
 
 [build-system]
 requires = ["setuptools>=68"]

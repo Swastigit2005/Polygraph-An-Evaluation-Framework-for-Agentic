@@ -1,0 +1,35 @@
+{
+  "configs": {
+    "baseline": {
+      "file": "baseline_20261008T162345Z.json",
+      "items": 70,
+      "answerable": 50,
+      "unanswerable": 20,
+      "end_to_end_accuracy": 0.88,
+      "correct_refusal_rate": 0.85,
+      "false_refusal_rate": 0.08,
+      "faithfulness": 0.861625874125874,
+      "recall_at_k": 0.7716666666666666,
+      "grader_recall": null,
+      "grader_precision": null,
+      "latency_p50_s": 0.8897209165030275,
+      "cost_per_query_usd": 0.00022641
+    },
+    "full": {
+      "file": "full_20261008T160255Z.json",
+      "items": 70,
+      "answerable": 50,
+      "unanswerable": 20,
+      "end_to_end_accuracy": 0.96,
+      "correct_refusal_rate": 0.95,
+      "false_refusal_rate": 0.02,
+      "faithfulness": 0.8703189530775739,
+      "recall_at_k": 0.8666666666666666,
+      "grader_recall": 0.9795918367346939,
+      "grader_precision": 0.96,
+      "latency_p50_s": 2.4240328540050773,
+      "cost_per_query_usd": 0.00038349914285714287
+    }
+  },
+  "golden_source": "ai_reviewed"
+}

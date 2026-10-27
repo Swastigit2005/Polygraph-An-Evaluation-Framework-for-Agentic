@@ -1,0 +1,15 @@
+# Not needed by the web demo (keeps the upload and the function bundle small).
+.venv/
+.cache/
+.env
+.env.*
+!.env.example
+.github/
+data/corpus/
+data/index/chroma/
+eval/
+tests/
+# Vercel must install requirements.txt, not this (dependency-less) project file.
+pyproject.toml
+requirements-full.txt
+requirements-dev.txt

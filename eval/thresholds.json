@@ -1,15 +1,25 @@
 {
   "_comment": "CI regression gate for the `full` config on eval/ci_subset.json. Values are set from the first real full run minus a tolerance (see README). null = not set yet; check_thresholds.py fails until they are set.",
-  "source_result": null,
+  "source_result": "full_20261008T160255Z.json",
   "min": {
-    "refusal.correct_refusal_rate": null,
-    "grader.set_level.precision": null,
-    "grader.set_level.recall": null,
-    "retrieval.recall@4": null,
-    "answer.end_to_end_accuracy": null
+    "refusal.correct_refusal_rate": 0.9,
+    "grader.set_level.precision": 0.9,
+    "grader.set_level.recall": 0.9,
+    "retrieval.recall@4": 0.708,
+    "answer.end_to_end_accuracy": 0.823
   },
   "max": {
-    "refusal.false_refusal_rate": null,
-    "steps.loop_rate": null
+    "refusal.false_refusal_rate": 0.177,
+    "steps.loop_rate": 0.5
+  },
+  "tolerance": 0.1,
+  "observed_on_ci_subset": {
+    "refusal.correct_refusal_rate": 1.0,
+    "grader.set_level.precision": 1.0,
+    "grader.set_level.recall": 1.0,
+    "retrieval.recall@4": 0.8076923076923077,
+    "answer.end_to_end_accuracy": 0.9230769230769231,
+    "refusal.false_refusal_rate": 0.07692307692307693,
+    "steps.loop_rate": 0.4
   }
 }

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "functions": {
+    "api/ask.py": {
+      "maxDuration": 60,
+      "excludeFiles": "{public/**,eval/**,tests/**,scripts/**,data/corpus/**,data/index/chroma/**,README.md,NOTICE}"
+    }
+  }
+}

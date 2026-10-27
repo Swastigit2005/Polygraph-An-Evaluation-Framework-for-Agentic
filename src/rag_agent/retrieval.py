@@ -62,17 +62,28 @@ class RetrievalResult:
         return [h.chunk.id for h in self.hits]
 
 
+ONNX_VECTORS = "embeddings_onnx.npy"  # chunk vectors from the ONNX embedder (serverless demo index)
+
+
 @lru_cache(maxsize=2)
-def get_embedder(model_name: str) -> Any:
-    """Load (once) a local sentence-transformers embedding model on CPU."""
+def get_embedder(model_name: str, backend: str = "torch", onnx_dir: Path | None = None) -> Any:
+    """Load (once) a local embedding model on CPU (sentence-transformers or ONNX Runtime)."""
+    if backend == "onnx":
+        from rag_agent.onnx_models import OnnxEmbedder, model_dir
+
+        return OnnxEmbedder(model_dir(onnx_dir or get_settings().onnx_dir, model_name))
     from sentence_transformers import SentenceTransformer
 
     return SentenceTransformer(model_name, device="cpu")
 
 
 @lru_cache(maxsize=2)
-def get_reranker(model_name: str) -> Any:
-    """Load (once) a local cross-encoder reranker on CPU."""
+def get_reranker(model_name: str, backend: str = "torch", onnx_dir: Path | None = None) -> Any:
+    """Load (once) a local cross-encoder reranker on CPU (sentence-transformers or ONNX Runtime)."""
+    if backend == "onnx":
+        from rag_agent.onnx_models import OnnxCrossEncoder, model_dir
+
+        return OnnxCrossEncoder(model_dir(onnx_dir or get_settings().onnx_dir, model_name))
     from sentence_transformers import CrossEncoder
 
     return CrossEncoder(model_name, device="cpu")
@@ -89,36 +100,38 @@ class Retriever:
         self.by_id = {c.id: c for c in chunks}
         self._bm25 = BM25Okapi([tokenize(c.embed_text()) for c in chunks])
         self._collection = collection
-        self._matrix = None  # in-memory vectors when no Chroma collection (e.g. uploaded PDF)
+        self._matrix = None  # in-memory vectors when there is no Chroma collection
 
     # ------------------------------------------------------------------ constructors
     @classmethod
     def from_index(cls, s: Settings | None = None) -> Retriever:
         """Open the prebuilt index in `s.index_dir`."""
-        import chromadb
-
         s = s or get_settings()
         chunks_path = s.index_dir / "chunks.jsonl"
         if not chunks_path.exists():
             raise FileNotFoundError(f"No index at {s.index_dir}; run `python -m rag_agent.ingest` first")
+        if s.model_backend == "onnx":
+            # Vectors from the same ONNX embedder that encodes queries; no Chroma needed.
+            import numpy as np
+
+            r = cls(read_chunks(chunks_path), s)
+            r._matrix = np.load(s.index_dir / ONNX_VECTORS).astype(np.float32)
+            return r
+        import chromadb
+
         # Chroma writes to its sqlite file even on read; open a temp copy so the committed index stays clean.
         tmp = Path(tempfile.mkdtemp(prefix="rag_index_")) / "chroma"
         shutil.copytree(s.index_dir / "chroma", tmp)
         client = chromadb.PersistentClient(path=str(tmp))
         return cls(read_chunks(chunks_path), s, client.get_collection(COLLECTION, embedding_function=None))
 
-    @classmethod
-    def from_chunks(cls, chunks: list[Chunk], s: Settings | None = None) -> Retriever:
-        """Build an in-memory retriever (used for uploaded PDFs)."""
-        r = cls(chunks, s or get_settings())
-        r._matrix = get_embedder(r.s.embed_model).encode(
-            [c.embed_text() for c in chunks], normalize_embeddings=True, batch_size=64)
-        return r
-
     # ------------------------------------------------------------------ retrievers
+    def _embedder(self) -> Any:
+        return get_embedder(self.s.embed_model, self.s.model_backend, self.s.onnx_dir)
+
     def dense(self, query: str, k: int) -> list[tuple[str, float]]:
         """Top-k (id, cosine similarity) by dense embedding."""
-        q = get_embedder(self.s.embed_model).encode(
+        q = self._embedder().encode(
             [self.s.embed_query_prompt + query], normalize_embeddings=True)[0]
         k = min(k, len(self.chunks))
         if self._collection is not None:
@@ -138,7 +151,7 @@ class Retriever:
         """Re-order candidate ids with the cross-encoder (higher = more relevant)."""
         if not ids:
             return []
-        model = get_reranker(self.s.rerank_model)
+        model = get_reranker(self.s.rerank_model, self.s.model_backend, self.s.onnx_dir)
         scores = model.predict([(query, self.by_id[i].embed_text()) for i in ids])
         return sorted(zip(ids, (float(x) for x in scores), strict=True), key=lambda kv: -kv[1])
 

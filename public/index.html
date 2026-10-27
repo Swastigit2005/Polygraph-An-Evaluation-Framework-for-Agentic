@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Polygraph · AI that admits when it doesn't know</title>
+  <meta name="description" content="A Docker docs assistant that fact-checks its own evidence before answering, and refuses instead of guessing. Built and evaluated by Swasti Jain.">
+  <meta property="og:title" content="Polygraph · AI that admits when it doesn't know">
+  <meta property="og:description" content="Watch an AI agent search the docs, fact-check its evidence, and refuse to guess.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f172a'/><path d='M3 17h6l3-8 4 15 3-11 2 4h8' fill='none' stroke='%23f43f5e' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M3 17h6l3-8 4 15 3-11 2 4h8"/></svg>
+      Polygraph
+    </a>
+    <nav>
+      <a href="#results">Results</a>
+      <a href="#how">How it works</a>
+      <a class="gh" href="https://github.com/Swastigit2005/Polygraph-An-Evaluation-Framework-for-Agentic" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">An AI assistant that knows when it doesn't know</p>
+      <h1>Most chatbots guess.<br><span>This one checks its evidence first.</span></h1>
+      <p class="lede">
+        Ask anything about <b>Docker</b>. The AI searches the official docs, a second AI
+        <b>fact-checks</b> what it found, and you get either an answer with sources
+        or an honest <q>that's not in the docs</q>.
+      </p>
+
+      <form id="ask" class="ask" autocomplete="off">
+        <input id="q" name="q" maxlength="300" placeholder="Ask a Docker question…" aria-label="Your question" required>
+        <button id="go" type="submit">Ask <span aria-hidden="true">→</span></button>
+      </form>
+
+      <div class="tries">
+        <span class="tries-label">Or try one:</span>
+        <div id="chips" class="chips"></div>
+      </div>
+    </section>
+
+    <section id="run" class="run" hidden>
+      <div class="run-q"><span>You asked</span><p id="run-q"></p></div>
+
+      <div class="strip" aria-hidden="true">
+        <svg id="strip" viewBox="0 0 1000 120" preserveAspectRatio="none">
+          <defs><clipPath id="reveal"><rect id="reveal-rect" x="0" y="0" width="0" height="120"/></clipPath></defs>
+          <path id="strip-idle" class="idle" d=""/>
+          <circle id="pen" r="6" cx="0" cy="60"/>
+        </svg>
+        <div class="strip-legend"><span class="ok">calm = evidence checks out</span><span class="bad">spike = evidence rejected</span></div>
+      </div>
+
+      <ol class="stations" id="stations">
+        <li data-st="search"><i>🔎</i><b>Search</b><small>Look through 2,594 doc snippets</small></li>
+        <li data-st="check"><i>🧑‍⚖️</i><b>Fact-check</b><small>Does the evidence really answer it?</small></li>
+        <li data-st="rephrase"><i>✏️</i><b>Rephrase</b><small>Only if the evidence was weak</small></li>
+        <li data-st="answer"><i>💬</i><b>Answer</b><small>Answer with sources, or refuse</small></li>
+      </ol>
+
+      <ul id="log" class="log"></ul>
+
+      <div id="result" class="result" hidden>
+        <div id="verdict" class="verdict"></div>
+        <div id="notice" class="notice" hidden></div>
+        <div id="answer" class="answer"></div>
+        <div id="sources" class="sources"></div>
+        <div id="meta" class="meta"></div>
+        <details class="raw">
+          <summary>For engineers: the raw agent trace</summary>
+          <pre id="raw"></pre>
+        </details>
+      </div>
+    </section>
+
+    <section id="results" class="results">
+      <p class="eyebrow">Does the fact-checking actually help?</p>
+      <h2>We tested it on 70 questions, including 20 trick ones.</h2>
+      <p class="sub">
+        Same documents, same answer-writing model. <b>Plain AI search</b> is the standard recipe: search once,
+        then answer from whatever comes back. <b>Polygraph</b> adds a sharper search and the fact-check-and-retry loop.
+      </p>
+      <div id="bars" class="bars"></div>
+      <p id="fine" class="fine"></p>
+    </section>
+
+    <section id="how" class="how">
+      <p class="eyebrow">How it works</p>
+      <h2>Three ideas, one honest assistant.</h2>
+      <div class="cards">
+        <article>
+          <span class="num">1</span>
+          <h3>Search two ways</h3>
+          <p>Keyword search catches exact terms like <code>daemon.json</code>; meaning-based search catches paraphrases.
+            Results are merged and re-ranked by a third model.</p>
+        </article>
+        <article>
+          <span class="num">2</span>
+          <h3>A second AI checks the evidence</h3>
+          <p>Before anything is written, a fast "grader" model decides whether the snippets <em>actually</em>
+            contain the answer, and says why.</p>
+        </article>
+        <article>
+          <span class="num">3</span>
+          <h3>Retry, then refuse</h3>
+          <p>Weak evidence? The agent rewrites its search (up to twice). Still nothing? It says so,
+            instead of inventing an answer.</p>
+        </article>
+      </div>
+      <div class="stack">
+        <span>LangGraph</span><span>Groq · gpt-oss-120b / 20b</span><span>BM25 + bge-small embeddings</span>
+        <span>Cross-encoder reranker</span><span>ONNX Runtime</span><span>Ragas · DeepEval</span><span>Vercel</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Built by <b>Swasti Jain</b> ·
+    <a href="https://github.com/Swastigit2005/Polygraph-An-Evaluation-Framework-for-Agentic" target="_blank" rel="noopener">Source &amp; full evaluation on GitHub</a> ·
+    Knowledge base: <a href="https://github.com/docker/docs" target="_blank" rel="noopener">Docker docs</a> (Apache-2.0)
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

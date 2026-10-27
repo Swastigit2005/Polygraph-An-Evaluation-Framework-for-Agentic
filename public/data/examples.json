@@ -1,0 +1,686 @@
+{
+ "examples": [
+  {
+   "kind": "normal",
+   "question": "How do I limit how much memory a container can use?"
+  },
+  {
+   "kind": "vague",
+   "question": "container can't reach the internet"
+  },
+  {
+   "kind": "trick",
+   "question": "How do I upgrade my Docker Hub subscription to a Team plan?"
+  },
+  {
+   "kind": "normal",
+   "question": "How does Compose watch sync file changes into running containers?"
+  },
+  {
+   "kind": "trick",
+   "question": "How do I configure an NGINX ingress controller in Kubernetes?"
+  }
+ ],
+ "recorded": [
+  {
+   "question": "How do I limit how much memory a container can use?",
+   "answer": "To limit the amount of memory a container can use, specify a memory limit when you start the container with `docker run`:\n\n* Use the `-m` or `--memory=` flag and give the desired maximum (e.g., `-m 500m` or `--memory=2g`). Docker will enforce this as a hard limit, preventing the container from using more than the value you set. The minimum allowed value is\u202f`6m`\u202f[1].\n\nYou can also combine this with swap\u2011related options (`--memory-swap`, `--memory\u2011swappiness`) if you need to control swap usage, but the primary way to cap memory is the `-m/--memory` flag.",
+   "refused": false,
+   "sources": [
+    {
+     "n": 1,
+     "id": "engine/containers/resource_constraints#005",
+     "title": "Resource constraints > Understand the risks of running out of memory > Limit a container's access to memory",
+     "url": "https://docs.docker.com/engine/containers/resource_constraints/",
+     "excerpt": "-m or --memory= The maximum amount of memory the container can use. If you set this option, the minimum allowed value is 6m (6 megabytes). That is, you must set the value to at least 6 megabytes. --memory-swap \\ The\u2026"
+    }
+   ],
+   "steps": [
+    {
+     "node": "retrieve",
+     "ms": 540,
+     "data": {
+      "query": "How do I limit how much memory a container can use?",
+      "retrieved_ids": [
+       "engine/containers/resource_constraints#005",
+       "engine/containers/resource_constraints#003",
+       "engine/containers/resource_constraints#000",
+       "engine/containers/resource_constraints#009"
+      ],
+      "scores": [
+       8.2065,
+       7.2522,
+       5.0974,
+       4.9574
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 770,
+     "data": {
+      "relevant": true,
+      "reason": "The retrieved context includes the Docker run options `-m`/`--memory=` that directly specify how to limit a container\u2019s memory usage.",
+      "relevant_chunk_ids": [
+       "engine/containers/resource_constraints#005",
+       "engine/containers/resource_constraints#003"
+      ],
+      "graded_ids": [
+       "engine/containers/resource_constraints#005",
+       "engine/containers/resource_constraints#003",
+       "engine/containers/resource_constraints#000",
+       "engine/containers/resource_constraints#009"
+      ]
+     },
+     "tokens": 1147
+    },
+    {
+     "node": "generate",
+     "ms": 1233,
+     "data": {
+      "refused": false,
+      "cited_ids": [
+       "engine/containers/resource_constraints#005"
+      ],
+      "citation_source": "inline",
+      "context_ids": [
+       "engine/containers/resource_constraints#005",
+       "engine/containers/resource_constraints#003",
+       "engine/containers/resource_constraints#000",
+       "engine/containers/resource_constraints#009"
+      ]
+     },
+     "tokens": 1044
+    }
+   ],
+   "titles": {
+    "engine/containers/resource_constraints#000": "Resource constraints",
+    "engine/containers/resource_constraints#009": "Resource constraints > Understand the risks of running out of memory > `--memory-swap` details",
+    "engine/containers/resource_constraints#005": "Resource constraints > Understand the risks of running out of memory > Limit a container's access to memory",
+    "engine/containers/resource_constraints#003": "Resource constraints > Understand the risks of running out of memory > Limit a container's access to memory"
+   },
+   "stats": {
+    "seconds": 2.55,
+    "tokens": 2191,
+    "rewrites": 0,
+    "llm_calls": 2
+   },
+   "models": {
+    "generator": "openai/gpt-oss-120b",
+    "grader": "openai/gpt-oss-20b"
+   },
+   "recorded_at": "2026-10-27"
+  },
+  {
+   "question": "container can't reach the internet",
+   "answer": "The most common cause is that IP\u2011forwarding is disabled on the host\u2019s network interface.  \nWhen Docker runs on a system that uses **systemd\u2011network** (systemd\u202f\u2265\u202f219), the per\u2011interface setting `net.ipv4.conf.<iface>.forwarding` defaults to **off**, which blocks traffic from containers.\n\n**Fix**\n\n1. On the Docker host edit the network file for the interface that Docker uses, e.g.:\n\n```\n/usr/lib/systemd/network/80\u2011container\u2011host0.network\n```\n\n2. Inside the `[Network]` section add one of the following lines:\n\n```ini\n[Network]\n\u2026\nIPForward=kernel      # or\nIPForward=true\n```\n\n3. Reload the systemd network configuration (or reboot) so the new setting takes effect.\n\nThis enables IP forwarding for that interface and allows containers to reach the Internet.  \n\nReference: [1]",
+   "refused": false,
+   "sources": [
+    {
+     "n": 1,
+     "id": "engine/daemon/troubleshoot#010",
+     "title": "Troubleshooting the Docker daemon > Networking > IP forwarding problems",
+     "url": "https://docs.docker.com/engine/daemon/troubleshoot/",
+     "excerpt": "If you manually configure your network using systemd-network with systemd version 219 or later, Docker containers may not be able to access your network. Beginning with systemd version 220, the forwarding setting for a\u2026"
+    }
+   ],
+   "steps": [
+    {
+     "node": "retrieve",
+     "ms": 349,
+     "data": {
+      "query": "container can't reach the internet",
+      "retrieved_ids": [
+       "engine/network/firewall-iptables#004",
+       "engine/network/firewall-nftables#010",
+       "compose/how-tos/networking#018",
+       "engine/network#004"
+      ],
+      "scores": [
+       1.7002,
+       0.7398,
+       0.7232,
+       0.6351
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 730,
+     "data": {
+      "relevant": false,
+      "reason": "The provided context discusses firewall rules for direct routed access to containers and network debugging steps, but it does not contain specific information about why a container cannot reach the internet or how to resolve that issue.",
+      "relevant_chunk_ids": [],
+      "graded_ids": [
+       "engine/network/firewall-iptables#004",
+       "engine/network/firewall-nftables#010",
+       "compose/how-tos/networking#018",
+       "engine/network#004"
+      ]
+     },
+     "tokens": 1274
+    },
+    {
+     "node": "rewrite_query",
+     "ms": 532,
+     "data": {
+      "from": "container can't reach the internet",
+      "to": "docker container cannot reach internet troubleshooting network connectivity issues",
+      "attempt": 1
+     },
+     "tokens": 209
+    },
+    {
+     "node": "retrieve",
+     "ms": 296,
+     "data": {
+      "query": "docker container cannot reach internet troubleshooting network connectivity issues",
+      "retrieved_ids": [
+       "engine/daemon/troubleshoot#010",
+       "engine/daemon/troubleshoot#012",
+       "engine/security/rootless/troubleshoot#014",
+       "engine/security/rootless/troubleshoot#015"
+      ],
+      "scores": [
+       6.451,
+       4.2876,
+       3.4531,
+       3.2757
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 596,
+     "data": {
+      "relevant": true,
+      "reason": "The context includes troubleshooting information about IP forwarding issues that can prevent containers from accessing the internet.",
+      "relevant_chunk_ids": [],
+      "graded_ids": [
+       "engine/daemon/troubleshoot#010",
+       "engine/daemon/troubleshoot#012",
+       "engine/security/rootless/troubleshoot#014",
+       "engine/security/rootless/troubleshoot#015"
+      ]
+     },
+     "tokens": 1124
+    },
+    {
+     "node": "generate",
+     "ms": 800,
+     "data": {
+      "refused": false,
+      "cited_ids": [
+       "engine/daemon/troubleshoot#010"
+      ],
+      "citation_source": "inline",
+      "context_ids": [
+       "engine/daemon/troubleshoot#010",
+       "engine/daemon/troubleshoot#012",
+       "engine/security/rootless/troubleshoot#014",
+       "engine/security/rootless/troubleshoot#015"
+      ]
+     },
+     "tokens": 1113
+    }
+   ],
+   "titles": {
+    "engine/network/firewall-nftables#010": "Docker with nftables > Migrating from iptables to nftables > Migrating `DOCKER-USER` > Migrating ACCEPT rules",
+    "engine/daemon/troubleshoot#010": "Troubleshooting the Docker daemon > Networking > IP forwarding problems",
+    "engine/network#004": "Networking overview > User-defined networks > Connecting to multiple networks",
+    "engine/security/rootless/troubleshoot#015": "Troubleshooting > Troubleshooting > Networking errors > `docker run -p` fails with `cannot expose privileged port`",
+    "compose/how-tos/networking#018": "Networking in Compose > Debugging",
+    "engine/network/firewall-iptables#004": "Docker with iptables > Add iptables policies before Docker's rules",
+    "engine/security/rootless/troubleshoot#014": "Troubleshooting > Troubleshooting > Networking errors",
+    "engine/daemon/troubleshoot#012": "Troubleshooting the Docker daemon > Networking > DNS resolver issues"
+   },
+   "stats": {
+    "seconds": 3.31,
+    "tokens": 3720,
+    "rewrites": 1,
+    "llm_calls": 4
+   },
+   "models": {
+    "generator": "openai/gpt-oss-120b",
+    "grader": "openai/gpt-oss-20b"
+   },
+   "recorded_at": "2026-10-27"
+  },
+  {
+   "question": "How do I upgrade my Docker Hub subscription to a Team plan?",
+   "answer": "I couldn't find this in the knowledge base.",
+   "refused": true,
+   "sources": [],
+   "steps": [
+    {
+     "node": "retrieve",
+     "ms": 389,
+     "data": {
+      "query": "How do I upgrade my Docker Hub subscription to a Team plan?",
+      "retrieved_ids": [
+       "desktop/setup/install/windows-install#011",
+       "desktop/troubleshoot-and-support/troubleshoot/topics#012",
+       "desktop/use-desktop/images#006",
+       "desktop/setup/install/mac-install#004"
+      ],
+      "scores": [
+       1.3098,
+       0.0833,
+       -0.627,
+       -0.8232
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 657,
+     "data": {
+      "relevant": false,
+      "reason": "The provided context does not contain any information about upgrading a Docker Hub subscription to a Team plan.",
+      "relevant_chunk_ids": [],
+      "graded_ids": [
+       "desktop/setup/install/windows-install#011",
+       "desktop/troubleshoot-and-support/troubleshoot/topics#012",
+       "desktop/use-desktop/images#006",
+       "desktop/setup/install/mac-install#004"
+      ]
+     },
+     "tokens": 1029
+    },
+    {
+     "node": "rewrite_query",
+     "ms": 484,
+     "data": {
+      "from": "How do I upgrade my Docker Hub subscription to a Team plan?",
+      "to": "upgrade Docker Hub subscription to Team plan steps Docker Hub documentation",
+      "attempt": 1
+     },
+     "tokens": 205
+    },
+    {
+     "node": "retrieve",
+     "ms": 265,
+     "data": {
+      "query": "upgrade Docker Hub subscription to Team plan steps Docker Hub documentation",
+      "retrieved_ids": [
+       "build/buildkit/frontend#005",
+       "desktop/use-desktop/images#008",
+       "desktop/setup/install/windows-install#011",
+       "desktop/setup/install/linux/rhel#000"
+      ],
+      "scores": [
+       -1.5467,
+       -2.0041,
+       -2.2548,
+       -2.6433
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 1064,
+     "data": {
+      "relevant": false,
+      "reason": "The provided context discusses Docker Desktop installation and subscription terms but does not contain any information about upgrading a Docker Hub subscription to a Team plan.",
+      "relevant_chunk_ids": [],
+      "graded_ids": [
+       "build/buildkit/frontend#005",
+       "desktop/use-desktop/images#008",
+       "desktop/setup/install/windows-install#011",
+       "desktop/setup/install/linux/rhel#000"
+      ]
+     },
+     "tokens": 1007
+    },
+    {
+     "node": "rewrite_query",
+     "ms": 434,
+     "data": {
+      "from": "upgrade Docker Hub subscription to Team plan steps Docker Hub documentation",
+      "to": "upgrade Docker Hub subscription to Team plan documentation steps Docker Hub API",
+      "attempt": 2
+     },
+     "tokens": 213
+    },
+    {
+     "node": "retrieve",
+     "ms": 347,
+     "data": {
+      "query": "upgrade Docker Hub subscription to Team plan documentation steps Docker Hub API",
+      "retrieved_ids": [
+       "build/buildkit/frontend#005",
+       "desktop/use-desktop/images#008",
+       "compose/how-tos/oci-artifact#009",
+       "desktop/setup/install/linux/rhel#000"
+      ],
+      "scores": [
+       -1.8873,
+       -2.5028,
+       -3.0795,
+       -3.2124
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 754,
+     "data": {
+      "relevant": false,
+      "reason": "The provided context does not contain any information about upgrading a Docker Hub subscription to a Team plan.",
+      "relevant_chunk_ids": [],
+      "graded_ids": [
+       "build/buildkit/frontend#005",
+       "desktop/use-desktop/images#008",
+       "compose/how-tos/oci-artifact#009",
+       "desktop/setup/install/linux/rhel#000"
+      ]
+     },
+     "tokens": 843
+    },
+    {
+     "node": "refuse",
+     "ms": 0,
+     "data": {
+      "reason": "grader rejected context after 2 rewrite(s)",
+      "last_grader_reason": "The provided context does not contain any information about upgrading a Docker Hub subscription to a Team plan."
+     },
+     "tokens": 0
+    }
+   ],
+   "titles": {
+    "desktop/setup/install/windows-install#011": "Install Docker Desktop on Windows > Start Docker Desktop",
+    "desktop/setup/install/mac-install#004": "Install Docker Desktop on Mac > Install and run Docker Desktop on Mac > Install interactively",
+    "desktop/use-desktop/images#006": "Explore the Images view in Docker Desktop > Push an image to Docker Hub",
+    "desktop/setup/install/linux/rhel#000": "Install Docker Desktop on RHEL",
+    "desktop/use-desktop/images#008": "Explore the Images view in Docker Desktop > Docker Hub repositories",
+    "desktop/troubleshoot-and-support/troubleshoot/topics#012": "Troubleshoot topics for Docker Desktop > Topics for Mac > Upgrade requires administrator privileges > Solution",
+    "compose/how-tos/oci-artifact#009": "Package and deploy Docker Compose applications as OCI artifacts > Next steps",
+    "build/buildkit/frontend#005": "Custom Dockerfile syntax > Other resources"
+   },
+   "stats": {
+    "seconds": 4.4,
+    "tokens": 3297,
+    "rewrites": 2,
+    "llm_calls": 5
+   },
+   "models": {
+    "generator": "openai/gpt-oss-120b",
+    "grader": "openai/gpt-oss-20b"
+   },
+   "recorded_at": "2026-10-27"
+  },
+  {
+   "question": "How does Compose watch sync file changes into running containers?",
+   "answer": "Compose\u202fWatch watches the files you specify in the `develop.watch` section of your\u202f`compose.yaml`.  \nWhen a file in the watched path changes, the `sync+restart` rule tells Compose to copy the modified files from the host directory (e.g., `.`) into the target directory inside the running container (e.g., `/code`) and then restart that container so the updated code is loaded\u202f[1].  \n\nIf the rule uses just `sync`, Compose only copies the changed files without restarting the container, which works for frameworks that have their own hot\u2011reload mechanism\u202f[2].  \n\nThus, Compose\u202fWatch keeps the container\u2019s filesystem in sync by automatically syncing changed files (and optionally restarting the service) whenever you save them on the host.",
+   "refused": false,
+   "sources": [
+    {
+     "n": 1,
+     "id": "compose/gettingstarted#011",
+     "title": "Docker Compose Quickstart > Step 4: Enable Compose Watch for live updates",
+     "url": "https://docs.docker.com/compose/gettingstarted/",
+     "excerpt": "The watch block defines two rules: - The sync+restart action watches your project directory ( . ) on the host. When a file changes, Compose copies any changed files into /code inside the running container, then restarts\u2026"
+    },
+    {
+     "n": 2,
+     "id": "compose/how-tos/file-watch#004",
+     "title": "Use Compose Watch > Configuration > `action` > Sync",
+     "url": "https://docs.docker.com/compose/how-tos/file-watch/",
+     "excerpt": "If action is set to sync , Compose makes sure any changes made to files on your host automatically match with the corresponding files within the service container. sync is ideal for frameworks that support \"Hot Reload\"\u2026"
+    }
+   ],
+   "steps": [
+    {
+     "node": "retrieve",
+     "ms": 278,
+     "data": {
+      "query": "How does Compose watch sync file changes into running containers?",
+      "retrieved_ids": [
+       "compose/gettingstarted#010",
+       "compose/gettingstarted#011",
+       "compose/how-tos/file-watch#006",
+       "compose/how-tos/file-watch#004"
+      ],
+      "scores": [
+       7.8162,
+       7.7292,
+       7.4262,
+       5.874
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 486,
+     "data": {
+      "relevant": true,
+      "reason": "The retrieved context explicitly describes how Compose Watch syncs file changes into running containers, including the sync+restart action and the sync action, and how it copies changed files into the container and restarts the service.",
+      "relevant_chunk_ids": [
+       "compose/gettingstarted#010",
+       "compose/gettingstarted#011",
+       "compose/how-tos/file-watch#006",
+       "compose/how-tos/file-watch#004"
+      ],
+      "graded_ids": [
+       "compose/gettingstarted#010",
+       "compose/gettingstarted#011",
+       "compose/how-tos/file-watch#006",
+       "compose/how-tos/file-watch#004"
+      ]
+     },
+     "tokens": 1221
+    },
+    {
+     "node": "generate",
+     "ms": 1059,
+     "data": {
+      "refused": false,
+      "cited_ids": [
+       "compose/gettingstarted#011",
+       "compose/how-tos/file-watch#004"
+      ],
+      "citation_source": "inline",
+      "context_ids": [
+       "compose/gettingstarted#010",
+       "compose/gettingstarted#011",
+       "compose/how-tos/file-watch#006",
+       "compose/how-tos/file-watch#004"
+      ]
+     },
+     "tokens": 1108
+    }
+   ],
+   "titles": {
+    "compose/how-tos/file-watch#004": "Use Compose Watch > Configuration > `action` > Sync",
+    "compose/gettingstarted#010": "Docker Compose Quickstart > Step 4: Enable Compose Watch for live updates",
+    "compose/gettingstarted#011": "Docker Compose Quickstart > Step 4: Enable Compose Watch for live updates",
+    "compose/how-tos/file-watch#006": "Use Compose Watch > Configuration > `action` > Sync + Restart"
+   },
+   "stats": {
+    "seconds": 1.83,
+    "tokens": 2329,
+    "rewrites": 0,
+    "llm_calls": 2
+   },
+   "models": {
+    "generator": "openai/gpt-oss-120b",
+    "grader": "openai/gpt-oss-20b"
+   },
+   "recorded_at": "2026-10-27"
+  },
+  {
+   "question": "How do I configure an NGINX ingress controller in Kubernetes?",
+   "answer": "I couldn't find this in the knowledge base.",
+   "refused": true,
+   "sources": [],
+   "steps": [
+    {
+     "node": "retrieve",
+     "ms": 355,
+     "data": {
+      "query": "How do I configure an NGINX ingress controller in Kubernetes?",
+      "retrieved_ids": [
+       "desktop/use-desktop/kubernetes#010",
+       "build/buildkit/configure#000",
+       "build/builders/drivers/remote#007",
+       "desktop/settings-and-maintenance/settings#032"
+      ],
+      "scores": [
+       1.9575,
+       1.0901,
+       0.6375,
+       0.253
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 853,
+     "data": {
+      "relevant": false,
+      "reason": "The provided context discusses custom image registries and Docker Desktop Kubernetes settings, but it does not contain any information about configuring an NGINX ingress controller in Kubernetes.",
+      "relevant_chunk_ids": [],
+      "graded_ids": [
+       "desktop/use-desktop/kubernetes#010",
+       "build/buildkit/configure#000",
+       "build/builders/drivers/remote#007",
+       "desktop/settings-and-maintenance/settings#032"
+      ]
+     },
+     "tokens": 983
+    },
+    {
+     "node": "rewrite_query",
+     "ms": 302,
+     "data": {
+      "from": "How do I configure an NGINX ingress controller in Kubernetes?",
+      "to": "nginx ingress controller configuration kubernetes docker documentation",
+      "attempt": 1
+     },
+     "tokens": 217
+    },
+    {
+     "node": "retrieve",
+     "ms": 283,
+     "data": {
+      "query": "nginx ingress controller configuration kubernetes docker documentation",
+      "retrieved_ids": [
+       "engine/network/drivers/host#006",
+       "desktop/use-desktop/kubernetes#002",
+       "build/builders/drivers/kubernetes#021",
+       "compose/bridge/customize#011"
+      ],
+      "scores": [
+       1.6712,
+       1.2752,
+       0.3846,
+       0.2559
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 265,
+     "data": {
+      "relevant": false,
+      "reason": "The provided context does not contain any information about configuring an NGINX ingress controller in Kubernetes.",
+      "relevant_chunk_ids": [],
+      "graded_ids": [
+       "engine/network/drivers/host#006",
+       "desktop/use-desktop/kubernetes#002",
+       "build/builders/drivers/kubernetes#021",
+       "compose/bridge/customize#011"
+      ]
+     },
+     "tokens": 980
+    },
+    {
+     "node": "rewrite_query",
+     "ms": 457,
+     "data": {
+      "from": "nginx ingress controller configuration kubernetes docker documentation",
+      "to": "nginx ingress controller kubernetes configuration docker docs",
+      "attempt": 2
+     },
+     "tokens": 201
+    },
+    {
+     "node": "retrieve",
+     "ms": 320,
+     "data": {
+      "query": "nginx ingress controller kubernetes configuration docker docs",
+      "retrieved_ids": [
+       "desktop/use-desktop/kubernetes#002",
+       "desktop/use-desktop/kubernetes#000",
+       "compose/bridge/customize#011",
+       "build/buildkit/configure#000"
+      ],
+      "scores": [
+       0.5662,
+       -0.7274,
+       -0.8042,
+       -0.8082
+      ]
+     },
+     "tokens": 0
+    },
+    {
+     "node": "grade_context",
+     "ms": 2155,
+     "data": {
+      "relevant": false,
+      "reason": "The provided context discusses enabling Kubernetes in Docker Desktop and general Kubernetes setup, but it does not contain any information about configuring an NGINX ingress controller in Kubernetes.",
+      "relevant_chunk_ids": [],
+      "graded_ids": [
+       "desktop/use-desktop/kubernetes#002",
+       "desktop/use-desktop/kubernetes#000",
+       "compose/bridge/customize#011",
+       "build/buildkit/configure#000"
+      ]
+     },
+     "tokens": 901
+    },
+    {
+     "node": "refuse",
+     "ms": 0,
+     "data": {
+      "reason": "grader rejected context after 2 rewrite(s)",
+      "last_grader_reason": "The provided context discusses enabling Kubernetes in Docker Desktop and general Kubernetes setup, but it does not contain any information about configuring an NGINX ingress controller in Kubernetes."
+     },
+     "tokens": 0
+    }
+   ],
+   "titles": {
+    "build/builders/drivers/kubernetes#021": "Kubernetes driver > Rootless mode",
+    "desktop/use-desktop/kubernetes#000": "Explore the Kubernetes view",
+    "build/builders/drivers/remote#007": "Remote driver > Example: Remote BuildKit in Kubernetes",
+    "engine/network/drivers/host#006": "Host network driver > Usage example > Prerequisites",
+    "compose/bridge/customize#011": "Customize Compose Bridge > Customize the default templates > Modify the default templates > Model Runner templates",
+    "build/buildkit/configure#000": "Configure BuildKit",
+    "desktop/use-desktop/kubernetes#010": "Explore the Kubernetes view > Configuring a custom image registry for Kubernetes control plane images",
+    "desktop/use-desktop/kubernetes#002": "Explore the Kubernetes view > Enable Kubernetes",
+    "desktop/settings-and-maintenance/settings#032": "Change your Docker Desktop settings > Kubernetes"
+   },
+   "stats": {
+    "seconds": 5.0,
+    "tokens": 3282,
+    "rewrites": 2,
+    "llm_calls": 5
+   },
+   "models": {
+    "generator": "openai/gpt-oss-120b",
+    "grader": "openai/gpt-oss-20b"
+   },
+   "recorded_at": "2026-10-27"
+  }
+ ]
+}

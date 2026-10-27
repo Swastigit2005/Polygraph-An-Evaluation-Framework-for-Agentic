@@ -71,6 +71,8 @@ class Settings:
     embed_model: str = "BAAI/bge-small-en-v1.5"
     embed_query_prompt: str = "Represent this sentence for searching relevant passages: "
     rerank_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    # "torch" (sentence-transformers) or "onnx" (onnxruntime; used by the serverless demo).
+    model_backend: str = "torch"
 
     # --- Retrieval / agent behaviour ---
     retrieval_mode: RetrievalMode = "hybrid"
@@ -89,6 +91,7 @@ class Settings:
     corpus_dir: Path = ROOT / "data" / "corpus" / "docker-docs"
     index_dir: Path = ROOT / "data" / "index"
     cache_dir: Path = ROOT / ".cache"
+    onnx_dir: Path = ROOT / "models"
     use_llm_cache: bool = True
 
     @classmethod
@@ -116,6 +119,7 @@ class Settings:
             embed_model=_str("EMBED_MODEL", cls.embed_model),
             embed_query_prompt=os.getenv("EMBED_QUERY_PROMPT", cls.embed_query_prompt),
             rerank_model=_str("RERANK_MODEL", cls.rerank_model),
+            model_backend=_str("MODEL_BACKEND", "torch").lower(),
             retrieval_mode=mode,  # type: ignore[arg-type]
             use_reranker=_bool("USE_RERANKER", True),
             use_reflection=_bool("USE_REFLECTION", True),
@@ -127,6 +131,7 @@ class Settings:
             chunk_overlap=_int("CHUNK_OVERLAP", 150),
             index_dir=Path(_str("INDEX_DIR") or cls.index_dir),
             cache_dir=Path(_str("CACHE_DIR") or cls.cache_dir),
+            onnx_dir=Path(_str("ONNX_DIR") or cls.onnx_dir),
             use_llm_cache=_bool("USE_LLM_CACHE", True),
         )
 
